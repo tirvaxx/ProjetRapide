@@ -12,7 +12,7 @@ class Project {
 	public function getNom($nom) {
 		return $this->nom;
 	}
-	public function getSprint($description) {
+	public function getSprint($sprint) {
 		return $this->sprint;
 	}
 	

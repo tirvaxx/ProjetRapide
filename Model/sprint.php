@@ -1,26 +1,26 @@
 <?php
 
-class Project {
+class Sprint {
 	private $nom;
-	private $sprint;
+	private $listOfList;
 
-	public function __construct($nom, $sprint) {
+	public function __construct($nom, $listOfList) {
 		$this->nom = $nom;
-		$this->sprint = $sprint;
+		$this->listOfList = $listOfList;
 	}
 
 	public function getNom($nom) {
 		return $this->nom;
 	}
-	public function getSprint($description) {
-		return $this->sprint;
+	public function getlistOfList($listOfList) {
+		return $this->listOfList;
 	}
 	
 	public function setNom($nom) {
 		$this->nom = $nom;
 	}
-	public function setSprint($sprint) {
-		$this->sprint = $sprint;
+	public function setlistOfList($listOfList) {
+		$this->listOfList = $listOfList;
 	}
 	
 ?>
