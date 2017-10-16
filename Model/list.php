@@ -12,13 +12,13 @@ class Task {
 	public function getNom($nom) {
 		return $this->nom;
 	}
-	public function getDescription($listOfTask) {
+	public function getlistOfTask($listOfTask) {
 		return $this->listOfTask;
 	}
 	public function setNom($nom) {
 		$this->nom = $nom;
 	}
-	public function setDescription($listOfTask) {
+	public function setlistOfTask($listOfTask) {
 		$this->listOfTask = $listOfTask;
 	}
 ?>
