@@ -9,6 +9,9 @@
       <style>
         #draggable { width: 150px; height: 150px; padding: 0.5em; border:thin solid red; }
       </style>
+	  <!-- Pour les choses qui se drag and drop-->
+	  <link rel="stylesheet" type="text/css" href="./View/style.css" media="screen" />
+	  <link rel="stylesheet" type="text/css" href="./View/devheart-examples.css" media="screen" />
       <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	  <script src="javascript/fonctions.js"></script>
@@ -17,6 +20,7 @@
             $( "#draggable" ).draggable();
       } );
       //https://devheart.org/articles/jquery-customizable-layout-using-drag-and-drop/
-      </script>
+	  </script>
+	  
 </header>
-<body>
+<body class="dhe-body">
