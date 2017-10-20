@@ -93,7 +93,8 @@ html,.dhe-body,.dhe-div,.dhe-span,.dhe-object,.dhe-iframe,.dhe-h1,.dhe-h2,.dhe-h
 ------------------------------------------------------------------- */
 
 
-.dhe-example-section {margin-bottom: 24px; padding-top: 32px;}
+.dhe-example-section1 {margin-bottom: 24px; padding-top: 32px;}
+.dhe-example-section2 {margin-bottom: 24px; padding-top: 32px;}
 .dhe-example-section-header {margin-bottom: 24px;}
 
 .dhe-example-title {
@@ -103,3 +104,6 @@ html,.dhe-body,.dhe-div,.dhe-span,.dhe-object,.dhe-iframe,.dhe-h1,.dhe-h2,.dhe-h
 }
 
 .dhe-example-description {color: #444;}
+
+#fixedtop1 { position: initial; top: 5px; left: 0; right: 0; border: none; z-index: 50; }
+#example-1-1 { width: 250px; margin: auto; background-color: #f0ffff; }

@@ -7,15 +7,13 @@
 
 <div id="center-wrapper">
 
-	<div class="dhe-example-section" id="ex-1-1" >
+	<div class="dhe-example-section1" id="ex-1-1" >
 		<div class="dhe-example-section-header">
 			<h3 class="dhe-h3 dhe-example-title">Example 1.1: A single sortable list</h3>
 			<div class="dhe-example-description">Drag and drop items within a list.</div>
 		</div>
-		<div class="dhe-example-section-content1">
-
+		<div class="dhe-example-section-content1" id="fixedtop1">
 			<!-- BEGIN: XHTML for example 1.1 -->
-
 			<div id="example-1-1">
 
 				<ul class="sortable-list">
@@ -25,13 +23,12 @@
 				</ul>
 
 			</div>
-
 			<!-- END: XHTML for example 1.1 -->
 
 		</div>
 	</div>
 
-	<div class="dhe-example-section" id="ex-1-3">
+	<div class="dhe-example-section2" id="ex-1-3">
 		<div class="dhe-example-section-header">
 			<h3 class="dhe-h3 dhe-example-title">Example 1.3: Sortable and connectable lists with visual helper</h3>
 			<div class="dhe-example-description">Drag and drop items within and between lists. A visual helper is displayed indicating where the item will be positioned if dropped.</div>
@@ -79,6 +76,25 @@
 
 
 </div>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1>
+<h1>1) On met des lignes pour remplir</h1><h1>1) On met des lignes pour remplir</h1>
 
 <!-- Example JavaScript files -->
 <script type="text/javascript" src="jquery-1.4.2.min.js"></script>
@@ -99,6 +115,7 @@ $(document).ready(function(){
 	});
 
 });
+
 
 </script>
 
