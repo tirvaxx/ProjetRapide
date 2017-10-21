@@ -6,6 +6,6 @@ $test= "test avec variable";
 
 
 
-require "view/index.view.php"
+require "view/creer.view.php"
 
 ?>
