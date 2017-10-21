@@ -135,7 +135,8 @@ CREATE TABLE IF NOT EXISTS `demande` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nom` varchar(100) NOT NULL,
   `description` varchar(2000) NOT NULL,
-  `demandeur_acteur_id` int(11) NOT NULL,
+  `demandeur_client_id` int(11) NOT NULL,
+  `demandeur_employe_id` int(11) NOT NULL,
   `date_inscription` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -197,21 +198,6 @@ INSERT INTO `documentation_source` (`id`, `description`) VALUES
 (2, 'Sprint'),
 (3, 'Liste'),
 (4, 'Tache');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `equipe`
---
-
-DROP TABLE IF EXISTS `equipe`;
-CREATE TABLE IF NOT EXISTS `equipe` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `projet_id` int(11) NOT NULL,
-  `acteur_id` int(11) NOT NULL,
-  `date_inscription` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
