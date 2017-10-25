@@ -12,5 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('pr');
+    return view('projetrapide');
 });
+
+
+
+Route::get('/old', function () {
+    return view('projetRapideOld');
+});
+
+
