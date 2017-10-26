@@ -12,7 +12,7 @@
       </style>
       <!-- Pour les choses qui se drag and drop-->
       <link rel="stylesheet" href="<?php echo asset('css/style.css')?>" type="text/css"> 
-      <link rel="stylesheet" href="<?php echo asset('css/devheart-examples.css')?>" type="text/css"> 
+       <link rel="stylesheet" href="<?php echo asset('css/drag_and_drop.css')?>" type="text/css"> 
       <!--<link rel="stylesheet" type="text/css" href="css/style.css" media="screen" /> -->
       <!-- <link rel="stylesheet" type="text/css" href="./View/devheart-examples.css" media="screen" /> -->
       <script src="https://code.jquery.com/jquery-1.12.4.js"></script>

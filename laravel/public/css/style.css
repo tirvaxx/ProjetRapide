@@ -51,7 +51,7 @@
 /* Sortable items */
 
 .sortable-list {
-	background-color: #6688aa;/*#F93;*/
+	background-color: #6688aa; /*#F93;*/
 	list-style: none;
 	margin: 0;
 	min-height: 60px;
@@ -79,7 +79,8 @@
 /* Item placeholder (visual helper) */
 
 .placeholder {
-	background-color: #BFB;
+	/*background-color: #BFB;*/
+	background-color: red;
 	border: 1px dashed #666;
 	height: 58px;
 	margin-bottom: 5px;
