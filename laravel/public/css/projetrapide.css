@@ -1,21 +1,30 @@
-span {color:red;}
 
-div.container{border:thin solid red;}
-
+.panel-heading {
+    text-align:center;
+   
+}
 
 .caret{color:white;}
 
 
 
+#center-wrapper{border:thin solid green;
+margin:10px;
+padding:10px;
+}
+
+.container-list-lvl2{
+
+    margin:0 auto;
+    text-align: center;
+}
 
 
 
-
-
-
-
-
-
+.container-list{
+ margin:0 auto;
+    
+}
 
 
 
@@ -59,7 +68,8 @@ div.container{border:thin solid red;}
 #center-wrapper {
   
     margin: 0 auto;
-    width: 920px; 
+    width: 100%; 
+
 
    
 }
@@ -80,19 +90,20 @@ div.container{border:thin solid red;}
 /* Sortable items */
 
 .sortable-list {
-    background-color: #6688aa; /*#F93;*/
+    /*background-color: #6688aa; *//*#F93;*/
     list-style: none;
     margin: 0;
     min-height: 60px;
     padding: 10px;
 
 
+
     width:200px;
-   
+    border:none;
 }
 .sortable-item {
     background-color: #FFF;
-    border: 1px solid #000;
+    border: 1px solid #C0C0C0;
     cursor: move;
     display: block;
     font-weight: bold;
@@ -107,7 +118,8 @@ div.container{border:thin solid red;}
 /* Containment area */
 
 #containment {
-    background-color: #FFA;
+    background-color: #FFA; 
+    
     height: 230px;
 
 
@@ -118,7 +130,7 @@ div.container{border:thin solid red;}
 
 .placeholder {
     /*background-color: #BFB;*/
-    background-color: red;
+    background-color: #C0C0C0;
     border: 1px dashed #666;
     height: 58px;
     margin-bottom: 5px;

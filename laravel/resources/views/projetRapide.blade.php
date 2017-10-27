@@ -7,20 +7,22 @@
         <title>Projet Rapide</title>
       
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <!--     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">  -->
         <link rel="stylesheet" type="text/css" href={{ asset('css/projetrapide.css') }}>          
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script>
         <script>
-          $( function() {
+     /*     $( function() {
                 $( "#draggable" ).draggable();
           } );
+    */
             //https://devheart.org/articles/jquery-customizable-layout-using-drag-and-drop/
         </script>
+    <!--    
         <style>
             #draggable { width: 150px; height: 150px; padding: 0.5em; border:thin solid red; }
         </style>
-
+    -->
 
     </header>
     <body>
@@ -80,74 +82,79 @@
             </div><!-- /.container-fluid -->
         </nav>
      
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2">
-                    <span>a</span>
-                </div>
-                <div class="col-md-2">
-                    <span>b</span>
-                </div>
-                <div class="col-md-2">
-                    <span>c</span>
-                </div>
-            </div>
-
-        </div>
-
-
-
 <hr />
 
-        <div id="center-wrapper">
 
-            <div class="dhe-section2" id="ex-1-3">
-               
-               <div class="dhe-section-content2">  
+<h1>Sprint 1</h1>
+   <div id="center-wrapper">  
+        <div class="container-list-lvl2" id="container-list-lvl2">
 
-                  
+            
+            <div class="container-list"> 
+                <div class="panel panel-default column left">
+                        <div class="panel-heading">
+                            <span>liste 1</span>
+                        </div>  <!-- panel-title -->
 
-                   <div id="example-1-3"> 
-
-                        <div class="column left first">
-
-                            <ul class="sortable-list">
-                                <li class="sortable-item">Sortable item A</li>
-                                <li class="sortable-item">Sortable item B</li>
+                        <div class="panel-body">
+                             <ul class="sortable-list">
+                                            <li class="sortable-item">Sortable item A</li>
+                                            <li class="sortable-item">Sortable item B</li>
                             </ul>
 
-                        </div>
+                        </div> <!-- panel-body -->
+                        <div class="panel-footer">
+                           <a href="#" class="btn btn-link right">ajouter une tache</a>
+                        </div> <!-- panel-footer -->
 
-                        <div class="column left">
+                </div>  <!-- panel-default -->
+            </div>  <!-- #container-liste -->
+            
+            <div class="container-list"> 
+                <div class="panel panel-default column left">
+                        <div class="panel-heading">
+                            <span>liste 1</span>
+                        </div>  <!-- panel-title -->
 
-                            <ul class="sortable-list">
-                                <li class="sortable-item">Sortable item C</li>
-                                <li class="sortable-item">Sortable item D</li>
-                                 <li class="sortable-item">Sortable item C</li>
-                                <li class="sortable-item">Sortable item D</li>
+                        <div class="panel-body">
+                             <ul class="sortable-list">
+                                            <li class="sortable-item">Sortable item A</li>
+                                            <li class="sortable-item">Sortable item B</li>
                             </ul>
 
-                        </div>
+                        </div> <!-- panel-body -->
+                        <div class="panel-footer">
+                           <a href="#" class="btn btn-link right">ajouter une tache</a>
+                        </div> <!-- panel-footer -->
 
-                        <div class="column left">
+                </div>  <!-- panel-default -->
+            </div>  <!-- #container-liste -->
 
-                            <ul class="sortable-list">
-                                <li class="sortable-item">Sortable item zzzzC</li>
-                               
-                            </ul>
-
-                        </div>
-                      
-                        <div class="clearer">&nbsp;</div>  
-
-                   </div> 
-
-                </div> 
-            </div>
+        </div> <!-- #container-list-lvl2 -->
+    </div>  <!-- #center-wrapper -->
 
 
-        </div>
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -157,8 +164,8 @@
 
 
             // Example 1.3: Sortable and connectable lists with visual helper
-            $('#example-1-3 .sortable-list').sortable({
-                connectWith: '#example-1-3 .sortable-list',
+            $('.container-list .sortable-list').sortable({
+                connectWith: '.container-list .sortable-list',
                 placeholder: 'placeholder',
             });
 
