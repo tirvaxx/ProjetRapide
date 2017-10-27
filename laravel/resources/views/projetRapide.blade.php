@@ -20,46 +20,45 @@
       
 
     $(document).ready(function() { 
-        $('a').click(function() { 
+        $('a.btn').click(function() { 
+            
             var list_id_from_a =  $(this).attr('id');
-
             //on s'assure que le <a> cliquer est un bouton pour ajouter une tache sinon exit
             //il faut que le id de <a> commence par btn_ajouter_tache_Liste + _ + le id de la liste dans la bd 
             if(!(typeof list_id_from_a != 'undefined' && list_id_from_a.indexOf("btn_ajouter_tache_Liste") >= 0)){
-             
-                alert( "exit");
+                alert("t");
                 return;
             }
-
-
-            var liste_no = list_id_from_a.replace("btn_ajouter_tache_Liste_", "");
             
-            $("#ul_liste_" + liste_no).append('<li class="sortable-item">NEW Tache<li>');
+            var liste_no = list_id_from_a.replace("btn_ajouter_tache_Liste_", "");
+            $("body").data("ajout_liste_no", liste_no);
 
+          
             $.blockUI({ 
                  message: $('#tache_form') 
             }); 
         }); 
         $('#btn_tache_fermer').click(function() { 
+            $("body").removeData("ajout_liste_no");
+            $('#form_tache')[0].reset();
             $.unblockUI(); 
             return false; 
         }); 
         $('#btn_tache_ajouter').click(function() { 
            
-
-            var parentEls = $( this ).parents()
-              .map(function() {
-                return this.tagName;
-              })
-              .get()
-              .join( ", " );
-
-
-            //alert(parentEls);
+            var liste_no = $("body").data("ajout_liste_no");
+            var nom_tache = $("#nom_tache").val();
+            if(nom_tache == ""){
+                nom_tache = "Non Défini";
+            }
+            $("#ul_liste_" + liste_no).append( '<li id="li_da" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span>' + nom_tache + '</span></li>' 
+            )}); 
 
 
-
-         }); 
+$("body").delegate('a.x-remove','click',function() {
+       
+            alert("remove");
+        })
 
          
     }); 
@@ -145,8 +144,18 @@
 
                         <div class="panel-body">
                              <ul class="sortable-list" id="ul_liste_1">
-                                    <li id="li_c" class="sortable-item">Sortable item C</li>
-                                    <li id="li_d" class="sortable-item">Sortable item D</li>
+                                    <li id="li_c" class="sortable-item">
+                                                <a href="#" class="x-remove">
+                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
+                                                </a>
+                                                <span>Sortable item C</span>
+                                            </li>
+                                    <li id="li_da" class="sortable-item">
+                                                <a href="#" class="x-remove">
+                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
+                                                </a>
+                                                <span>Sortable item D</span>
+                                    </li>
                             </ul>
 
                         </div> <!-- panel-body -->
@@ -165,8 +174,18 @@
 
                         <div class="panel-body">
                              <ul class="sortable-list" id="ul_liste_2" >
-                                            <li id="li_a" class="sortable-item">Sortable item A</li>
-                                            <li id="li_b" class="sortable-item">Sortable item B</li>
+                                            <li id="li_a" class="sortable-item">
+                                                <a href="#" class="x-remove">
+                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
+                                                </a>
+                                                <span>Sortable item A</span>
+                                            </li>
+                                            <li id="li_b" class="sortable-item">
+                                                <a href="#" class="x-remove">
+                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
+                                                </a>
+                                                <span>Sortable item B</span>
+                                            </li>
                                           
                             </ul>
 
@@ -185,7 +204,7 @@
 
 
 <div id="tache_form" style="display:none">
-    <form>
+    <form id="form_tache">
         <fieldset>
             <legend>Ajouter une tache</legend>
                 <div class="form-group">
@@ -235,6 +254,8 @@
                 connectWith: '.container-list .sortable-list',
                 placeholder: 'placeholder',
             });
+
+            $('#form_tache')[0].reset();
 
         });
 
