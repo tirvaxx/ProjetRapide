@@ -7,23 +7,69 @@
         <title>Projet Rapide</title>
       
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-   <!--     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">  -->
+   
         <link rel="stylesheet" type="text/css" href={{ asset('css/projetrapide.css') }}>          
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script>
-        <script>
-     /*     $( function() {
-                $( "#draggable" ).draggable();
-          } );
-    */
-            //https://devheart.org/articles/jquery-customizable-layout-using-drag-and-drop/
-        </script>
-    <!--    
-        <style>
-            #draggable { width: 150px; height: 150px; padding: 0.5em; border:thin solid red; }
-        </style>
-    -->
+        <script src="{{ asset('js/jquery.blockUI.js') }}"></script>
+      
+    
+  <script>
+  
+    
+      
 
+    $(document).ready(function() { 
+        $('a').click(function() { 
+            var list_id_from_a =  $(this).attr('id');
+
+            //on s'assure que le <a> cliquer est un bouton pour ajouter une tache sinon exit
+            //il faut que le id de <a> commence par btn_ajouter_tache_Liste + _ + le id de la liste dans la bd 
+            if(!(typeof list_id_from_a != 'undefined' && list_id_from_a.indexOf("btn_ajouter_tache_Liste") >= 0)){
+             
+                alert( "exit");
+                return;
+            }
+
+
+            var liste_no = list_id_from_a.replace("btn_ajouter_tache_Liste_", "");
+            
+            $("#ul_liste_" + liste_no).append('<li class="sortable-item">NEW Tache<li>');
+
+            $.blockUI({ 
+                 message: $('#tache_form') 
+            }); 
+        }); 
+        $('#btn_tache_fermer').click(function() { 
+            $.unblockUI(); 
+            return false; 
+        }); 
+        $('#btn_tache_ajouter').click(function() { 
+           
+
+            var parentEls = $( this ).parents()
+              .map(function() {
+                return this.tagName;
+              })
+              .get()
+              .join( ", " );
+
+
+            //alert(parentEls);
+
+
+
+         }); 
+
+         
+    }); 
+  
+    
+  
+
+
+
+  </script>
     </header>
     <body>
         
@@ -85,26 +131,27 @@
 <hr />
 
 
-<h1>Sprint 1</h1>
+
    <div id="center-wrapper">  
+    <h2 id="sprint_no">Sprint 1</h2>
         <div class="container-list-lvl2" id="container-list-lvl2">
 
             
             <div class="container-list"> 
-                <div class="panel panel-default column left">
+                <div class="panel panel-default column left"  id="liste_1">
                         <div class="panel-heading">
                             <span>liste 1</span>
                         </div>  <!-- panel-title -->
 
                         <div class="panel-body">
-                             <ul class="sortable-list">
-                                            <li class="sortable-item">Sortable item A</li>
-                                            <li class="sortable-item">Sortable item B</li>
+                             <ul class="sortable-list" id="ul_liste_1">
+                                    <li id="li_c" class="sortable-item">Sortable item C</li>
+                                    <li id="li_d" class="sortable-item">Sortable item D</li>
                             </ul>
 
                         </div> <!-- panel-body -->
                         <div class="panel-footer">
-                           <a href="#" class="btn btn-link right">ajouter une tache</a>
+                           <a href="#" id="btn_ajouter_tache_Liste_1" class="btn btn-link right">ajouter une tache</a>
                         </div> <!-- panel-footer -->
 
                 </div>  <!-- panel-default -->
@@ -113,18 +160,19 @@
             <div class="container-list"> 
                 <div class="panel panel-default column left">
                         <div class="panel-heading">
-                            <span>liste 1</span>
+                            <span>liste 2</span>
                         </div>  <!-- panel-title -->
 
                         <div class="panel-body">
-                             <ul class="sortable-list">
-                                            <li class="sortable-item">Sortable item A</li>
-                                            <li class="sortable-item">Sortable item B</li>
+                             <ul class="sortable-list" id="ul_liste_2" >
+                                            <li id="li_a" class="sortable-item">Sortable item A</li>
+                                            <li id="li_b" class="sortable-item">Sortable item B</li>
+                                          
                             </ul>
 
                         </div> <!-- panel-body -->
                         <div class="panel-footer">
-                           <a href="#" class="btn btn-link right">ajouter une tache</a>
+                           <a href="#"  id="btn_ajouter_tache_Liste_2" class="btn btn-link right">ajouter une tache</a>
                         </div> <!-- panel-footer -->
 
                 </div>  <!-- panel-default -->
@@ -136,8 +184,27 @@
 
 
 
+<div id="tache_form" style="display:none">
+    <form>
+        <fieldset>
+            <legend>Ajouter une tache</legend>
+                <div class="form-group">
+                        <label for="nom_tache">Nom de la tache</label>
+                        <input type="text" class="form-control" id="nom_tache" placeholder="Nom" />                            
+                </div>
+                <div class="form-group">
+                         <label for="description_tache">Description de la tache</label>
+                        <textarea class="form-control" id="description_tache" placeholder="Description"></textarea>               
+                </div>
+                <div class="form-group">
+                    <input type="button" id="btn_tache_ajouter" class="btn btn-default pull-right" value="Ajouter">
+                    <input type="button" id="btn_tache_fermer" class="btn btn-default pull-right" value="Fermer">
+                </div>
+        </fieldset>
+      
+    </form>
 
-
+</div>
 
 
 

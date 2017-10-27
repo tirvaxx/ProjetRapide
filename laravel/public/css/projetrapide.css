@@ -6,17 +6,24 @@
 
 .caret{color:white;}
 
+fieldset {
+    text-align: left;
+    padding: 10px;
 
-
-#center-wrapper{border:thin solid green;
-margin:10px;
-padding:10px;
 }
+fieldset legend {
+ 
+    text-align: center;
+   
+   
+}
+
+
 
 .container-list-lvl2{
 
-    margin:0 auto;
-    text-align: center;
+   margin:40px;
+  
 }
 
 
@@ -25,10 +32,6 @@ padding:10px;
  margin:0 auto;
     
 }
-
-
-
-/* SECTION Drag and drop*/
 
 /*
     Stylesheet for examples by DevHeart.
@@ -39,6 +42,7 @@ padding:10px;
 
     Example title:  1. Getting started with sortable lists
     Example URI:    http://devheart.org/examples/jquery-customizable-layout-using-drag-and-drop/1-getting-started-with-sortable-lists/index.html
+    https://devheart.org/articles/jquery-customizable-layout-using-drag-and-drop/
 */
 
 /*
@@ -71,7 +75,7 @@ padding:10px;
     width: 100%; 
 
 
-   
+   padding-left: 10px;
 }
 
 
