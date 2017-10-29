@@ -21,4 +21,5 @@ Route::get('/old', function () {
     return view('projetRapideOld');
 });
 
-
+Route::get('/acteurs',  array('as'=> 'acteurs', 'uses' => 'acteurs@test'));
+Route::resource('acteurs', 'ActeurController');

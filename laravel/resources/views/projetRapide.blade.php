@@ -54,14 +54,15 @@
             $("#ul_liste_" + liste_no).append( '<li id="li_da" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span>' + nom_tache + '</span></li>' 
             )}); 
 
+            //utilisation de delegate au lieu de juste click car la fonctionalité est 
+            //ajouté dynamiquement... sinon, ca ne marche pas
+            $("body").delegate('a.x-remove','click',function() {
+                   
+                        alert("remove");
+                    })
 
-$("body").delegate('a.x-remove','click',function() {
-       
-            alert("remove");
-        })
-
-         
-    }); 
+                     
+                }); 
   
     
   
