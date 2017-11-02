@@ -332,6 +332,9 @@ CREATE TABLE IF NOT EXISTS `tache` (
 
 -- --------------------------------------------------------
 
+
+GRANT ALL PRIVILEGES ON *.* TO 'projetrapide_user'@'%' WITH GRANT OPTION;
+
 --
 -- Structure for view `acteurs`
 --
