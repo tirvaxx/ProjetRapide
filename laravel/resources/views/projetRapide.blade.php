@@ -27,7 +27,7 @@
             //on s'assure que le <a> cliquer est un bouton pour ajouter une tache sinon exit
             //il faut que le id de <a> commence par btn_ajouter_tache_Liste + _ + le id de la liste dans la bd 
             if(!(typeof list_id_from_a != 'undefined' && list_id_from_a.indexOf("btn_ajouter_tache_Liste") >= 0)){
-                alert("t");
+                
                 return;
             }
             
@@ -66,7 +66,8 @@
             //ajouté dynamiquement... sinon, ca ne marche pas
             $("body").delegate('a.x-remove','click',function() {
                    
-                        alert("remove");
+                        //alert($(this).parent().attr('id'));
+                        $(this).parent().remove();
                     })
 
                      
