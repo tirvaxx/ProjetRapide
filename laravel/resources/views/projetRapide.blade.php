@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-compatible" content="IE-edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ Session::token() }}">
         <title>Projet Rapide</title>
       
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -21,7 +22,7 @@
 
     $(document).ready(function() { 
         $('a.btn').click(function() { 
-            
+
             var list_id_from_a =  $(this).attr('id');
             //on s'assure que le <a> cliquer est un bouton pour ajouter une tache sinon exit
             //il faut que le id de <a> commence par btn_ajouter_tache_Liste + _ + le id de la liste dans la bd 
@@ -51,8 +52,15 @@
             if(nom_tache == ""){
                 nom_tache = "Non Défini";
             }
+            
+
+        
+
+
             $("#ul_liste_" + liste_no).append( '<li id="li_da" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span>' + nom_tache + '</span></li>' 
-            )}); 
+
+
+        )}); 
 
             //utilisation de delegate au lieu de juste click car la fonctionalité est 
             //ajouté dynamiquement... sinon, ca ne marche pas
@@ -65,8 +73,55 @@
                 }); 
   
     
-  
 
+
+     $(document).on("click", "#creer_item_liste", function() {
+     
+
+        $("#container-list-lvl2").append(
+
+            '<div class="container-list">                                                                           \
+                <div class="panel panel-default column left"  id="liste_1">                                         \
+                        <div class="panel-heading">                                                                 \
+                            <span>liste 3</span>                                                                    \
+                        </div>  <!-- panel-title -->                                                                \
+                                                                                                                    \
+                        <div class="panel-body">                                                                    \
+                             <ul class="sortable-list" id="ul_liste_1">                                             \
+                                                                                                                    \
+                            </ul>                                                                                   \
+                                                                                                                    \
+                        </div> <!-- panel-body -->                                                                  \
+                        <div class="panel-footer">                                                                  \
+                           <a href="#" id="btn_ajouter_tache_Liste_1" class="btn btn-link right">ajouter une tache</a> \
+                        </div> <!-- panel-footer -->                                                                \
+                                                                                                                    \
+                </div>  <!-- panel-default -->                                                                      \
+            </div>  <!-- #container-liste -->'
+
+        );
+
+
+    });
+           
+
+
+
+  
+/*
+https://stackoverflow.com/questions/28386534/post-request-with-jquery-and-laravel-framework
+$(function(){
+         $.post(Urldir,{ _token: $('meta[name=csrf-token]').attr('content'), _method : 'PUT', data :  }, function(response){
+
+               if(response != '')
+                {
+                 console.log('good');
+                }
+
+            });
+        });
+
+*/
 
 
   </script>
@@ -90,18 +145,12 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Link</a></li>
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">One more separated link</a></li>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Creer <span class="caret"></span></a>
+                  <ul id="creer_item" class="dropdown-menu">
+                    <li><a id="creer_item_projet" href="#">Projet</a></li>
+                    <li><a id="creer_item_sprint" href="#">Sprint</a></li>
+                    <li><a id="creer_item_liste" href="#">Liste</a></li>
                   </ul>
                 </li>
               </ul>
@@ -111,19 +160,6 @@
                 </div>
                 <button type="submit" class="btn btn-default">Rechercher</button>
               </form>
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Link</a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                  </ul>
-                </li>
-              </ul>
             </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
@@ -131,12 +167,13 @@
 <hr />
 
 
-
+<p id="message"></p>
    <div id="center-wrapper">  
     <h2 id="sprint_no">Sprint 1</h2>
         <div class="container-list-lvl2" id="container-list-lvl2">
-
             
+
+
             <div class="container-list"> 
                 <div class="panel panel-default column left"  id="liste_1">
                         <div class="panel-heading">
@@ -167,6 +204,8 @@
                 </div>  <!-- panel-default -->
             </div>  <!-- #container-liste -->
             
+
+
             <div class="container-list"> 
                 <div class="panel panel-default column left">
                         <div class="panel-heading">

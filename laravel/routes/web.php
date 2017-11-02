@@ -16,10 +16,15 @@ Route::get('/', function () {
 });
 
 
-
 Route::get('/old', function () {
     return view('projetRapideOld');
 });
 
-Route::get('/acteurs',  array('as'=> 'acteurs', 'uses' => 'acteurs@test'));
+
+Route::get('/acteurs',  array('as'=> 'acteurs', 'uses' => 'acteurs@index'));
+Route::post('/sprintactivite/store',  array( 'uses' => 'sprintactivite@store'));
+Route::post('/taches/store',  array( 'uses' => 'taches@store'));
+
 Route::resource('acteurs', 'ActeurController');
+Route::resource('taches', 'TacheController');
+Route::resource('sprintactivite', 'SprintActiviteController');
