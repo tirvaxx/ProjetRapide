@@ -35,7 +35,12 @@ class TacheController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tache = new Tache;    
+        $tache->nom = $request->nom;
+        $tache->description = $request->description;
+        $tache->creer_par = 2;
+        $tache->save();
+
     }
 
     /**
