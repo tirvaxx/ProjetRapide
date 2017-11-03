@@ -16,14 +16,15 @@ Route::get('/', function () {
 });
 
 
-Route::get('/old', function () {
-    return view('projetRapideOld');
-});
+
+
+Route::post('/projetRapide/laravel/public/taches', 'TacheController@store');
+
 
 
 Route::get('/acteurs',  array('as'=> 'acteurs', 'uses' => 'acteurs@index'));
 Route::post('/sprintactivite/store',  array( 'uses' => 'sprintactivite@store'));
-Route::post('/taches/store',  array( 'uses' => 'taches@store'));
+//Route::post('/taches/store',  array( 'uses' => 'taches@store'));
 
 Route::resource('acteurs', 'ActeurController');
 Route::resource('taches', 'TacheController');

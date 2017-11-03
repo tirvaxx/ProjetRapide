@@ -1,135 +1,7 @@
-<!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-    <header>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-compatible" content="IE-edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ Session::token() }}">
-        <title>Projet Rapide</title>
-      
-        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-   
-        <link rel="stylesheet" type="text/css" href={{ asset('css/projetrapide.css') }}>          
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
-        <script src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.blockUI.js') }}"></script>
-      
-    
-  <script>
-  
-    
-      
 
-    $(document).ready(function() { 
-        $('a.btn').click(function() { 
-
-            var list_id_from_a =  $(this).attr('id');
-            //on s'assure que le <a> cliquer est un bouton pour ajouter une tache sinon exit
-            //il faut que le id de <a> commence par btn_ajouter_tache_Liste + _ + le id de la liste dans la bd 
-            if(!(typeof list_id_from_a != 'undefined' && list_id_from_a.indexOf("btn_ajouter_tache_Liste") >= 0)){
-                
-                return;
-            }
-            
-            var liste_no = list_id_from_a.replace("btn_ajouter_tache_Liste_", "");
-            $("body").data("ajout_liste_no", liste_no);
-
-          
-            $.blockUI({ 
-                 message: $('#tache_form') 
-            }); 
-        }); 
-        $('#btn_tache_fermer').click(function() { 
-            $("body").removeData("ajout_liste_no");
-            $('#form_tache')[0].reset();
-            $.unblockUI(); 
-            return false; 
-        }); 
-        $('#btn_tache_ajouter').click(function() { 
-           
-            var liste_no = $("body").data("ajout_liste_no");
-            var nom_tache = $("#nom_tache").val();
-            if(nom_tache == ""){
-                nom_tache = "Non Défini";
-            }
-            
-
+ @extends('layouts.app')
         
-
-
-            $("#ul_liste_" + liste_no).append( '<li id="li_da" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span>' + nom_tache + '</span></li>' 
-
-
-        )}); 
-
-            //utilisation de delegate au lieu de juste click car la fonctionalité est 
-            //ajouté dynamiquement... sinon, ca ne marche pas
-            $("body").delegate('a.x-remove','click',function() {
-                   
-                        //alert($(this).parent().attr('id'));
-                        $(this).parent().remove();
-                    })
-
-                     
-                }); 
-  
-    
-
-
-     $(document).on("click", "#creer_item_liste", function() {
-     
-
-        $("#container-list-lvl2").append(
-
-            '<div class="container-list">                                                                           \
-                <div class="panel panel-default column left"  id="liste_1">                                         \
-                        <div class="panel-heading">                                                                 \
-                            <span>liste 3</span>                                                                    \
-                        </div>  <!-- panel-title -->                                                                \
-                                                                                                                    \
-                        <div class="panel-body">                                                                    \
-                             <ul class="sortable-list" id="ul_liste_1">                                             \
-                                                                                                                    \
-                            </ul>                                                                                   \
-                                                                                                                    \
-                        </div> <!-- panel-body -->                                                                  \
-                        <div class="panel-footer">                                                                  \
-                           <a href="#" id="btn_ajouter_tache_Liste_1" class="btn btn-link right">ajouter une tache</a> \
-                        </div> <!-- panel-footer -->                                                                \
-                                                                                                                    \
-                </div>  <!-- panel-default -->                                                                      \
-            </div>  <!-- #container-liste -->'
-
-        );
-
-
-    });
-           
-
-
-
-  
-/*
-https://stackoverflow.com/questions/28386534/post-request-with-jquery-and-laravel-framework
-$(function(){
-         $.post(Urldir,{ _token: $('meta[name=csrf-token]').attr('content'), _method : 'PUT', data :  }, function(response){
-
-               if(response != '')
-                {
-                 console.log('good');
-                }
-
-            });
-        });
-
-*/
-
-
-  </script>
-    </header>
-    <body>
-        
-
+@section('content')
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -245,41 +117,28 @@ $(function(){
 
 
 <div id="tache_form" style="display:none">
-    <form id="form_tache">
+    <form id="form_tache" method="POST" action="/projetRapide/laravel/public/taches">
+        <!-- securite contre les failles sur les requests -->
+        {{ csrf_field() }}
         <fieldset>
             <legend>Ajouter une tache</legend>
                 <div class="form-group">
                         <label for="nom_tache">Nom de la tache</label>
-                        <input type="text" class="form-control" id="nom_tache" placeholder="Nom" />                            
+                        <input type="text" class="form-control" id="nom_tache" name="nom_tache" placeholder="Nom" />                            
                 </div>
                 <div class="form-group">
                          <label for="description_tache">Description de la tache</label>
-                        <textarea class="form-control" id="description_tache" placeholder="Description"></textarea>               
+                        <textarea class="form-control" id="description_tache" name="description_tache" placeholder="Description"></textarea>               
                 </div>
                 <div class="form-group">
-                    <input type="button" id="btn_tache_ajouter" class="btn btn-default pull-right" value="Ajouter">
-                    <input type="button" id="btn_tache_fermer" class="btn btn-default pull-right" value="Fermer">
+                    <button type="submit" id="btn_tache_ajouter" class="btn btn-primary" >Ajouter</button>
+                    <button type="submit" id="btn_tache_fermer" class="btn btn-primary" >Fermer</button>
                 </div>
         </fieldset>
       
     </form>
 
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -308,5 +167,4 @@ $(function(){
      
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
-     </body>    
-</html>
+@endsection
