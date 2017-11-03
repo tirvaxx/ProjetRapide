@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Tache;
 use Illuminate\Http\Request;
 
-class TacheController extends Controller
+class TacheController extends Controller 
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class TacheController extends Controller
      */
     public function index()
     {
-        //
+        return View::make('acteurs.index')->with('title', 'Les Acteurs')->with('acteurs',Acteur::all());
     }
 
     /**
@@ -24,7 +24,7 @@ class TacheController extends Controller
      */
     public function create()
     {
-        //
+        return view(taches.create);
     }
 
     /**
@@ -35,11 +35,15 @@ class TacheController extends Controller
      */
     public function store(Request $request)
     {
+
+        dd(request()->all());
+        // echo "cacahuete";
         $tache = new Tache;    
-        $tache->nom = $request->nom;
-        $tache->description = $request->description;
-        $tache->creer_par = 2;
+        $tache->nom = request('nom_tache');
+        $tache->description = request('description_tache');
         $tache->save();
+
+        return view('projetRapide');
 
     }
 
