@@ -18,9 +18,9 @@ Route::get('/', function () {
 
 
 
-Route::post('/projetRapide/laravel/public/taches', 'TacheController@store');
+Route::post('/taches', 'TacheController@store');
 
-
+// Route::get('/')
 
 Route::get('/acteurs',  array('as'=> 'acteurs', 'uses' => 'acteurs@index'));
 Route::post('/sprintactivite/store',  array( 'uses' => 'sprintactivite@store'));
