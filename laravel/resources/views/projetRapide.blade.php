@@ -72,23 +72,25 @@
                 })
                 
 
-                $('#btn_tache_ajouter').on('click', function(){
+                $('#btn_tache_ajouter').on( 'click', function(event){
+                    event.preventDefault();
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                 }
                     });
-                    var nom = $('#nom_tache').val;
-                    var description = $('#description_tache').val;
+                    var nom = $("#nom_tache").val();
+                    var description = $("#description_tache").val();
+
                     $.ajax({
                         /* the route pointing to the post function */
                         url: "{{ URL::to('pushTaches') }}",
                         type: 'POST',
                         /* send the csrf-token and the input to the controller */
-                        data: $(this).serialize(),
+                        data: $('form#myform').serialize(),
                         dataType: 'JSON',
                         /* remind that 'data' is the response of the AjaxController */
-                        success: function (data) { 
+                        success: function () { 
                             alert('successbis');
                         }
                     });
@@ -171,7 +173,7 @@
 
 
 <div id="tache_form" style="display:none">
-    <form id="form_tache" action="#">
+    <form id="form_tache" action="#" >
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <!-- securite contre les failles sur les requests -->
        

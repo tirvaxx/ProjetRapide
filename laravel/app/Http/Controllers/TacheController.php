@@ -41,7 +41,7 @@ class TacheController extends Controller
     {
 
         // dd(request()->all());
-        //echo "cacahuete";
+        echo "cacahuete";
         $tache = new Tache;    
         $tache->nom = request('nom_tache');
         $tache->description = request('description_tache');
