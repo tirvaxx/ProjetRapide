@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Creer <span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  <span class="caret"></span></a>
                   <ul id="creer_item" class="dropdown-menu">
                     <li><a id="creer_item_projet" href="#">Projet</a></li>
                     <li><a id="creer_item_sprint" href="#">Sprint</a></li>
@@ -70,43 +70,9 @@
                         console.log(data);   
                     })    
                 })
-                // $('#form_tache').on('submit',function(e){
-                //     $.ajaxSetup({
-                //         header:$('meta[name="_token"]').attr('content')
-                //     })
-                //     e.preventDefault(e);
+                
 
-                //         $.ajax({
-
-                //         type:"POST",
-                //         url:'/taches',
-                //         data:$(this).serialize(),
-                //         dataType: 'json',
-                //         success: function(data){
-                //             console.log(data);
-                //         },
-                //         error: function(data){
-
-                //         }
-                //     })
-                // });
-                // $('#form_tache').on('submit',function(e){
-                //     $.ajaxSetup({
-                //         header:$('meta[name="_token"]').attr('content')
-                //     })
-                //     e.preventDefault(e);
-                //     jQuery.ajax({
-                //         type:'post',
-                //         url: 'pushTaches',
-                //         success: function (response) {
-                //             alert(response);
-                //         }
-                //     });
-                // });
-
-
-
-                $('#form_tache').on('click', function(){
+                $('#btn_tache_ajouter').on('click', function(){
                     $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -127,38 +93,6 @@
                         }
                     });
                 }); 
-
-                // $('#getTaches').on('click',function(){
-                //     $.ajax({
-                //        url : '/getTaches', // La ressource ciblée
-                //        type : 'GET', // Le type de la requête HTTP
-
-                //        /**
-                //         * Le paramètre data n'est plus renseigné, nous ne faisons plus passer de variable
-                //         */
-
-                //        dataType : 'json', // Le type de données à recevoir, ici, du HTML.
-                //        success : 
-                //        error:function (xhr, ajaxOptions, thrownError){
-                //             if(xhr.status==404) {
-                //                 alert(thrownError);
-                //             }
-                //         }
-                //     });
-                // })
-
-
-                // $('#form_tache').submit(function(){
-                //     var nom_tache = $('#nom_tache').val;
-                //     var description_tache = $('#description_tache').val;
-
-
-                //     $.post('taches', { '_token' : "{{ csrf_token() }}", 'nom_tache' : nom_tache, 'description_tache' : description_tache }, function(data) {
-                //         console.log(data);
-                //         $('#getTachesData').html(data);
-                //     });
-                // });
-
 
             });
         </script>

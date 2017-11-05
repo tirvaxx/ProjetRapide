@@ -50,7 +50,7 @@ class TacheController extends Controller
         //     'success': true,
         //     'message': 'Your AJAX processed correctly'
         // ];
-        return 'success';
+        
       //  return view('projetRapide');
 
     }
