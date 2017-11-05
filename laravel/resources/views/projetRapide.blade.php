@@ -74,12 +74,12 @@
 
             $(document).ready(function() {
                 
-                $('#getTaches').on('click',function(){
+                //$('#getTaches').on('click',function(){
                     $.get("{{URL::to('/getTaches')}}", function(data){
                         $('#getTachesData').append(data);
                         afficherTache(data);
                     })    
-                })
+               // })
                 
 
                 $('#form_tache').on( 'submit', function(event){
