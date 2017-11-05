@@ -61,18 +61,26 @@
         
 
         <script type="text/javascript">
+            function fromJsonToObject(data) {
+                console.log(data);
+                var tache = JSON.stringify(data);
+                var tachef = JSON.parse(tache);
+                console.log(tachef);
+            }
 
             $(document).ready(function() {
                 
                 $('#getTaches').on('click',function(){
                     $.get("{{URL::to('/getTaches')}}", function(data){
                         $('#getTachesData').append(data);
-                        console.log(data);   
+                        console.log(data);
+                        fromJsonToObject(data);
+
                     })    
                 })
                 
 
-                $('#btn_tache_ajouter').on( 'click', function(event){
+                $('#form_tache').on( 'submit', function(event){
                     event.preventDefault();
                     $.ajaxSetup({
                         headers: {
@@ -80,14 +88,21 @@
                                 }
                     });
                     var nom = $("#nom_tache").val();
+                    console.log(nom);
                     var description = $("#description_tache").val();
-
+                    console.log(description);
+                    var tot = {
+                        nom : nom,
+                        description : description
+                    }
+                    var tot1 = JSON.stringify(tot);
+                    console.log(this);
                     $.ajax({
                         /* the route pointing to the post function */
                         url: "{{ URL::to('pushTaches') }}",
                         type: 'POST',
                         /* send the csrf-token and the input to the controller */
-                        data: $('form#myform').serialize(),
+                        data: $(this).serialize(),
                         dataType: 'JSON',
                         /* remind that 'data' is the response of the AjaxController */
                         success: function () { 
@@ -188,7 +203,7 @@
                         <textarea class="form-control" id="description_tache" name="description_tache" placeholder="Description"></textarea>               
                 </div>
                 <div class="form-group">
-                    <button type="button" id="btn_tache_ajouter" class="btn btn-primary" >Ajouter</button>
+                    <button type="submit" id="btn_tache_ajouter" class="btn btn-primary" >Ajouter</button>
                     <button type="button" id="btn_tache_fermer" class="btn btn-primary" >Fermer</button>
                 </div>
         </fieldset>

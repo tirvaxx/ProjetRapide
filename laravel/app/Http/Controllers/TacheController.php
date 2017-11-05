@@ -17,7 +17,8 @@ class TacheController extends Controller
     public function index(Request $request)
     {
          echo 'ca marche ';
-        return Tache::get();
+        $retour = Tache::get();
+        return $retour->ToJson();
         // return response()->json(['response' => 'This is get method']);
     }
 
@@ -41,7 +42,7 @@ class TacheController extends Controller
     {
 
         // dd(request()->all());
-        echo "cacahuete";
+       
         $tache = new Tache;    
         $tache->nom = request('nom_tache');
         $tache->description = request('description_tache');
