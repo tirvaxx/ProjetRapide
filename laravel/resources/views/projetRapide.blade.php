@@ -2,6 +2,10 @@
  @extends('layouts.app')
         
 @section('content')
+
+
+
+
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -40,9 +44,125 @@
 <hr />
 
 
+
+
+
+
 <p id="message"></p>
    <div id="center-wrapper">  
     <h2 id="sprint_no">Sprint 1</h2>
+        <div class="row">
+            <h2>GET</h2>
+            <button id="getTaches" type="button" class="btn btn-primary">GET</button>
+        </div>
+        <div id="getTachesData">
+            
+        </div>
+        
+
+        <script type="text/javascript">
+
+            $(document).ready(function() {
+                
+                $('#getTaches').on('click',function(){
+                    $.get("{{URL::to('/getTaches')}}", function(data){
+                        $('#getTachesData').append(data);
+                        console.log(data);   
+                    })    
+                })
+                // $('#form_tache').on('submit',function(e){
+                //     $.ajaxSetup({
+                //         header:$('meta[name="_token"]').attr('content')
+                //     })
+                //     e.preventDefault(e);
+
+                //         $.ajax({
+
+                //         type:"POST",
+                //         url:'/taches',
+                //         data:$(this).serialize(),
+                //         dataType: 'json',
+                //         success: function(data){
+                //             console.log(data);
+                //         },
+                //         error: function(data){
+
+                //         }
+                //     })
+                // });
+                // $('#form_tache').on('submit',function(e){
+                //     $.ajaxSetup({
+                //         header:$('meta[name="_token"]').attr('content')
+                //     })
+                //     e.preventDefault(e);
+                //     jQuery.ajax({
+                //         type:'post',
+                //         url: 'pushTaches',
+                //         success: function (response) {
+                //             alert(response);
+                //         }
+                //     });
+                // });
+
+
+
+                $('#form_tache').on('click', function(){
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                    });
+                    var nom = $('#nom_tache').val;
+                    var description = $('#description_tache').val;
+                    $.ajax({
+                        /* the route pointing to the post function */
+                        url: "{{ URL::to('pushTaches') }}",
+                        type: 'POST',
+                        /* send the csrf-token and the input to the controller */
+                        data: $(this).serialize(),
+                        dataType: 'JSON',
+                        /* remind that 'data' is the response of the AjaxController */
+                        success: function (data) { 
+                            alert('successbis');
+                        }
+                    });
+                }); 
+
+                // $('#getTaches').on('click',function(){
+                //     $.ajax({
+                //        url : '/getTaches', // La ressource ciblée
+                //        type : 'GET', // Le type de la requête HTTP
+
+                //        /**
+                //         * Le paramètre data n'est plus renseigné, nous ne faisons plus passer de variable
+                //         */
+
+                //        dataType : 'json', // Le type de données à recevoir, ici, du HTML.
+                //        success : 
+                //        error:function (xhr, ajaxOptions, thrownError){
+                //             if(xhr.status==404) {
+                //                 alert(thrownError);
+                //             }
+                //         }
+                //     });
+                // })
+
+
+                // $('#form_tache').submit(function(){
+                //     var nom_tache = $('#nom_tache').val;
+                //     var description_tache = $('#description_tache').val;
+
+
+                //     $.post('taches', { '_token' : "{{ csrf_token() }}", 'nom_tache' : nom_tache, 'description_tache' : description_tache }, function(data) {
+                //         console.log(data);
+                //         $('#getTachesData').html(data);
+                //     });
+                // });
+
+
+            });
+        </script>
+
         <div class="container-list-lvl2" id="container-list-lvl2">
             
 
@@ -117,9 +237,10 @@
 
 
 <div id="tache_form" style="display:none">
-    <form id="form_tache" method="POST" action="/projetRapide/laravel/public/taches">
+    <form id="form_tache" action="#">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <!-- securite contre les failles sur les requests -->
-        {{ csrf_field() }}
+       
         <fieldset>
             <legend>Ajouter une tache</legend>
                 <div class="form-group">
@@ -131,19 +252,69 @@
                         <textarea class="form-control" id="description_tache" name="description_tache" placeholder="Description"></textarea>               
                 </div>
                 <div class="form-group">
-                    <button type="submit" id="btn_tache_ajouter" class="btn btn-primary" >Ajouter</button>
-                    <button type="submit" id="btn_tache_fermer" class="btn btn-primary" >Fermer</button>
+                    <button type="button" id="btn_tache_ajouter" class="btn btn-primary" >Ajouter</button>
+                    <button type="button" id="btn_tache_fermer" class="btn btn-primary" >Fermer</button>
                 </div>
         </fieldset>
       
     </form>
 
 </div>
+<script type="text/javascript">
+
+     
+
+    //     e.preventDefault(); 
+
+    //     var formData = {
+    //         task: $('#nom_tache').val(),
+    //         description: $('#description_tache').val(),
+    //     }
+
+    //     //used to determine the http verb to use [add=POST], [update=PUT]
+    //     var state = $('#btn_tache_ajouter').val();
+
+    //     var type = "POST"; //for creating new resource
+    //     var task_id = $('#nom_tache').val();
+    //     var my_url = "http://localhost:8080/projetRapide/laravel/public/taches";
+
+        
+
+    //     console.log(formData);
+
+    //     $.ajax({
+
+    //         type: type,
+    //         url: my_url,
+    //         data: formData,
+    //         dataType: 'json',
+    //         success: function (data) {
+    //             console.log(data);
+
+                
+    //         },
+    //         error: function (data) {
+    //             console.log('Error:', data);
+    //         }
+    //     });
+    // });
+     // $(document).ready(function() {
+                
+     //            $('#getTaches').on('click',function(){
+     //                $.post("{{URL::to('taches')}}", function(data){
+     //                    console.log(data); 
+     //                })
+                    
+     //            })
+
+     //        });
+</script>
 
 
 
 
 
+        
         <script type="text/javascript">
 
         $(document).ready(function(){

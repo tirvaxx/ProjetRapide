@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Tache;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests;
 
 class TacheController extends Controller 
 {
@@ -12,9 +14,11 @@ class TacheController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return View::make('acteurs.index')->with('title', 'Les Acteurs')->with('acteurs',Acteur::all());
+         echo 'ca marche ';
+        return Tache::get();
+        // return response()->json(['response' => 'This is get method']);
     }
 
     /**
@@ -22,9 +26,9 @@ class TacheController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view(taches.create);
+        return $request->all();
     }
 
     /**
@@ -36,14 +40,18 @@ class TacheController extends Controller
     public function store(Request $request)
     {
 
-        dd(request()->all());
-        // echo "cacahuete";
+        // dd(request()->all());
+        //echo "cacahuete";
         $tache = new Tache;    
         $tache->nom = request('nom_tache');
         $tache->description = request('description_tache');
         $tache->save();
-
-        return view('projetRapide');
+        // $data = [
+        //     'success': true,
+        //     'message': 'Your AJAX processed correctly'
+        // ];
+        return 'success';
+      //  return view('projetRapide');
 
     }
 

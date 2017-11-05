@@ -18,9 +18,19 @@ Route::get('/', function () {
 
 
 
-Route::post('/taches', 'TacheController@store');
+Route::post('/pushTaches', 'TacheController@store');
 
-// Route::get('/')
+Route::get('/getTaches', 'TacheController@index');
+// 	if (Request::ajax()){
+// 		return 'success';
+// 	}
+// });
+
+// Route::post('/pushTaches', function(){
+// 	if (Request::ajax()){
+// 		return 'success';
+// 	}
+// });
 
 Route::get('/acteurs',  array('as'=> 'acteurs', 'uses' => 'acteurs@index'));
 Route::post('/sprintactivite/store',  array( 'uses' => 'sprintactivite@store'));

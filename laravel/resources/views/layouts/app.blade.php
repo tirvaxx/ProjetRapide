@@ -21,6 +21,7 @@
       
 
     $(document).ready(function() { 
+        
         $('a.btn').click(function() { 
 
             var list_id_from_a =  $(this).attr('id');
