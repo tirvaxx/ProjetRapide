@@ -61,11 +61,15 @@
         
 
         <script type="text/javascript">
-            function fromJsonToObject(data) {
-                console.log(data);
+            function afficherTache(data) {
+                
                 var tache = JSON.stringify(data);
                 var tachef = JSON.parse(tache);
-                console.log(tachef);
+                
+                $.each( JSON.parse(tachef), function( nom, value ) {
+                    var nomTache = value.nom;
+                    $("#ul_liste_" + 1).append( '<li id="li_da" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span>' + nomTache + '</span></li>');  
+                });
             }
 
             $(document).ready(function() {
@@ -73,9 +77,7 @@
                 $('#getTaches').on('click',function(){
                     $.get("{{URL::to('/getTaches')}}", function(data){
                         $('#getTachesData').append(data);
-                        console.log(data);
-                        fromJsonToObject(data);
-
+                        afficherTache(data);
                     })    
                 })
                 
@@ -90,12 +92,6 @@
                     var nom = $("#nom_tache").val();
                     console.log(nom);
                     var description = $("#description_tache").val();
-                    console.log(description);
-                    var tot = {
-                        nom : nom,
-                        description : description
-                    }
-                    var tot1 = JSON.stringify(tot);
                     console.log(this);
                     $.ajax({
                         /* the route pointing to the post function */
