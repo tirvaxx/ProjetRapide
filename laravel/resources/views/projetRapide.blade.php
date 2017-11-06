@@ -68,8 +68,56 @@
                 
                 $.each( JSON.parse(tachef), function( nom, value ) {
                     var nomTache = value.nom;
-                    $("#ul_liste_" + 1).append( '<li id="li_da" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span>' + nomTache + '</span></li>');  
+                    var idTache = value.id;
+                    $("#ul_liste_" + 1).append( '<li class="sortable-item"><a id="' + idTache + '" href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span>' + nomTache + '</span></li>');
+                    $("#" + idTache).on('click', function(){
+                        //  $.ajaxSetup({
+                        //     headers: {
+                        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        //             }
+                        // });
+                        // var nom = $("#nom_tache").val();
+                        // console.log(nom);
+                        // var description = $("#description_tache").val();
+                        // console.log(value);
+                        // $.ajax({
+                        //     /* the route pointing to the post function */
+                        //     url: "{{ URL::to('deleteTaches') }}",
+                        //     type: 'POST',
+                        //     /* send the csrf-token and the input to the controller */
+                        //     data: value,
+                        //     dataType: 'JSON',
+                        //     /* remind that 'data' is the response of the AjaxController */
+                        //     success: function () { 
+                        //         alert('successbis');
+                        //     }
+                        // });
+                        deleteTache(value);
+                    });
                 });
+            }
+            function deleteTache(value){
+                $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    }
+                        });
+                        var nom = $("#nom_tache").val();
+                        console.log(nom);
+                        var description = $("#description_tache").val();
+                        console.log(value);
+                        $.ajax({
+                            /* the route pointing to the post function */
+                            url: "{{ URL::to('deleteTaches') }}",
+                            type: 'POST',
+                            /* send the csrf-token and the input to the controller */
+                            data: value,
+                            dataType: 'JSON',
+                            /* remind that 'data' is the response of the AjaxController */
+                            success: function () { 
+                                alert('successbis');
+                            }
+                        });
             }
 
             $(document).ready(function() {
