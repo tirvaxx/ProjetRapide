@@ -54,11 +54,7 @@
                 nom_tache = "Non Défini";
             }
 
-
-
-
-
-            $("#ul_liste_" + liste_no).append( '<li id="li_da" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span>' + nom_tache + '</span></li>'
+            $("#ul_liste_" + liste_no).append( '<li id="li_da" class="sortable-item ui-sortable-handle"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span>' + nom_tache + '</span></li>'
 
 
         )});
@@ -74,19 +70,6 @@
 
                 });
 
-
-            // Modifier un tâche
-            $('#btn_tache_modifier_annuler').click(function() {
-                $('#form_modifier_tache')[0].reset();
-                $.unblockUI();
-                return false;
-            });
-            $('#btn_tache_modifier').click(function() {
-                $('#form_modifier_tache')[0].reset();
-                $.unblockUI();
-                return true;
-            });
-            // Fin modifier une tâche
 
      $(document).on("click", "#creer_item_liste", function() {
 

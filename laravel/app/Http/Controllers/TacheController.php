@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
-class TacheController extends Controller 
+class TacheController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class TacheController extends Controller
      */
     public function index(Request $request)
     {
-        
+
         $retour = Tache::get();
         return $retour->ToJson();
         // return response()->json(['response' => 'This is get method']);
@@ -42,8 +42,8 @@ class TacheController extends Controller
     {
 
         // dd(request()->all());
-       
-        $tache = new Tache;    
+
+        $tache = new Tache;
         $tache->nom = request('nom_tache');
         $tache->description = request('description_tache');
         $tache->save();
@@ -51,7 +51,7 @@ class TacheController extends Controller
         //     'success': true,
         //     'message': 'Your AJAX processed correctly'
         // ];
-        
+
       //  return view('projetRapide');
 
     }
@@ -65,6 +65,7 @@ class TacheController extends Controller
     public function show(Tache $tache)
     {
         //
+        //return ['tache' => Tache::findOrFail($id)];
     }
 
     /**
@@ -75,7 +76,11 @@ class TacheController extends Controller
      */
     public function edit(Tache $tache)
     {
-        //
+        //GET	/nerds/{id}/edit	edit	nerds.edit
+        /*$tache = new Tache;
+        $tache->nom = request('nom_tache');
+        $tache->description = request('description_tache');
+        $tache->save();*/
     }
 
     /**
@@ -87,7 +92,12 @@ class TacheController extends Controller
      */
     public function update(Request $request, Tache $tache)
     {
-        //
+        //PUT/PATCH	/nerds/{id}	update	nerds.update
+        /*$tache = Tache[id];
+        $tache->nom = request('nom_tache');
+        $tache->description = request('description_tache');
+        $tache->save();*/
+
     }
 
     /**

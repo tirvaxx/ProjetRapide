@@ -21,6 +21,7 @@ Route::get('/', function () {
 Route::post('/pushTaches', 'TacheController@store');
 
 Route::get('/getTaches', 'TacheController@index');
+Route::get('/taches/{id}', 'TacheController@show');
 // 	if (Request::ajax()){
 // 		return 'success';
 // 	}
