@@ -61,10 +61,6 @@
 
 
         <script type="text/javascript">
-
-
-
-
             function afficherTache(data) {
 
                 var tache = JSON.stringify(data);
@@ -73,8 +69,56 @@
                 $.each( JSON.parse(tachef), function( nom, value ) {
                     var nomTache = value.nom;
                     var idTache = value.id;
-                    $("#ul_liste_" + 1).append( '<li id="li_tache_' + idTache + '" class="sortable-item ui-sortable-handle" sytle=""><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span>' + nomTache + '</span></li>');
+                    $("#ul_liste_" + 1).append( '<li class="sortable-item"><a id="' + idTache + '" href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span>' + nomTache + '</span></li>');
+                    $("#" + idTache).on('click', function(){
+                        //  $.ajaxSetup({
+                        //     headers: {
+                        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        //             }
+                        // });
+                        // var nom = $("#nom_tache").val();
+                        // console.log(nom);
+                        // var description = $("#description_tache").val();
+                        // console.log(value);
+                        // $.ajax({
+                        //     /* the route pointing to the post function */
+                        //     url: "{{ URL::to('deleteTaches') }}",
+                        //     type: 'POST',
+                        //     /* send the csrf-token and the input to the controller */
+                        //     data: value,
+                        //     dataType: 'JSON',
+                        //     /* remind that 'data' is the response of the AjaxController */
+                        //     success: function () {
+                        //         alert('successbis');
+                        //     }
+                        // });
+                        deleteTache(value);
+                    });
                 });
+            }
+
+            function deleteTache(value){
+                $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    }
+                        });
+                        var nom = $("#nom_tache").val();
+                        console.log(nom);
+                        var description = $("#description_tache").val();
+                        console.log(value);
+                        $.ajax({
+                            /* the route pointing to the post function */
+                            url: "{{ URL::to('deleteTaches') }}",
+                            type: 'POST',
+                            /* send the csrf-token and the input to the controller */
+                            data: value,
+                            dataType: 'JSON',
+                            /* remind that 'data' is the response of the AjaxController */
+                            success: function () {
+                                alert('successbis');
+                            }
+                        });
             }
 
 
@@ -126,6 +170,7 @@
               });
               // Fin modifier une tâche
 
+            //$(document).ready(function() {
 
                 //$('#getTaches').on('click',function(){
                     $.get("{{URL::to('/getTaches')}}", function(data){
@@ -159,8 +204,7 @@
                         }
                     });
                 });
-
-            });
+              });
         </script>
 
         <div class="container-list-lvl2" id="container-list-lvl2">

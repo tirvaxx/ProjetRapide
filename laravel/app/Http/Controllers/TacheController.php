@@ -106,8 +106,14 @@ class TacheController extends Controller
      * @param  \App\Tache  $tache
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tache $tache)
+    public function destroy(Request $request)
     {
-        //
+
+            
+        $tache = Tache::find(request('id'));
+        $tache->delete();
+        // $tache = ;
+
+        return (String)$request->input('id');
     }
 }
