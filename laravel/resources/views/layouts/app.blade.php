@@ -254,8 +254,8 @@ $(document).ready(function() {
                         type: 'DELETE',
                        
                     success: function (result,status,xhr) {
-                            
-                          $(this).parent().remove();
+                          
+                          $('#' + $id).parent().remove();
 
                     },error(xhr,status,error){
                         alert("error 1 " + status);

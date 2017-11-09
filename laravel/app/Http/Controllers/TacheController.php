@@ -106,6 +106,7 @@ class TacheController extends Controller
         $tache->delete();
 
         $data = array( 
+            'id' => $id,
             'message' => 'La tache a été supprimé.'
         );
         return $data;
