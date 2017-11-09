@@ -18,24 +18,21 @@ Route::get('/', function () {
 
 
 
-Route::post('/pushTaches', 'TacheController@store');
+Route::post('/taches', 'TacheController@store');
 
-Route::get('/getTaches', 'TacheController@index');
-// 	if (Request::ajax()){
-// 		return 'success';
-// 	}
-// });
+Route::get('/taches', 'TacheController@index');
+Route::delete('/taches/{id}', 'TacheController@destroy');
 
-// Route::post('/pushTaches', function(){
-// 	if (Request::ajax()){
-// 		return 'success';
-// 	}
-// });
 
 Route::get('/acteurs',  array('as'=> 'acteurs', 'uses' => 'acteurs@index'));
-Route::post('/sprintactivite/store',  array( 'uses' => 'sprintactivite@store'));
-//Route::post('/taches/store',  array( 'uses' => 'taches@store'));
+
+
+Route::post('/listes',  array( 'uses' => 'ListeController@store'));
+Route::post('/sprintactivite/store',  array( 'uses' => 'SprintActiviteController@store'));
+
+
 
 Route::resource('acteurs', 'ActeurController');
 Route::resource('taches', 'TacheController');
-Route::resource('sprintactivite', 'SprintActiviteController');
+Route::resource('listes', 'ListeController');
+Route::resource('sprintactivites', 'SprintActiviteController');

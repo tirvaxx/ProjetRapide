@@ -46,13 +46,16 @@ class TacheController extends Controller
         $tache = new Tache;    
         $tache->nom = request('nom_tache');
         $tache->description = request('description_tache');
+        $tache->creer_par_acteur_id = 2;
         $tache->save();
-        // $data = [
-        //     'success': true,
-        //     'message': 'Your AJAX processed correctly'
-        // ];
         
-      //  return view('projetRapide');
+        $data = array( 
+             'last_inserted_id' => $tache->id,
+             'nom' => request('nom_tache'),
+             'description' => request('description_tache')
+        );
+        return $data;
+      
 
     }
 
@@ -96,8 +99,15 @@ class TacheController extends Controller
      * @param  \App\Tache  $tache
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tache $tache)
+    public function destroy($id)
     {
-        //
+        // delete
+        $tache = Tache::find($id);
+        $tache->delete();
+
+        $data = array( 
+            'message' => 'La tache a été supprimé.'
+        );
+        return $data;
     }
 }
