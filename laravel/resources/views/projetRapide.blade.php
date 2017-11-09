@@ -87,12 +87,33 @@
                     <button type="button" id="btn_tache_fermer" class="btn btn-primary" >Fermer</button>
                 </div>
         </fieldset>
-      
+    </form>
+</div>
+
+<div id="tache_modifier_form" style="display:none">
+    <form id="form_modifier_tache" action="#">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <!-- securite contre les failles sur les requests -->
+
+        <fieldset>
+            <legend>Modifier une tache</legend>
+                <div class="form-group">
+                        <label for="nom_tache">Nom de la tache todo</label>
+                        <input type="text" class="form-control" id="nom_tache" name="nom_tache" placeholder="Nom" />
+                </div>
+                <div class="form-group">
+                         <label for="description_tache">Description de la tache todo</label>
+                        <textarea class="form-control" id="description_tache" name="description_tache" placeholder="Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="button" id="btn_tache_modifier" class="btn btn-primary" >Modifier</button>
+                    <button type="button" id="btn_tache_modifier_annuler" class="btn btn-primary" >Annuler</button>
+                </div>
+        </fieldset>
+
     </form>
 
 </div>
-
-
 
 <div class="div_liste_form" style="display:none">
     <form id="form_liste" action="#" >

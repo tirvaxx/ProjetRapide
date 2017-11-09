@@ -16,9 +16,8 @@ class TacheController extends Controller
      */
     public function index(Request $request)
     {
-        
-        $retour = Tache::get();
-        return $retour->ToJson();
+         echo 'ca marche ';
+        return Tache::get();
         // return response()->json(['response' => 'This is get method']);
     }
 
