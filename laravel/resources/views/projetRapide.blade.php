@@ -54,81 +54,13 @@
         <div class="row">
             <h2>GET</h2>
             <button id="getTaches" type="button" class="btn btn-primary">GET</button>
-        </div>
+        </div> 
         <div id="getTachesData">
             
         </div>
-        
-
-
-
+            <!-- Les listes viennent ici -->
         <div class="container-list-lvl2" id="container-list-lvl2">
             
-
-
-            <div class="container-list"> 
-                <div class="panel panel-default column left"  id="liste_1">
-                        <div class="panel-heading">
-                            <span>liste 1</span>
-                        </div>  <!-- panel-title -->
-
-                        <div class="panel-body">
-                             <ul class="sortable-list" id="ul_liste_1">
-                                    <li id="li_c" class="sortable-item">
-                                                <a href="#" class="x-remove">
-                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
-                                                </a>
-                                                <span>Sortable item C</span>
-                                            </li>
-                                    <li id="li_da" class="sortable-item">
-                                                <a href="#" class="x-remove">
-                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
-                                                </a>
-                                                <span>Sortable item D</span>
-                                    </li>
-                            </ul>
-
-                        </div> <!-- panel-body -->
-                        <div class="panel-footer">
-                           <a href="#" id="btn_ajouter_tache_Liste_1" class="btn btn-link right">ajouter une tache</a>
-                        </div> <!-- panel-footer -->
-
-                </div>  <!-- panel-default -->
-            </div>  <!-- #container-liste -->
-            
-
-
-            <div class="container-list"> 
-                <div class="panel panel-default column left">
-                        <div class="panel-heading">
-                            <span>liste 2</span>
-                        </div>  <!-- panel-title -->
-
-                        <div class="panel-body">
-                             <ul class="sortable-list" id="ul_liste_2" >
-                                            <li id="li_a" class="sortable-item">
-                                                <a href="#" class="x-remove">
-                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
-                                                </a>
-                                                <span>Sortable item A</span>
-                                            </li>
-                                            <li id="li_b" class="sortable-item">
-                                                <a href="#" class="x-remove">
-                                                    <span class="glyphicon glyphicon-remove pull-right"></span>
-                                                </a>
-                                                <span>Sortable item B</span>
-                                            </li>
-                                          
-                            </ul>
-
-                        </div> <!-- panel-body -->
-                        <div class="panel-footer">
-                           <a href="#"  id="btn_ajouter_tache_Liste_2" class="btn btn-link right">ajouter une tache</a>
-                        </div> <!-- panel-footer -->
-
-                </div>  <!-- panel-default -->
-            </div>  <!-- #container-liste -->
-
         </div> <!-- #container-list-lvl2 -->
     </div>  <!-- #center-wrapper -->
 
