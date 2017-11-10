@@ -9,5 +9,5 @@ use Illuminate\Database\Eloquent\Model;
 //https://laravel.com/docs/5.4/controllers
 class Acteur extends Model
 {
-  protected $table = 'acteur_employe';
+ 	protected $table = 'acteurs';
 }

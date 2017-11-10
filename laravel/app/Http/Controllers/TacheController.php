@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
-class TacheController extends Controller
+class TacheController extends Controller 
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,8 @@ class TacheController extends Controller
      */
     public function index(Request $request)
     {
-
-        $retour = Tache::get();
-        return $retour->ToJson();
+         echo 'ca marche ';
+        return Tache::get();
         // return response()->json(['response' => 'This is get method']);
     }
 
@@ -42,17 +41,20 @@ class TacheController extends Controller
     {
 
         // dd(request()->all());
-
-        $tache = new Tache;
+       
+        $tache = new Tache;    
         $tache->nom = request('nom_tache');
         $tache->description = request('description_tache');
+        $tache->creer_par_acteur_id = 2;
         $tache->save();
-        // $data = [
-        //     'success': true,
-        //     'message': 'Your AJAX processed correctly'
-        // ];
-
-      //  return view('projetRapide');
+        
+        $data = array( 
+             'last_inserted_id' => $tache->id,
+             'nom' => request('nom_tache'),
+             'description' => request('description_tache')
+        );
+        return $data;
+      
 
     }
 
@@ -65,7 +67,6 @@ class TacheController extends Controller
     public function show(Tache $tache)
     {
         //
-        //return ['tache' => Tache::findOrFail($id)];
     }
 
     /**
@@ -76,11 +77,7 @@ class TacheController extends Controller
      */
     public function edit(Tache $tache)
     {
-        //GET	/nerds/{id}/edit	edit	nerds.edit
-        /*$tache = new Tache;
-        $tache->nom = request('nom_tache');
-        $tache->description = request('description_tache');
-        $tache->save();*/
+        //
     }
 
     /**
@@ -92,12 +89,7 @@ class TacheController extends Controller
      */
     public function update(Request $request, Tache $tache)
     {
-        //PUT/PATCH	/nerds/{id}	update	nerds.update
-        /*$tache = Tache[id];
-        $tache->nom = request('nom_tache');
-        $tache->description = request('description_tache');
-        $tache->save();*/
-
+        //
     }
 
     /**
@@ -106,14 +98,20 @@ class TacheController extends Controller
      * @param  \App\Tache  $tache
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-
-            
-        $tache = Tache::find(request('id'));
+        // delete
+        $tache = Tache::find($id);
         $tache->delete();
-        // $tache = ;
 
-        return (String)$request->input('id');
+        $data = array( 
+            'id' => $id,
+            'message' => 'La tache a été supprimé.'
+        );
+        return $data;
     }
 }
+
+
+
+
