@@ -27,6 +27,10 @@ Route::delete('/taches/{id}', 'TacheController@destroy');
 
 
 Route::get('/acteurs',  array('as'=> 'acteurs', 'uses' => 'acteurs@index'));
+Route::get('/acteurEmployes',  array('as'=> 'acteurEmployes', 'uses' => 'acteurEmployeController@index'));
+Route::get('/acteurEmployes/create',  array('as'=> 'acteurEmployes', 'uses' => 'acteurEmployeController@create'));
+Route::post('/acteurEmployes/store',  array('as'=> 'acteurEmployes', 'uses' => 'acteurEmployeController@store'));
+
 
 
 Route::post('/listes',  array( 'uses' => 'ListeController@store'));
@@ -35,6 +39,7 @@ Route::post('/sprintactivite/store',  array( 'uses' => 'SprintActiviteController
 
 
 Route::resource('acteurs', 'ActeurController');
+Route::resource('acteurEmployes', 'acteurEmployeController');
 Route::resource('taches', 'TacheController');
 Route::resource('listes', 'ListeController');
 Route::resource('sprintactivites', 'SprintActiviteController');
