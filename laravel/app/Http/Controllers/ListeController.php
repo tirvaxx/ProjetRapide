@@ -35,7 +35,18 @@ class ListeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $liste = new Liste;    
+        $liste->nom = request('nom_liste');
+        $liste->description = request('description_liste');
+        $liste->creer_par_acteur_id = 2;
+        $liste->save();
+        
+        $data = array( 
+             'last_inserted_id' => $liste->id,
+             'nom' => request('nom_liste'),
+             'description' => request('description_liste')
+        );
+        return $data;
     }
 
     /**
