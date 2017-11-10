@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use View;
 use App\Tache;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
-class TacheController extends Controller 
+class TacheController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,20 +41,20 @@ class TacheController extends Controller
     {
 
         // dd(request()->all());
-       
-        $tache = new Tache;    
+
+        $tache = new Tache;
         $tache->nom = request('nom_tache');
         $tache->description = request('description_tache');
         $tache->creer_par_acteur_id = 2;
         $tache->save();
-        
-        $data = array( 
+
+        $data = array(
              'last_inserted_id' => $tache->id,
              'nom' => request('nom_tache'),
              'description' => request('description_tache')
         );
         return $data;
-      
+
 
     }
 
@@ -66,7 +66,7 @@ class TacheController extends Controller
      */
     public function show(Tache $tache)
     {
-        //
+          return View::make('tache/show', array('tache' => $tache));
     }
 
     /**
@@ -77,7 +77,7 @@ class TacheController extends Controller
      */
     public function edit(Tache $tache)
     {
-        //
+        return View::make('taches.edit', array('tache' => $tache))->with('title', 'Éditer une tâche');
     }
 
     /**
@@ -89,7 +89,21 @@ class TacheController extends Controller
      */
     public function update(Request $request, Tache $tache)
     {
-        //
+      $this->validate($request, [
+      'nom' => 'required',
+      'description' => 'required',
+        ]);
+       $input = $request->all();
+
+       $tache->update($input);
+       if ($tache->validator->fails()) {
+                   return Redirect::action('TacheController@edit', array($tache->id))->withInput()->withErrors($tache->validator);
+                 }
+       $data = array(
+           'id' => $tache->id,
+           'message' => 'La tache a été mise à jour.'
+       );
+       return $data;
     }
 
     /**
@@ -104,14 +118,10 @@ class TacheController extends Controller
         $tache = Tache::find($id);
         $tache->delete();
 
-        $data = array( 
+        $data = array(
             'id' => $id,
             'message' => 'La tache a été supprimé.'
         );
         return $data;
     }
 }
-
-
-
-

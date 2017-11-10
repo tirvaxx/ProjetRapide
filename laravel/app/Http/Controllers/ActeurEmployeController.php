@@ -36,7 +36,7 @@ class ActeurEmployeController extends Controller
      */
     public function store(Request $request)
     {
-        $acteurEmploye = new ActeurEmploye;    
+        $acteurEmploye = new ActeurEmploye;
         $acteurEmploye->prenom = request('prenom');
         $acteurEmploye->nom = request('nom');
         $acteurEmploye->date_embauche = request('date_embauche');
@@ -44,11 +44,11 @@ class ActeurEmployeController extends Controller
         $acteurEmploye->actif = request('actif');
         $acteurEmploye->save();
 
-        $data = array( 
+        $data = array(
              'last_inserted_id' => $acteurEmploye->id
         );
         return $data;
-        
+
     }
 
     /**
@@ -82,7 +82,7 @@ class ActeurEmployeController extends Controller
      */
     public function update(Request $request, ActeurEmploye $acteurEmploye)
     {
-        //
+    
     }
 
     /**
