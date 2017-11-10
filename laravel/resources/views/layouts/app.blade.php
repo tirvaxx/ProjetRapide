@@ -46,7 +46,46 @@ $(function(){
   </script>
 
         <script type="text/javascript">
-         
+         // sur double-click d'une t�che
+           $("body").delegate('li','dblclick',function() {
+              
+              //$('li').on('dblclick',function(){
+
+                var tache_id =  $(this).attr('id');
+                alert("bonjour "+tache_id);
+                //on s'assure que le <li> cliqu� est une t�che sinon exit
+                //il faut que le id de <a> commence par btn_ajouter_tache_Liste + _ + le id de la liste dans la bd
+                if(!(typeof tache_id != 'undefined' && tache_id.indexOf("li_tache") >= 0)){
+                  return;
+                }
+                var tache_no = tache_id.replace("li_tache_", "");
+                $("body").data("modif_tache_no", tache_no);
+
+             
+
+                $.blockUI({
+                     message: $('#tache_modifier_form')
+                });
+              });
+
+              // Modifier un tâche
+               $("body").delegate('#btn_tache_modifier_annuler','click',function(){
+             // $('#btn_tache_modifier_annuler').click(function() {
+                  //$('#form_modifier_tache')[0].reset();
+                  alert("annuler");
+                  $.unblockUI();
+                  return false;
+              });
+
+               
+              $('#btn_tache_modifier').click(function() {
+                  //$('#form_modifier_tache')[0].reset();
+                  alert("modifier");
+                  $.unblockUI();
+                  return true;
+              });
+              // Fin modifier une tâche
+
             function ajouter_tache(liste_no){
 
 
@@ -245,6 +284,8 @@ $(document).ready(function() {
                         $id = $(this).parent().attr("id");
                         $id_no = $id.replace("li_tache_","");
                         $url = "taches/" + $id_no;
+                        
+
                         $.ajax({ statusCode: {
                         500: function(xhr) {
                          alert(500);

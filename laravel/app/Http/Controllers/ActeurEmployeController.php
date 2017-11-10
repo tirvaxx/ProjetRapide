@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use View;
 use App\ActeurEmploye;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class ActeurEmployeController extends Controller
      */
     public function index()
     {
-        //
+        return View::make('acteurEmployes.index')->with('title', 'Les Acteurs')->with('ae',ActeurEmploye::all());
     }
 
     /**
@@ -24,7 +25,7 @@ class ActeurEmployeController extends Controller
      */
     public function create()
     {
-        //
+        return View::make('acteurEmployes.create')->with('title', 'Insérer un utilisateur');
     }
 
     /**
@@ -35,7 +36,19 @@ class ActeurEmployeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $acteurEmploye = new ActeurEmploye;    
+        $acteurEmploye->prenom = request('prenom');
+        $acteurEmploye->nom = request('nom');
+        $acteurEmploye->date_embauche = request('date_embauche');
+        $acteurEmploye->date_cessation_emploi  = request('date_cessation_emploi');
+        $acteurEmploye->actif = request('actif');
+        $acteurEmploye->save();
+
+        $data = array( 
+             'last_inserted_id' => $acteurEmploye->id
+        );
+        return $data;
+        
     }
 
     /**
