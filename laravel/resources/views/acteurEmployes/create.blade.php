@@ -2,7 +2,6 @@
 
 
 {{ Form::open(array('url' => '/acteurEmployes/store', 'method' => 'post')) }}
-{{ Form::label('prénom :') }}
 
 {{ Form::token() }}
 {{ Form::label('prénom :') }}
