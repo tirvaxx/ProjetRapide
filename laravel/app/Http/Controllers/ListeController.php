@@ -67,8 +67,13 @@ class ListeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Liste $liste)
-    {
-        //
+    {   
+        $data = array( 
+             'liste_id' => $liste->id,
+             'nom_liste' => $liste->nom,
+             'description_liste' => $liste->description
+        );
+        return $data;
     }
 
     /**
@@ -80,7 +85,15 @@ class ListeController extends Controller
      */
     public function update(Request $request, Liste $liste)
     {
-        //
+        $liste ->nom = request('nom_liste');
+        $liste ->description = request('description_liste');
+        $liste->update();
+        $data = array( 
+             'liste_id' => $liste->id,
+             'nom' => request('nom_liste'),
+             'description' => request('description_liste')
+        );
+        return $data;
     }
 
     /**
