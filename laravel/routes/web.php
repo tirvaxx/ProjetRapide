@@ -24,6 +24,7 @@ Route::post('/taches', 'TacheController@store');
 Route::get('/taches', 'TacheController@index');
 Route::delete('/taches/{id}', 'TacheController@destroy');
 
+Route::post('/sprints', 'SprintController@store');
 
 
 Route::get('/acteurs',  array('as'=> 'acteurs', 'uses' => 'acteurs@index'));

@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ Session::token() }}">
         <title>Projet Rapide</title>
-      
+        <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
    
         <link rel="stylesheet" type="text/css" href={{ asset('css/projetrapide.css') }}>          
@@ -58,6 +58,57 @@ $(function(){
              
 
             } //ajouter_tache
+            function creer_sprint(id, no) {
+
+                
+
+                
+                // $sprint = '<div id="div_sprint_' + id + ' class="tabcontent" style="display : none ;">'
+                // $sprint += '    <h3>'+ no + '</h3>'
+                // $sprint += '    <p>Premier Sprint : </p>'
+                // $sprint += '</div>'
+                // alert($sprint);
+                // $('#tabContenu').append($sprint);
+
+                // alert("fonction creer");
+                // $sprint_onglet = '<button class="tablinks" onclick="openTabSprint(event, ' + no + ')">Sprint ' + no + '</button>';
+                // alert($sprint_onglet);
+
+                // $('#tabLien').append($sprint_onglet);
+                // $("div#tabLien").tabs("refresh");
+
+                
+
+            }
+
+            function openTabSprint(evt, sprintNo) {
+                    // Declare all variables
+                var i, tabcontent, tablinks;
+               
+
+                // Get all elements with class="tabcontent" and hide them
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+
+                alert(tabcontent);
+
+                // Get all elements with class="tablinks" and remove the class "active"
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                alert(tablinks);
+
+                // Show the current tab, and add an "active" class to the button that opened the tab
+                // $('document').getElementById("div_sprint_" + sprintNo).style.display = "block";
+                $("#div_sprint_" + sprintNo).val().style.display = "block";
+                evt.currentTarget.className += " active";
+
+                alert(tabcontent);
+            }
+
 
  
              function creer_liste(id, nom, description){
@@ -104,9 +155,11 @@ $(function(){
                 });
        
             }
+
      
 
 $(document).ready(function() {
+
             $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -135,6 +188,12 @@ $(document).ready(function() {
                  $('#btn_liste_fermer').click(function() { 
                     //permet d'effacer les valeurs du form et recommencer à neuf
                     $('#form_liste')[0].reset();
+                    $.unblockUI(); 
+                    return false; 
+                }); //$('#btn_liste_fermer').click(function() 
+                 $('#btn_sprint_fermer').click(function() { 
+                    //permet d'effacer les valeurs du form et recommencer à neuf
+                    $('#form_sprint')[0].reset();
                     $.unblockUI(); 
                     return false; 
                 }); //$('#btn_liste_fermer').click(function() 
@@ -213,6 +272,31 @@ $(document).ready(function() {
                    
                 }); // $('#btn_liste_ajouter').click(function()
 
+                $('#btn_sprint_ajouter').click(function() { 
+
+                    $.ajax({ 
+
+                            url: "{{ URL::to('sprints') }}",
+                            type: 'POST',
+                            data: $('#form_sprint').serialize(),
+                            dataType: 'text',
+
+                        success: function (result,status,xhr) {
+     
+                                $id = JSON.parse(result).last_inserted_id;
+                                $numero = JSON.parse(result).numero;
+
+                                creer_sprint($id, $numero);
+
+                        },
+                        error(xhr,status,error){
+                            alert("error 1 " + status);
+                            alert("error 2 " + error);
+                        }
+
+                    });
+                }); //$('#btn_tache_ajouter').click(function()
+
 
             
                 $("body").delegate('a.btn','click', function() { 
@@ -269,6 +353,10 @@ $(document).ready(function() {
                           
                             
                 }); // $("body").delegate('a.x-remove','click',function()
+
+
+
+                
                 $(document).on("click", "#creer_item_liste", function() {
                     //permet d'effacer les valeurs du form et recommencer à neuf
                     $('#form_liste')[0].reset();
@@ -279,9 +367,89 @@ $(document).ready(function() {
                      
                 }); // $(document).on("click", "#creer_item_liste", function()
            
+                
 
+                $(document).on("click", "#creer_item_sprint", function() {
+                    //permet d'effacer les valeurs du form et recommencer à neuf
+                    $('#form_sprint')[0].reset();
+                    $.blockUI({ 
+                        message: $('.div_sprint_form') 
+                    }); 
+                    
+                }); //$(document).on("click", "#creer_item_liste", function() {
    
+
+                $( function() {
+                var tabTitle = $( "#tab_title" ),
+                  tabContent = $( "#tab_content" ),
+                  tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>",
+                  tabCounter = 2;
+             
+                var tabs = $( "#tabs" ).tabs();
+             
+                // Modal dialog init: custom buttons and a "close" callback resetting the form inside
+                var dialog = $( "#dialog" ).dialog({
+                  autoOpen: false,
+                  modal: true,
+                  buttons: {
+                    Add: function() {
+                      addTab();
+                      $( this ).dialog( "close" );
+                    },
+                    Cancel: function() {
+                      $( this ).dialog( "close" );
+                    }
+                  },
+                  close: function() {
+                    form[ 0 ].reset();
+                  }
+                });
+             
+                //AddTab form: calls addTab function on submit and closes the dialog
+                var form = dialog.find( "form" ).on( "submit", function( event ) {
+                  addTab();
+                  dialog.dialog( "close" );
+                  event.preventDefault();
+                });
+             
+                // Actual addTab function: adds new tab using the input from the form above
+                function addTab() {
+                  var label = tabTitle.val() || "Tab " + tabCounter,
+                    id = "tabs-" + tabCounter,
+                    li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
+                    tabContentHtml = tabContent.val() || "Tab " + tabCounter + " content.";
+             
+                  tabs.find( ".ui-tabs-nav" ).append( li );
+                  tabs.append( "<div id='" + id + "'><p>" + tabContentHtml + "</p></div>" );
+                  tabs.tabs( "refresh" );
+                  tabCounter++;
+                }
+             
+                // AddTab button: just opens the dialog
+                $( "#add_tab" )
+                  .button()
+                  .on( "click", function() {
+                    dialog.dialog( "open" );
+                  });
+             
+                // Close icon: removing the tab on click
+                tabs.on( "click", "span.ui-icon-close", function() {
+                  var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
+                  $( "#" + panelId ).remove();
+                  tabs.tabs( "refresh" );
+                });
+             
+                tabs.on( "keyup", function( event ) {
+                  if ( event.altKey && event.keyCode === $.ui.keyCode.BACKSPACE ) {
+                    var panelId = tabs.find( ".ui-tabs-active" ).remove().attr( "aria-controls" );
+                    $( "#" + panelId ).remove();
+                    tabs.tabs( "refresh" );
+                  }
+                });
+               } );
 }); //$(document).ready(function()
+
+
 
 
 
