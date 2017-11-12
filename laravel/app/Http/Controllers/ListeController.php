@@ -85,8 +85,8 @@ class ListeController extends Controller
      */
     public function update(Request $request, Liste $liste)
     {
-        $liste ->nom = request('nom_liste');
-        $liste ->description = request('description_liste');
+        $liste->nom = request('nom_liste');
+        $liste->description = request('description_liste');
         $liste->update();
         $data = array( 
              'liste_id' => $liste->id,

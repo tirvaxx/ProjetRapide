@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use View;
+//use View;
 use App\Tache;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests;
+//use App\Http\Controllers\Controller;
+//use App\Http\Requests;
 
 class TacheController extends Controller
 {
@@ -16,8 +16,8 @@ class TacheController extends Controller
      */
     public function index(Request $request)
     {
-         echo 'ca marche ';
-        return Tache::get();
+        // echo 'ca marche ';
+        //return Tache::get();
         // return response()->json(['response' => 'This is get method']);
     }
 
@@ -66,7 +66,7 @@ class TacheController extends Controller
      */
     public function show(Tache $tache)
     {
-          return View::make('tache/show', array('tache' => $tache));
+          //return View::make('tache/show', array('tache' => $tache));
     }
 
     /**
@@ -77,7 +77,13 @@ class TacheController extends Controller
      */
     public function edit(Tache $tache)
     {
-        return View::make('taches.edit', array('tache' => $tache))->with('title', 'Éditer une tâche');
+        //return View::make('taches.edit', array('tache' => $tache))->with('title', 'Éditer une tâche');
+        $data = array( 
+            'tache_id' => $tache->id,
+            'nom_tache' => $tache->nom,
+            'description_tache' => $tache->description
+       );
+       return $data;
     }
 
     /**
@@ -89,19 +95,13 @@ class TacheController extends Controller
      */
     public function update(Request $request, Tache $tache)
     {
-      $this->validate($request, [
-      'nom' => 'required',
-      'description' => 'required',
-        ]);
-       $input = $request->all();
-
-       $tache->update($input);
-       if ($tache->validator->fails()) {
-                   return Redirect::action('TacheController@edit', array($tache->id))->withInput()->withErrors($tache->validator);
-                 }
-       $data = array(
-           'id' => $tache->id,
-           'message' => 'La tache a été mise à jour.'
+        $tache->nom = request('nom_tache');
+        $tache->description = request('description_tache');
+        $tache->update();
+        $data = array( 
+            'tache_id' => $tache->id,
+            'nom' => request('nom_tache'),
+            'description' => request('description_tache')
        );
        return $data;
     }
