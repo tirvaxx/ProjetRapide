@@ -21,9 +21,8 @@ Route::get('/', function () {
 // create ?
 Route::post('/taches', 'TacheController@store');
 Route::get('/taches/{id}/edit', array('tache'=> 'taches', 'uses' => 'TacheController@edit'));
-Route::post('/taches/{id}', 'TacheController@update');
+Route::put('/taches/{id}', 'TacheController@update');
 Route::delete('/taches/{id}', 'TacheController@destroy');
-
 
 
 Route::get('/acteurs',  array('as'=> 'acteurs', 'uses' => 'acteurs@index'));
@@ -32,7 +31,7 @@ Route::get('/acteurEmployes/create',  array('as'=> 'acteurEmployes', 'uses' => '
 Route::post('/acteurEmployes/store',  array('as'=> 'acteurEmployes', 'uses' => 'acteurEmployeController@store'));
 
 Route::get('/listes/{id}/edit', array('liste'=> 'listes', 'uses' => 'ListeController@edit'));
-Route::post('/listes/{id}', 'ListeController@update');
+Route::put('/listes/{id}', 'ListeController@update');
 Route::post('/listes',  array( 'uses' => 'ListeController@store'));
 
 Route::post('/sprintactivite/store',  array( 'uses' => 'SprintActiviteController@store'));

@@ -66,8 +66,9 @@ class ListeController extends Controller
      * @param  \App\Liste  $liste
      * @return \Illuminate\Http\Response
      */
-    public function edit(Liste $liste)
+    public function edit($id)
     {   
+        $liste = Liste::find($id);
         $data = array( 
              'liste_id' => $liste->id,
              'nom_liste' => $liste->nom,
@@ -83,15 +84,16 @@ class ListeController extends Controller
      * @param  \App\Liste  $liste
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Liste $liste)
+    public function update(Request $request, $id)
     {
-        $liste->nom = request('nom_liste');
-        $liste->description = request('description_liste');
+        $liste = Liste::find($id);
+        $liste->nom = request('modifier_nom_liste');
+        $liste->description = request('modifier_description_liste');
         $liste->update();
         $data = array( 
              'liste_id' => $liste->id,
-             'nom' => request('nom_liste'),
-             'description' => request('description_liste')
+             'nom' => request('modifier_nom_liste'),
+             'description' => request('modifier_description_liste')
         );
         return $data;
     }
