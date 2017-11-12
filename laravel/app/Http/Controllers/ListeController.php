@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\SprintActivite;
 use App\Liste;
 use Illuminate\Http\Request;
 
@@ -35,18 +35,33 @@ class ListeController extends Controller
      */
     public function store(Request $request)
     {
+
+
         $liste = new Liste;    
         $liste->nom = request('nom_liste');
         $liste->description = request('description_liste');
         $liste->creer_par_acteur_id = 2;
         $liste->save();
         
+
+
+        $sprint_activite = new SprintActivite;
+        $sprint_activite->projet_id = request("projet_id");
+        $sprint_activite->sprint_id = request("sprint_id");
+        $sprint_activite->liste_id = $liste->id;
+        $sprint_activite->actif = 1;
+        $sprint_activite->creer_par_acteur_id = 2;
+        $sprint_activite->assigne_acteur_id = 2;
+        $sprint_activite->save();
+
         $data = array( 
              'last_inserted_id' => $liste->id,
              'nom' => request('nom_liste'),
              'description' => request('description_liste')
         );
         return $data;
+
+
     }
 
     /**
@@ -67,8 +82,13 @@ class ListeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Liste $liste)
-    {
-        //
+    {   
+        $data = array( 
+             'liste_id' => $liste->id,
+             'nom_liste' => $liste->nom,
+             'description_liste' => $liste->description
+        );
+        return $data;
     }
 
     /**
@@ -80,7 +100,15 @@ class ListeController extends Controller
      */
     public function update(Request $request, Liste $liste)
     {
-        //
+        $liste->nom = request('nom_liste');
+        $liste->description = request('description_liste');
+        $liste->update();
+        $data = array( 
+             'liste_id' => $liste->id,
+             'nom' => request('nom_liste'),
+             'description' => request('description_liste')
+        );
+        return $data;
     }
 
     /**

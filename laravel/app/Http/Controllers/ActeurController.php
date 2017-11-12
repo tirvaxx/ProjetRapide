@@ -26,7 +26,7 @@ class ActeurController extends Controller
      */
     public function create()
     {
-        //
+        return View::make('acteurs.create')->with('title', 'Insérer un acteur');   
     }
 
     /**
@@ -37,7 +37,7 @@ class ActeurController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
     }
 
     /**

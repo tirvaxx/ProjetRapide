@@ -17,25 +17,32 @@ Route::get('/', function () {
 
 
 
-
+//Route::get('/taches', 'TacheController@index');
+// create ?
 Route::post('/taches', 'TacheController@store');
-
-
-Route::get('/taches', 'TacheController@index');
+Route::get('/taches/{id}/edit', array('tache'=> 'taches', 'uses' => 'TacheController@edit'));
+Route::post('/taches/{id}', 'TacheController@update');
 Route::delete('/taches/{id}', 'TacheController@destroy');
 
 Route::post('/sprints', 'SprintController@store');
 
 
 Route::get('/acteurs',  array('as'=> 'acteurs', 'uses' => 'acteurs@index'));
+Route::get('/acteurEmployes',  array('as'=> 'acteurEmployes', 'uses' => 'acteurEmployeController@index'));
+Route::get('/acteurEmployes/create',  array('as'=> 'acteurEmployes', 'uses' => 'acteurEmployeController@create'));
+Route::post('/acteurEmployes/store',  array('as'=> 'acteurEmployes', 'uses' => 'acteurEmployeController@store'));
 
-
+Route::get('/listes/{id}/edit', array('liste'=> 'listes', 'uses' => 'ListeController@edit'));
+Route::post('/listes/{id}', 'ListeController@update');
 Route::post('/listes',  array( 'uses' => 'ListeController@store'));
-Route::post('/sprintactivite/store',  array( 'uses' => 'SprintActiviteController@store'));
+
+Route::post('/sprintactivite',  array( 'uses' => 'SprintActiviteController@store'));
+
 
 
 
 Route::resource('acteurs', 'ActeurController');
+Route::resource('acteurEmployes', 'acteurEmployeController');
 Route::resource('taches', 'TacheController');
 Route::resource('listes', 'ListeController');
 Route::resource('sprintactivites', 'SprintActiviteController');
