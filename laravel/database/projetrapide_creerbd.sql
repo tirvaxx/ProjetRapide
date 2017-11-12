@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 11, 2017 at 06:08 PM
+-- Generation Time: Nov 12, 2017 at 02:28 PM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `liste` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `liste`
@@ -238,7 +238,41 @@ INSERT INTO `liste` (`id`, `nom`, `description`, `creer_par_acteur_id`, `created
 (44, 'akakakk', 'dd', 2, '2017-11-10 03:21:07', '2017-11-10 03:21:07'),
 (45, 'aaa', 'aaa', 2, '2017-11-10 03:34:04', '2017-11-10 03:34:04'),
 (46, 'ddd', 'ddd', 2, '2017-11-10 03:39:19', '2017-11-10 03:39:19'),
-(47, 'aaa', 'aaa', 2, '2017-11-11 17:07:34', '2017-11-11 17:07:34');
+(47, 'aaa', 'aaa', 2, '2017-11-11 17:07:34', '2017-11-11 17:07:34'),
+(48, 'ddd', 'ddd', 2, '2017-11-11 21:08:02', '2017-11-11 21:08:02'),
+(49, 'akaub', 'akaub', 2, '2017-11-11 21:24:02', '2017-11-11 21:24:02'),
+(50, 'alain', 'alain', 2, '2017-11-11 21:31:53', '2017-11-11 21:31:53'),
+(51, 'alain', 'alain', 2, '2017-11-11 22:16:15', '2017-11-11 22:16:15'),
+(52, 'alain', 'alain', 2, '2017-11-11 22:29:01', '2017-11-11 22:29:01'),
+(53, 'alain3', 'alain3', 2, '2017-11-11 22:29:22', '2017-11-11 22:29:22'),
+(54, 'sss', 'sss', 2, '2017-11-11 22:33:19', '2017-11-11 22:33:19'),
+(55, 'ddd', 'dddd', 2, '2017-11-12 04:49:04', '2017-11-12 04:49:04'),
+(56, 'dsds', 'dsdd', 2, '2017-11-12 04:49:23', '2017-11-12 04:49:23'),
+(57, 'fff', 'fff', 2, '2017-11-12 04:54:49', '2017-11-12 04:54:49'),
+(58, 'frr', 'rrr', 2, '2017-11-12 04:54:59', '2017-11-12 04:54:59'),
+(59, 'fff', 'ff', 2, '2017-11-12 05:05:11', '2017-11-12 05:05:11'),
+(60, 'ff', 'ff', 2, '2017-11-12 05:05:21', '2017-11-12 05:05:21'),
+(61, 'ff', 'ff', 2, '2017-11-12 05:08:13', '2017-11-12 05:08:13'),
+(62, 'ff', 'ff', 2, '2017-11-12 05:08:17', '2017-11-12 05:08:17'),
+(63, 'ffff', 'fff', 2, '2017-11-12 05:13:10', '2017-11-12 05:13:10'),
+(64, 'ffff', 'fff', 2, '2017-11-12 05:13:13', '2017-11-12 05:13:13'),
+(65, 'fff', 'ff', 2, '2017-11-12 05:15:24', '2017-11-12 05:15:24'),
+(66, 'fff', 'ff', 2, '2017-11-12 05:15:27', '2017-11-12 05:15:27'),
+(67, 'fff', 'fff', 2, '2017-11-12 05:18:03', '2017-11-12 05:18:03'),
+(68, 'fff4', 'fff4', 2, '2017-11-12 05:18:07', '2017-11-12 05:18:07'),
+(69, 'fff', 'fff', 2, '2017-11-12 05:19:47', '2017-11-12 05:19:47'),
+(70, 'fffr', 'fffr', 2, '2017-11-12 05:19:52', '2017-11-12 05:19:52'),
+(71, 'ddd', 'ddd', 2, '2017-11-12 05:34:14', '2017-11-12 05:34:14'),
+(72, 'adad', 'ada', 2, '2017-11-12 05:34:23', '2017-11-12 05:34:23'),
+(73, 'aaa', 'aaa', 2, '2017-11-12 05:37:17', '2017-11-12 05:37:17'),
+(74, 'aaaw', 'aaaw', 2, '2017-11-12 05:37:22', '2017-11-12 05:37:22'),
+(75, 'tt', 'tt', 2, '2017-11-12 06:00:14', '2017-11-12 06:00:14'),
+(76, 'dd', 'dd', 2, '2017-11-12 06:02:15', '2017-11-12 06:02:15'),
+(77, 'aaa', 'a', 2, '2017-11-12 06:15:41', '2017-11-12 06:15:41'),
+(78, 'ffff', 'ffff', 2, '2017-11-12 06:17:19', '2017-11-12 06:17:19'),
+(79, 'ffff3', 'ffff3', 2, '2017-11-12 06:17:26', '2017-11-12 06:17:26'),
+(80, 'alain', 'alain', 2, '2017-11-12 06:19:03', '2017-11-12 06:19:03'),
+(81, 'alain3', 'alain3', 2, '2017-11-12 06:19:08', '2017-11-12 06:19:08');
 
 -- --------------------------------------------------------
 
@@ -312,13 +346,6 @@ CREATE TABLE IF NOT EXISTS `sprint` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `sprint`
---
-
-INSERT INTO `sprint` (`id`, `numero`, `projet_id`, `date_debut`, `date_fin`, `creer_par_acteur_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '2017-10-01', '2017-10-31', 2, '2017-11-11 13:04:15', '2017-11-11 13:04:15');
-
 -- --------------------------------------------------------
 
 --
@@ -330,16 +357,28 @@ CREATE TABLE IF NOT EXISTS `sprint_activite` (
   `projet_id` int(11) NOT NULL,
   `sprint_id` int(11) NOT NULL,
   `liste_id` int(11) NOT NULL,
-  `tache_id` int(11) NOT NULL,
+  `tache_id` int(11) DEFAULT NULL,
   `actif` tinyint(1) NOT NULL,
   `creer_par_acteur_id` int(11) NOT NULL,
   `assigne_acteur_id` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE KEY `unique_sprint_activite` (`sprint_id`,`liste_id`,`tache_id`,`actif`) USING BTREE,
   KEY `fk_sprint_activite_liste_id` (`liste_id`),
   KEY `fk_sprint_activite_tache_id` (`tache_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `sprint_activite`
+--
+
+INSERT INTO `sprint_activite` (`projet_id`, `sprint_id`, `liste_id`, `tache_id`, `actif`, `creer_par_acteur_id`, `assigne_acteur_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 78, NULL, 0, 2, 2, '2017-11-12 06:17:19', '2017-11-12 06:21:08'),
+(1, 1, 79, NULL, 0, 2, 2, '2017-11-12 06:17:26', '2017-11-12 06:21:08'),
+(1, 1, 78, 22, 1, 2, 2, '2017-11-12 06:17:32', '2017-11-12 06:17:32'),
+(1, 1, 80, NULL, 0, 2, 2, '2017-11-12 06:19:03', '2017-11-12 06:21:08'),
+(1, 1, 81, NULL, 0, 2, 2, '2017-11-12 06:19:08', '2017-11-12 06:21:08'),
+(1, 1, 80, 23, 0, 2, 2, '2017-11-12 06:19:18', '2017-11-12 06:21:08'),
+(1, 1, 81, 23, 1, 2, 2, '2017-11-12 06:21:09', '2017-11-12 06:21:09');
 
 -- --------------------------------------------------------
 
@@ -356,17 +395,17 @@ CREATE TABLE IF NOT EXISTS `tache` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `tache`
 --
 
 INSERT INTO `tache` (`id`, `nom`, `description`, `creer_par_acteur_id`, `created_at`, `updated_at`) VALUES
-(1, 'ddd', 'ddd', 2, '2017-11-10 03:21:16', '2017-11-10 03:21:16'),
-(2, 'ddd', 'ddd', 2, '2017-11-10 03:34:12', '2017-11-10 03:34:12'),
-(3, 'ddd', 'ddddd', 2, '2017-11-10 03:39:33', '2017-11-10 03:39:33'),
-(4, 'aaa', 'aaa', 2, '2017-11-11 17:07:41', '2017-11-11 17:07:41');
+(23, 'tala', 'ala', 2, '2017-11-12 06:19:18', '2017-11-12 06:19:18'),
+(22, 'd', 'd', 2, '2017-11-12 06:17:32', '2017-11-12 06:17:32'),
+(21, 'g', 'g', 2, '2017-11-12 06:11:10', '2017-11-12 06:11:10'),
+(20, 'f', 'f', 2, '2017-11-12 06:09:22', '2017-11-12 06:09:22');
 
 -- --------------------------------------------------------
 
@@ -388,6 +427,7 @@ CREATE TABLE IF NOT EXISTS `vw_sprint_activite_actif` (
 ,`sprint_cpa_nom` double
 ,`liste_id` int(10) unsigned
 ,`liste_nom` varchar(50)
+,`liste_description` varchar(200)
 ,`liste_cpa_id` int(10) unsigned
 ,`liste_cpa_nom` double
 ,`nom` varchar(50)
@@ -413,6 +453,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`projetrapide`@`localhost` SQL SECURITY DEFIN
 DROP TABLE IF EXISTS `vw_sprint_activite_actif`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`projetrapide`@`%` SQL SECURITY DEFINER VIEW `vw_sprint_activite_actif`  AS  select `sa_ae`.`id` AS `activite_cpa_id`,((`sa_ae`.`prenom` + ' ') + `sa_ae`.`nom`) AS `activite_cpa_nom`,`sa_assigne_ae`.`id` AS `emp_assigne_id`,((`sa_assigne_ae`.`prenom` + ' ') + `sa_assigne_ae`.`nom`) AS `emp_assigne_nom`,`sa_assigne_ae`.`courriel` AS `emp_assigne_courriel`,`sa_assigne_ae`.`telephone` AS `emp_assigne_telephone`,`sprint`.`id` AS `sprint_id`,`sprint`.`numero` AS `sprint_numero`,`sprint_ae`.`id` AS `sprint_cpa_id`,((`sprint_ae`.`prenom` + ' ') + `sprint_ae`.`nom`) AS `sprint_cpa_nom`,`liste`.`id` AS `liste_id`,`liste`.`nom` AS `liste_nom`,`liste`.`description` AS `liste_description`,`liste_ae`.`id` AS `liste_cpa_id`,((`liste_ae`.`prenom` + ' ') + `liste_ae`.`nom`) AS `liste_cpa_nom`,`tache`.`nom` AS `nom`,`tache`.`description` AS `description`,`tache_ae`.`id` AS `tache_cpa_id`,((`tache_ae`.`prenom` + ' ') + `tache_ae`.`nom`) AS `tache_cpa_nom` from ((((((((`sprint_activite` `sa` join `acteur_employe` `sa_ae` on((`sa`.`creer_par_acteur_id` = `sa_ae`.`id`))) join `acteur_employe` `sa_assigne_ae` on((`sa`.`assigne_acteur_id` = `sa_assigne_ae`.`id`))) join `sprint` on(((`sprint`.`id` = `sa`.`sprint_id`) and (`sa`.`projet_id` = `sprint`.`projet_id`)))) join `acteur_employe` `sprint_ae` on(((`sprint`.`creer_par_acteur_id` = `sprint_ae`.`id`) and (`sprint`.`projet_id` = `sa`.`projet_id`)))) join `liste` on((`liste`.`id` = `sa`.`liste_id`))) join `acteur_employe` `liste_ae` on((`liste`.`creer_par_acteur_id` = `liste_ae`.`id`))) join `tache` on((`tache`.`id` = `sa`.`tache_id`))) join `acteur_employe` `tache_ae` on((`tache`.`creer_par_acteur_id` = `tache_ae`.`id`))) where (`sa`.`actif` = 1) ;
+
 
 # Privileges for `projetrapide`@`%`
 

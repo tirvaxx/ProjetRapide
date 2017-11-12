@@ -58,9 +58,9 @@
         <div id="getTachesData">
             
         </div>
-            <!-- Les listes viennent ici -->
+           
         <div class="container-list-lvl2" id="container-list-lvl2">
-            
+             <!-- Les listes viennent ici -->
         </div> <!-- #container-list-lvl2 -->
     </div>  <!-- #center-wrapper -->
 
@@ -71,7 +71,7 @@
     <form id="form_tache" action="#" >
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <!-- securite contre les failles sur les requests -->
-       
+    
         <fieldset>
             <legend>Ajouter une tache</legend>
                 <div class="form-group">

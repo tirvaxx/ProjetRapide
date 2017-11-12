@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 //use View;
 use App\Tache;
+use App\SprintActivite;
 use Illuminate\Http\Request;
 //use App\Http\Controllers\Controller;
 //use App\Http\Requests;
@@ -40,7 +41,7 @@ class TacheController extends Controller
     public function store(Request $request)
     {
 
-        // dd(request()->all());
+       
 
         $tache = new Tache;
         $tache->nom = request('nom_tache');
@@ -48,13 +49,26 @@ class TacheController extends Controller
         $tache->creer_par_acteur_id = 2;
         $tache->save();
 
+
+
+        $sprint_activite = new SprintActivite;
+        $sprint_activite->projet_id = request("projet_id");
+        $sprint_activite->sprint_id = request("sprint_id");
+        $sprint_activite->liste_id = request("liste_id");
+        $sprint_activite->tache_id = $tache->id;
+        $sprint_activite->actif = 1;
+        $sprint_activite->creer_par_acteur_id = 2;
+        $sprint_activite->assigne_acteur_id = 2;
+        $sprint_activite->save();
+
+
         $data = array(
              'last_inserted_id' => $tache->id,
              'nom' => request('nom_tache'),
              'description' => request('description_tache')
         );
         return $data;
-
+   
 
     }
 

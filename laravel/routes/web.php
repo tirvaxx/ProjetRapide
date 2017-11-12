@@ -35,7 +35,8 @@ Route::get('/listes/{id}/edit', array('liste'=> 'listes', 'uses' => 'ListeContro
 Route::post('/listes/{id}', 'ListeController@update');
 Route::post('/listes',  array( 'uses' => 'ListeController@store'));
 
-Route::post('/sprintactivite/store',  array( 'uses' => 'SprintActiviteController@store'));
+Route::post('/sprintactivite',  array( 'uses' => 'SprintActiviteController@store'));
+
 
 
 

@@ -46,6 +46,10 @@ $(function(){
   </script>
 
         <script type="text/javascript">
+
+            var projet_id  = 1;
+            var sprint_id  = 1;
+
          // sur double-click d'une t�che
            $("body").delegate('li','dblclick',function() {
 
@@ -160,11 +164,55 @@ $(function(){
                 });
 
 
-                // Example 1.3: Sortable and connectable lists with visual helper
+               
                 $('.container-list .sortable-list').sortable({
                     connectWith: '.container-list .sortable-list',
                     placeholder: 'placeholder',
-                });
+                    receive: function( event, ui ){
+
+
+                        //on récupere le numéro de la liste
+                        var liste_id_name = $(this).attr("id");
+                        var liste_no = liste_id_name.replace("ul_liste_", "");
+
+                        var tache_id_name = $(ui.item).attr("id");
+                        var tache_no = tache_id_name.replace("li_tache_", "");
+                        
+                        
+                        
+                        var data =  "projet_id=" + projet_id + "&sprint_id=" + sprint_id + "&liste_id=" + liste_no + "&tache_id=" + tache_no;
+
+
+
+
+                        $.ajax({ statusCode: {
+                            500: function(xhr) {
+                             alert(500);
+                            }},
+                            //the route pointing to the post function
+                            url: "/sprintactivite" ,
+                            type: 'POST',
+                            // send the csrf-token and the input to the controller
+                            data: data,
+                            dataType: 'text',
+                            // remind that 'data' is the response of the AjaxController
+                        success: function (result,status,xhr) {
+
+                               alert("drag drop successs");
+
+                        },error(xhr,status,error){
+                            alert("error 1 " + status);
+                            alert("error 2 " + error);
+                        },
+                            complete: function (xhr,status) {
+                                // Handle the complete event
+                             alert("complete " + status);
+                            }
+                        });  //ajax
+                                
+                    } // update function
+
+                }); //$('.container-list .sortable-list').sortable
 
             } //creer_liste
 
@@ -263,6 +311,8 @@ $(document).ready(function() {
                                 }
             });
 
+
+           
                 //$('#getTaches').on('click',function(){
             /*        $.get("{{URL::to('/getTaches')}}", function(data){
                         $('#getTachesData').append(data);
@@ -299,6 +349,7 @@ $(document).ready(function() {
 
                     }
 
+                    var data =  $('#form_tache').serialize() + "&projet_id=" + projet_id + "&sprint_id=" + sprint_id + "&liste_id=" + liste_no;
 
                     $.ajax({ statusCode: {
                         500: function(xhr) {
@@ -308,7 +359,7 @@ $(document).ready(function() {
                         url: "{{ URL::to('taches') }}",
                         type: 'POST',
                         // send the csrf-token and the input to the controller
-                        data: $('#form_tache').serialize(),
+                        data: data,
                         dataType: 'text',
                         // remind that 'data' is the response of the AjaxController
                     success: function (result,status,xhr) {
@@ -331,8 +382,9 @@ $(document).ready(function() {
                  }); // $('#btn_tache_ajouter').click(function()
 
                 $('#btn_liste_ajouter').click(function() {
-
-                     $.ajax({ statusCode: {
+                    var data =  $('#form_liste').serialize() + "&projet_id=" + projet_id + "&sprint_id=" + sprint_id
+                  
+                    $.ajax({ statusCode: {
                         500: function(xhr) {
                          alert(500);
                         }},
@@ -340,15 +392,15 @@ $(document).ready(function() {
                         url: "{{ URL::to('listes') }}",
                         type: 'POST',
                         // send the csrf-token and the input to the controller
-                        data: $('#form_liste').serialize(),
+                        data: data,
                         dataType: 'text',
                         // remind that 'data' is the response of the AjaxController
                     success: function (result,status,xhr) {
 
-                            $id = JSON.parse(result).last_inserted_id;
-                            $nom = JSON.parse(result).nom;
-                            $description = JSON.parse(result).description;
-                            creer_liste($id, $nom, $description);
+                            var id = JSON.parse(result).last_inserted_id;
+                            var nom = JSON.parse(result).nom;
+                            var description = JSON.parse(result).description;
+                            creer_liste(id, nom, description);
 
                     },
                     error(xhr,status,error){
@@ -392,9 +444,9 @@ $(document).ready(function() {
 
 
 
-                        $id = $(this).parent().attr("id");
-                        $id_no = $id.replace("li_tache_","");
-                        $url = "taches/" + $id_no;
+                        var id = $(this).parent().attr("id");
+                        var id_no = id.replace("li_tache_","");
+                        var url = "taches/" + id_no;
 
 
                         $.ajax({ statusCode: {
@@ -402,12 +454,12 @@ $(document).ready(function() {
                          alert(500);
                         }},
                         //the route pointing to the post function
-                        url: $url,
+                        url: url,
                         type: 'DELETE',
 
                     success: function (result,status,xhr) {
 
-                          $('#' + $id).parent().remove();
+                          $('#' + id).parent().remove();
 
                     },error(xhr,status,error){
                         alert("error 1 " + status);
