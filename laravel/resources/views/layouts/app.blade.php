@@ -49,19 +49,15 @@ $(function(){
          // sur double-click d'une t�che
            $("body").delegate('li','dblclick',function() {
 
-              //$('li').on('dblclick',function(){
-
                 var tache_id =  $(this).attr('id');
-                alert("bonjour "+tache_id);
+                //alert("bonjour "+tache_id);
                 //on s'assure que le <li> cliqu� est une t�che sinon exit
                 //il faut que le id de <a> commence par btn_ajouter_tache_Liste + _ + le id de la liste dans la bd
                 if(!(typeof tache_id != 'undefined' && tache_id.indexOf("li_tache") >= 0)){
                   return;
                 }
-                var tache_no = tache_id.replace("li_tache_", "");
-                $("body").data("modif_tache_no", tache_no);
-
-
+                $tache_no = tache_id.replace("li_tache_", "");
+                $("body").data("modif_tache_no", $tache_no);
 
                 $.blockUI({
                      message: $('#tache_modifier_form')
@@ -78,17 +74,21 @@ $(function(){
               });
 
               $("body").delegate('#btn_tache_modifier','click',function(){
-                  //$('#form_modifier_tache')[0].reset();
-                  alert("modifier");
+                  $tache_no = $("body").data("modif_tache_no");
+                  alert("tache_numéro " + $tache_no);
+                  //var donnees_form = $('#form_modifier_tache').serialize();
+                  var input_name = "nom_tache";
+                  var nom_tache = $("#form_modifier_tache :input[name='"+input_name+"']").val();
+                  //input_name = "description_tache"; 
+                  //var description_tache = $("#form_modifier_tache :input[name='"+input_name+"']").val(); 
+                  
+                  //alert(nom_tache + " " + description_tache);
 
-                  var tache_no = $("body").data("modif_tache_no");
-                  var nom_tache = $("#nom_tache").val();
                   if(nom_tache == ""){
                       nom_tache = "Non Défini";
-
                   }
-                  $url = "taches/" + $id_no;
-
+                  $url = "taches/" + $tache_no;
+                  alert($url);
 
                   $.ajax({ statusCode: {
                       500: function(xhr) {
@@ -102,16 +102,22 @@ $(function(){
                       dataType: 'text',
                       // remind that 'data' is the response of the AjaxController
                   success: function (result,status,xhr) {
+                      var tache_no = $("body").data("modif_tache_no");
                   },error(xhr,status,error){
                       alert("error 1 " + status);
                       alert("error 2 " + error);
                   },
+
                       complete: function (xhr,status) {
-                          // Handle the complete event
+                        var spanAModifier = "tache_titre_" + $tache_no;
+                        document.getElementById(spanAModifier).innerHTML = nom_tache;
+
+                        // Handle the complete event
                        alert("complete " + status);
                       }
                   });
-
+                  $.unblockUI();
+                 
               });//#btn_tache_modifier
               // Fin modifier une tâche
 
@@ -132,8 +138,8 @@ $(function(){
 
                 $liste = '<div class="container-list">'
                 $liste +='    <div class="panel panel-default column left"  id="liste_' + id + '">'
-                $liste +='        <div class="panel-heading">'
-                $liste +='            <span>' + nom + '</span>'
+                $liste +='        <div class="panel-heading" id="liste_panel_' + id + '">'
+                $liste +='            <span id="liste_titre_' + id + '">' + nom + '</span>'
                 $liste +='        </div>  <!-- panel-heading -->'
                 $liste +='        <div class="panel-body">'
                 $liste +='            <ul class="sortable-list" id="ul_liste_' + id + '">'
@@ -162,13 +168,89 @@ $(function(){
 
             } //creer_liste
 
+           // sur double-click d'un div aller chercher la liste pour cette fois-ci
+           $("body").delegate('div','dblclick',function() {
+
+                var liste_id =  $(this).attr('id');
+                //alert("liste "+ liste_id);
+                //on s'assure qu'on a bien cliqué sur la partie liste sinon exit
+                if(!(typeof liste_id != 'undefined' && liste_id.indexOf("liste_panel_") >= 0)){
+                        return;
+                }
+                var liste_no = liste_id.replace("liste_panel_", "");
+                $("body").data("modif_liste_no", liste_no);
+
+                $.blockUI({
+                     message: $('#liste_modifier_form')
+                });
+              });
+
+              // Annuler la modification d'une liste
+               $("body").delegate('#btn_liste_formmodifier_annuler','click',function(){
+                  //$('#form_modifier_liste')[0].reset();
+                  $.unblockUI();
+                  return false;
+              });
+
+              // Sur appuie du bouton modifier de la liste
+              $("body").delegate('#btn_liste_modifier','click',function(){
+                  //$('#form_modifier_tache')[0].reset();
+                  //alert("modifier");
+
+                  var liste_no = $("body").data("modif_liste_no");
+                  
+                  //var donnees_form = $('#form_modifier_liste').serialize();
+                  var input_name = "nom_liste";
+                  var nom_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val();
+                  //input_name = "description_liste"; 
+                  //var description_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val(); 
+                  
+                  //alert(nom_liste + " " + description_liste);
+
+                  //alert("liste_no " + liste_no);
+                  if(nom_liste == ""){
+                      nom_liste = "Non Défini";
+                  }
+                  $url = "listes/" + liste_no;
+
+                  $.ajax({ statusCode: {
+                      500: function(xhr) {
+                       alert(500);
+                      }},
+                      //the route pointing to the post function
+                      url: $url,
+                      type: 'PUT',
+                      // send the csrf-token and the input to the controller
+                      data: $('#form_modifier_liste').serialize(),
+                      dataType: 'text',
+                      // remind that 'data' is the response of the AjaxController
+                  success: function (result,status,xhr) {
+                  },error(xhr,status,error){
+                      alert("error 1 " + status);
+                      alert("error 2 " + error);
+                  },
+
+                      complete: function (xhr,status) {
+                        var spanAModifier = "liste_titre_"+liste_no;
+                        document.getElementById(spanAModifier).innerHTML = nom_liste;
+
+                        // Handle the complete event
+                       alert("complete " + status);
+                      }
+                  });
+                  $.unblockUI();
+
+              });//#btn_liste_modifier
+              // Fin modifier une liste
+
             function afficherTache(data) {
                 var tache = JSON.stringify(data);
                 var tachef = JSON.parse(tache);
 
                 $.each( JSON.parse(tachef), function( nom, value ) {
                     var nomTache = value.nom;
-                    $("#ul_liste_" + 1).append( '<li id="li_da" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span>' + nomTache + '</span></li>');
+                    var idTache = value.id;
+                    $("#ul_liste_" + 1).append( '<li id="li_da" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span id="tache_titre_' + idTache + '">' + nomTache + '</span></li>');
                 });
 
             }
@@ -232,7 +314,7 @@ $(document).ready(function() {
                     success: function (result,status,xhr) {
 
                             var liste_no = $("body").data("ajout_liste_no");
-                            $("#ul_liste_" + liste_no).append( '<li id="li_tache_' + JSON.parse(result).last_inserted_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span>' + JSON.parse(result).nom + '</span></li>' );
+                            $("#ul_liste_" + liste_no).append( '<li id="li_tache_' + JSON.parse(result).last_inserted_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span id="tache_titre_'+ JSON.parse(result).last_inserted_id + '">' + JSON.parse(result).nom + '</span></li>' );
 
 
                     },error(xhr,status,error){
