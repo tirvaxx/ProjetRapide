@@ -34,7 +34,7 @@ Route::post('/acteurEmployes/store',  array('as'=> 'acteurEmployes', 'uses' => '
 
 
 Route::post('/listes',  array( 'uses' => 'ListeController@store'));
-Route::post('/sprintactivite/store',  array( 'uses' => 'SprintActiviteController@store'));
+Route::post('/sprintactivite',  array( 'uses' => 'SprintActiviteController@store'));
 
 
 
