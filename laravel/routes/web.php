@@ -24,6 +24,7 @@ Route::get('/taches/{id}/edit', array('tache'=> 'taches', 'uses' => 'TacheContro
 Route::put('/taches/{id}', 'TacheController@update');
 Route::delete('/taches/{id}', 'TacheController@destroy');
 
+Route::post('/sprints', 'SprintController@store');
 
 Route::get('/acteurs',  array('as'=> 'acteurs', 'uses' => 'acteurs@index'));
 Route::get('/acteurEmployes',  array('as'=> 'acteurEmployes', 'uses' => 'acteurEmployeController@index'));

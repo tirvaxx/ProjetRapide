@@ -150,3 +150,14 @@ fieldset legend {
     height: 58px;
     margin-bottom: 5px;
 }
+
+#dialog label, #dialog input { display:block; }
+#dialog label { margin-top: 0.5em; }
+#dialog input, #dialog textarea { width: 95%; height: 95%; }
+#tabs { margin-top: 1em; height: 500px;}
+#tabs li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+#add_tab { cursor: pointer; }
+
+
+#date_debut{z-index:2000 !important;}
+#date_fin{z-index:2000 !important;}
