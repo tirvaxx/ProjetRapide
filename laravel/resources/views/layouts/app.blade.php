@@ -181,7 +181,7 @@ $(function(){
                 $('.container-list .sortable-list').sortable({
                     connectWith: '.container-list .sortable-list',
                     placeholder: 'placeholder',
-                });
+                
                     receive: function( event, ui ){
 
 
