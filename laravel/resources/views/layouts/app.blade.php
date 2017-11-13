@@ -29,10 +29,12 @@
         <script type="text/javascript">
 
             var projet_id  = 1;
+
             // var sprint_id  = 1;
 
          // sur double-click d'une t�che
            $("body").delegate('li','dblclick',function() {
+
 
                 var tache_id =  $(this).attr('id');
                 //alert("bonjour "+tache_id);
@@ -44,78 +46,92 @@
                 $tache_no = tache_id.replace("li_tache_", "");
                 $("body").data("modif_tache_no", $tache_no);
 
-                $.blockUI({
-                     message: $('#tache_modifier_form')
-                });
-              });
-
-              // Modifier un tâche
-               $("body").delegate('#btn_tache_modifier_annuler','click',function(){
-             // $('#btn_tache_modifier_annuler').click(function() {
-                  //$('#form_modifier_tache')[0].reset();
-                  alert("annuler");
-                  $.unblockUI();
-                  return false;
-              });
-
-              $("body").delegate('#btn_tache_modifier','click',function(){
-                  $tache_no = $("body").data("modif_tache_no");
-                  alert("tache_numéro " + $tache_no);
-                  //var donnees_form = $('#form_modifier_tache').serialize();
-                  var input_name = "nom_tache";
-                  var nom_tache = $("#form_modifier_tache :input[name='"+input_name+"']").val();
-                  //input_name = "description_tache"; 
-                  //var description_tache = $("#form_modifier_tache :input[name='"+input_name+"']").val(); 
-                  
-                  //alert(nom_tache + " " + description_tache);
-
-                  if(nom_tache == ""){
-                      nom_tache = "Non Défini";
-                  }
-                  $url = "taches/" + $tache_no;
-                  alert($url);
-
+                  $url = "taches/" + $tache_no + "/edit";
+                  //alert($url);
+                
+                // Partie ajax pour éditer le formulaire
                   $.ajax({ statusCode: {
                       500: function(xhr) {
                        alert(500);
                       }},
                       //the route pointing to the post function
                       url: $url,
-                      type: 'PUT',
-                      // send the csrf-token and the input to the controller
-                      data: $('#form_modifier_tache').serialize(),
+                      type: 'GET',
                       dataType: 'text',
-                      // remind that 'data' is the response of the AjaxController
                   success: function (result,status,xhr) {
-                      var tache_no = $("body").data("modif_tache_no");
+                      var la_tache = JSON.parse(result);
+                      $('#modifier_nom_tache').val(la_tache.nom_tache);
+                      $('#modifier_description_tache').val(la_tache.description_tache);
+
                   },error(xhr,status,error){
                       alert("error 1 " + status);
                       alert("error 2 " + error);
                   },
 
                       complete: function (xhr,status) {
-                        var spanAModifier = "tache_titre_" + $tache_no;
-                        document.getElementById(spanAModifier).innerHTML = nom_tache;
-
                         // Handle the complete event
-                       alert("complete " + status);
+                        //alert("complete " + status);
                       }
-                  });
-                  $.unblockUI();
-                 
-              });//#btn_tache_modifier
-              // Fin modifier une tâche
+                  }); // Fin partie ajax pour editer le formulaire
+                
+                $.blockUI({
+                     message: $('#tache_modifier_form')
+                });
+            });
+
+            // Modifier un tâche
+            $("body").delegate('#btn_tache_modifier_annuler','click',function(){
+                alert("annuler");
+                $.unblockUI();
+                return false;
+            });
+
+            $("body").delegate('#btn_tache_modifier','click',function(){
+                $tache_no = $("body").data("modif_tache_no");
+                var input_name = "modifier_nom_tache";
+                var nom_tache = $("#form_modifier_tache :input[name='"+input_name+"']").val();
+                
+                if(nom_tache == ""){
+                    nom_tache = "Non Défini";
+                }
+
+                $url = "taches/" + $tache_no;
+                //alert($url + " serialize " + $('#form_modifier_tache').serialize());
+
+                $.ajax({ statusCode: {
+                    500: function(xhr) {
+                    alert(500);
+                    }},
+                    //the route pointing to the post function
+                    url: $url,
+                    type: 'PUT',
+                    // send the csrf-token and the input to the controller
+                    data: $('#form_modifier_tache').serialize(),
+                    dataType: 'text',
+                    // remind that 'data' is the response of the AjaxController
+                success: function (result,status,xhr) {
+                    var tache_no = $("body").data("modif_tache_no");
+                    var spanAModifier = "tache_titre_" + $tache_no;
+                    $('#'+spanAModifier).html(nom_tache);
+                },error(xhr,status,error){
+                    alert("error 1 " + status);
+                    alert("error 2 " + error + " "+ xhr.responseText);
+                },
+
+                    complete: function (xhr,status) {
+                    // Handle the complete event
+                    //alert("complete PUT " + status);
+                    }
+                });
+                $.unblockUI();
+                
+            });//#btn_tache_modifier
+            // Fin modifier une tâche
 
             function ajouter_tache(liste_no){
-
-
-
                 $.blockUI({
                      message: $('.div_tache_form')
                 });
-
-
-
             } //ajouter_tache
             
 
@@ -151,10 +167,11 @@
                 });
 
 
-               
+                // Example 1.3: Sortable and connectable lists with visual helper
                 $('.container-list .sortable-list').sortable({
                     connectWith: '.container-list .sortable-list',
                     placeholder: 'placeholder',
+                
                     receive: function( event, ui ){
 
 
@@ -204,11 +221,12 @@
 
             } //creer_liste
 
+
+
            // sur double-click d'un div aller chercher la liste pour cette fois-ci
            $("body").delegate('div','dblclick',function() {
 
                 var liste_id =  $(this).attr('id');
-                //alert("liste "+ liste_id);
                 //on s'assure qu'on a bien cliqué sur la partie liste sinon exit
                 if(!(typeof liste_id != 'undefined' && liste_id.indexOf("liste_panel_") >= 0)){
                         return;
@@ -216,68 +234,85 @@
                 var liste_no = liste_id.replace("liste_panel_", "");
                 $("body").data("modif_liste_no", liste_no);
 
+                $url = "listes/" + liste_no + "/edit";
+
+                $.ajax({ statusCode: {
+                    500: function(xhr) {
+                    alert(500);
+                    }},
+                    //the route pointing to the post function
+                    url: $url,
+                    type: 'GET',
+                    dataType: 'text',
+                    
+                success: function (result,status,xhr) {
+                    var la_liste = JSON.parse(result);
+                    $('#modifier_nom_liste').val(la_liste.nom_liste);
+                    $('#modifier_description_liste').val(la_liste.description_liste);
+
+                },error(xhr,status,error){
+                    alert("error 1 " + status);
+                    alert("error 2 " + error);
+                },
+
+                    complete: function (xhr,status) {
+                    // Handle the complete event
+                    //alert("complete " + status);
+                    }
+                });
+                
                 $.blockUI({
                      message: $('#liste_modifier_form')
                 });
-              });
+            });
 
-              // Annuler la modification d'une liste
-               $("body").delegate('#btn_liste_formmodifier_annuler','click',function(){
-                  //$('#form_modifier_liste')[0].reset();
-                  $.unblockUI();
-                  return false;
-              });
+            // Annuler la modification d'une liste
+            $("body").delegate('#btn_liste_formmodifier_annuler','click',function(){
+                //$('#form_modifier_liste')[0].reset();
+                $.unblockUI();
+                return false;
+            });
 
-              // Sur appuie du bouton modifier de la liste
-              $("body").delegate('#btn_liste_modifier','click',function(){
-                  //$('#form_modifier_tache')[0].reset();
-                  //alert("modifier");
-
-                  var liste_no = $("body").data("modif_liste_no");
+            // Sur appuie du bouton modifier de la liste
+            $("body").delegate('#btn_liste_modifier','click',function(){
                   
-                  //var donnees_form = $('#form_modifier_liste').serialize();
-                  var input_name = "nom_liste";
-                  var nom_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val();
-                  //input_name = "description_liste"; 
-                  //var description_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val(); 
-                  
-                  //alert(nom_liste + " " + description_liste);
+                var liste_no = $("body").data("modif_liste_no");
+                var input_name = "modifier_nom_liste";
+                var nom_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val();
+                
+                if(nom_liste == ""){
+                    nom_liste = "Non Défini";
+                }
+                $url = "listes/" + liste_no;
 
-                  //alert("liste_no " + liste_no);
-                  if(nom_liste == ""){
-                      nom_liste = "Non Défini";
-                  }
-                  $url = "listes/" + liste_no;
+                $.ajax({ statusCode: {
+                    500: function(xhr) {
+                    alert(500);
+                    }},
+                    //the route pointing to the post function
+                    url: $url,
+                    type: 'PUT',
+                    // send the csrf-token and the input to the controller
+                    data: $('#form_modifier_liste').serialize(),
+                    dataType: 'text',
+                    // remind that 'data' is the response of the AjaxController
+                success: function (result,status,xhr) {
+                    var spanAModifier = "liste_titre_"+liste_no;
+                    $('#'+spanAModifier).html(nom_liste);
+                },error(xhr,status,error){
+                    alert("error 1 " + status);
+                    alert("error 2 " + error);
+                },
+                    complete: function (xhr,status) {
+                    
+                    // Handle the complete event
+                    //alert("complete " + status);
+                    }
+                });
+                $.unblockUI();
 
-                  $.ajax({ statusCode: {
-                      500: function(xhr) {
-                       alert(500);
-                      }},
-                      //the route pointing to the post function
-                      url: $url,
-                      type: 'PUT',
-                      // send the csrf-token and the input to the controller
-                      data: $('#form_modifier_liste').serialize(),
-                      dataType: 'text',
-                      // remind that 'data' is the response of the AjaxController
-                  success: function (result,status,xhr) {
-                  },error(xhr,status,error){
-                      alert("error 1 " + status);
-                      alert("error 2 " + error);
-                  },
-
-                      complete: function (xhr,status) {
-                        var spanAModifier = "liste_titre_"+liste_no;
-                        document.getElementById(spanAModifier).innerHTML = nom_liste;
-
-                        // Handle the complete event
-                       alert("complete " + status);
-                      }
-                  });
-                  $.unblockUI();
-
-              });//#btn_liste_modifier
-              // Fin modifier une liste
+            });//#btn_liste_modifier
+            // Fin modifier une liste
 
             function afficherTache(data) {
                 var tache = JSON.stringify(data);
@@ -301,8 +336,6 @@ $(document).ready(function() {
                                 }
             });
 
-
-           
                 //$('#getTaches').on('click',function(){
             /*        $.get("{{URL::to('/getTaches')}}", function(data){
                         $('#getTachesData').append(data);
