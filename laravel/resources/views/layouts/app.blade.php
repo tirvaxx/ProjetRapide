@@ -52,7 +52,7 @@ $(function(){
         <script type="text/javascript">
 
             var projet_id  = 1;
-            var sprint_id  = 1;
+            // var sprint_id  = 1;
 
          // sur double-click d'une t�che
            $("body").delegate('li','dblclick',function() {
@@ -140,60 +140,15 @@ $(function(){
 
 
             } //ajouter_tache
-            function creer_sprint(id, no) {
-
-                
-
-                
-                // $sprint = '<div id="div_sprint_' + id + ' class="tabcontent" style="display : none ;">'
-                // $sprint += '    <h3>'+ no + '</h3>'
-                // $sprint += '    <p>Premier Sprint : </p>'
-                // $sprint += '</div>'
-                // alert($sprint);
-                // $('#tabContenu').append($sprint);
-
-                // alert("fonction creer");
-                // $sprint_onglet = '<button class="tablinks" onclick="openTabSprint(event, ' + no + ')">Sprint ' + no + '</button>';
-                // alert($sprint_onglet);
-
-                // $('#tabLien').append($sprint_onglet);
-                // $("div#tabLien").tabs("refresh");
-
-                
-
-            }
-
-            function openTabSprint(evt, sprintNo) {
-                    // Declare all variables
-                var i, tabcontent, tablinks;
-               
-
-                // Get all elements with class="tabcontent" and hide them
-                tabcontent = document.getElementsByClassName("tabcontent");
-                for (i = 0; i < tabcontent.length; i++) {
-                    tabcontent[i].style.display = "none";
-                }
-
-                alert(tabcontent);
-
-                // Get all elements with class="tablinks" and remove the class "active"
-                tablinks = document.getElementsByClassName("tablinks");
-                for (i = 0; i < tablinks.length; i++) {
-                    tablinks[i].className = tablinks[i].className.replace(" active", "");
-                }
-                alert(tablinks);
-
-                // Show the current tab, and add an "active" class to the button that opened the tab
-                // $('document').getElementById("div_sprint_" + sprintNo).style.display = "block";
-                $("#div_sprint_" + sprintNo).val().style.display = "block";
-                evt.currentTarget.className += " active";
-
-                alert(tabcontent);
-            }
-
+            
 
 
              function creer_liste(id, nom, description){
+
+                var sprint_id_name = $('#tabs .ui-state-active').attr('aria-controls');
+                    alert(sprint_id_name);
+                    var sprint_id = sprint_id_name.replace("tabs-", "");
+                    alert(sprint_id);
 
                 $liste = '<div class="container-list">'
                 $liste +='    <div class="panel panel-default column left"  id="liste_' + id + '">'
@@ -210,7 +165,7 @@ $(function(){
                 $liste +='    </div>  <!-- panel-default -->'
                 $liste +='</div>  <!-- #container-liste -->'
 
-                $("#container-list-lvl2").append($liste);
+                $("#tabs-" + sprint_id).append($liste);
 
                 $("#btn_ajouter_tache_Liste_" + id ).bind('click', function(e)
                 {
@@ -235,6 +190,7 @@ $(function(){
                         
                         
                         
+
                         var data =  "projet_id=" + projet_id + "&sprint_id=" + sprint_id + "&liste_id=" + liste_no + "&tache_id=" + tache_no;
 
 
@@ -403,9 +359,6 @@ $(document).ready(function() {
                     return false; 
                 }); //$('#btn_liste_fermer').click(function() 
 
-                    $.unblockUI();
-                    return false;
-                }); //$('#btn_liste_fermer').click(function()
 
                $('#btn_tache_ajouter').click(function() {
 
@@ -413,6 +366,9 @@ $(document).ready(function() {
 
                     var liste_no = $("body").data("ajout_liste_no");
                     var nom_tache = $("#nom_tache").val();
+                    var sprint_id_name = $("#tabs .ui-tabs-panel:visible").attr("id");
+                    var sprint_id = sprint_id_name.replace("tabs-", "");
+
                     if(nom_tache == ""){
                         nom_tache = "Non Défini";
 
@@ -451,6 +407,15 @@ $(document).ready(function() {
                  }); // $('#btn_tache_ajouter').click(function()
 
                 $('#btn_liste_ajouter').click(function() {
+
+
+                    // var tabs = $( "#tabs" ).tabs();
+                    // var sprint_id_name = tabs.find( ".ui-tabs-active" ).attr('id');
+                    var sprint_id_name = $('#tabs .ui-state-active').attr('aria-controls');
+                    alert(sprint_id_name);
+                    var sprint_id = sprint_id_name.replace("tabs-", "");
+                    alert(sprint_id);
+
                     var data =  $('#form_liste').serialize() + "&projet_id=" + projet_id + "&sprint_id=" + sprint_id
                   
                     $.ajax({ statusCode: {
@@ -498,7 +463,8 @@ $(document).ready(function() {
                                 $id = JSON.parse(result).last_inserted_id;
                                 $numero = JSON.parse(result).numero;
 
-                                creer_sprint($id, $numero);
+                                // creer_sprint($id, $numero);
+                                addTab($id, $numero);
 
                         },
                         error(xhr,status,error){
@@ -595,7 +561,7 @@ $(document).ready(function() {
    
 
                 $( function() {
-                var tabTitle = $( "#tab_title" ),
+                var noSprint = $( "#no_sprint" ),
                   tabContent = $( "#tab_content" ),
                   tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>",
                   tabCounter = 2;
@@ -629,7 +595,7 @@ $(document).ready(function() {
              
                 // Actual addTab function: adds new tab using the input from the form above
                 function addTab() {
-                  var label = tabTitle.val() || "Tab " + tabCounter,
+                  var label = noSprint.val() || "Tab " + tabCounter,
                     id = "tabs-" + tabCounter,
                     li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
                     tabContentHtml = tabContent.val() || "Tab " + tabCounter + " content.";
@@ -639,11 +605,28 @@ $(document).ready(function() {
                   tabs.tabs( "refresh" );
                   tabCounter++;
                 }
+                // function addTab() {
+                //   var label = no_sprint.val() || "Tab " + tabCounter,
+                //     id = "tabs-" + tabCounter,
+                //     li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
+                //     tabContentHtml = tabContent.val() || "Tab " + tabCounter + " content.";
+             
+                //     alert(no_sprint.val());
+                //   tabs.find( ".ui-tabs-nav" ).append( li );
+                //   tabs.append( "<div id='" + id + "'><p>" + tabContentHtml + "</p></div>" );
+                //   tabs.tabs( "refresh" );
+                //   tabCounter++;
+                // }
+
              
                 // AddTab button: just opens the dialog
-                $( "#add_tab" )
-                  .button()
-                  .on( "click", function() {
+                // $( "#add_tab" )
+                //   .button()
+                //   .on( "click", function() {
+                //     dialog.dialog( "open" );
+                //   });
+
+                $( "#creer_item_sprint" ).button().on( "click", function() {
                     dialog.dialog( "open" );
                   });
              
@@ -661,10 +644,7 @@ $(document).ready(function() {
                     tabs.tabs( "refresh" );
                   }
                 });
-               
-
-
-
+               });
 }); //$(document).ready(function()
 
 
