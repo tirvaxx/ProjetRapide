@@ -24,29 +24,6 @@
     <?php ini_set('display_errors', 'On'); ?>
 
 
-
-
-
-
-
-
-
-/*
-https://stackoverflow.com/questions/28386534/post-request-with-jquery-and-laravel-framework
-$(function(){
-         $.post(Urldir,{ _token: $('meta[name=csrf-token]').attr('content'), _method : 'PUT', data :  }, function(response){
-
-               if(response != '')
-                {
-                 console.log('good');
-                }
-
-            });
-        });
-
-*/
-
-
   </script>
 
         <script type="text/javascript">
@@ -409,8 +386,7 @@ $(document).ready(function() {
                 $('#btn_liste_ajouter').click(function() {
 
 
-                    // var tabs = $( "#tabs" ).tabs();
-                    // var sprint_id_name = tabs.find( ".ui-tabs-active" ).attr('id');
+                  
                     var sprint_id_name = $('#tabs .ui-state-active').attr('aria-controls');
                     alert(sprint_id_name);
                     var sprint_id = sprint_id_name.replace("tabs-", "");
@@ -449,31 +425,7 @@ $(document).ready(function() {
 
                 }); // $('#btn_liste_ajouter').click(function()
 
-                $('#btn_sprint_ajouter').click(function() { 
-
-                    $.ajax({ 
-
-                            url: "{{ URL::to('sprints') }}",
-                            type: 'POST',
-                            data: $('#form_sprint').serialize(),
-                            dataType: 'text',
-
-                        success: function (result,status,xhr) {
-     
-                                $id = JSON.parse(result).last_inserted_id;
-                                $numero = JSON.parse(result).numero;
-
-                                // creer_sprint($id, $numero);
-                                addTab($id, $numero);
-
-                        },
-                        error(xhr,status,error){
-                            alert("error 1 " + status);
-                            alert("error 2 " + error);
-                        }
-
-                    });
-                }); //$('#btn_tache_ajouter').click(function()
+                
 
 
 
@@ -569,66 +521,67 @@ $(document).ready(function() {
                 var tabs = $( "#tabs" ).tabs();
              
                 // Modal dialog init: custom buttons and a "close" callback resetting the form inside
-                var dialog = $( "#dialog" ).dialog({
-                  autoOpen: false,
-                  modal: true,
-                  buttons: {
-                    Add: function() {
-                      addTab();
-                      $( this ).dialog( "close" );
-                    },
-                    Cancel: function() {
-                      $( this ).dialog( "close" );
-                    }
-                  },
-                  close: function() {
-                    form[ 0 ].reset();
-                  }
-                });
+                // var dialog = $( "#dialog" ).dialog({
+                //   autoOpen: false,
+                //   modal: true,
+                //   buttons: {
+                //     Add: function() {
+                //       addTab();
+                //       $( this ).dialog( "close" );
+                //     },
+                //     Cancel: function() {
+                //       $( this ).dialog( "close" );
+                //     }
+                //   },
+                //   close: function() {
+                //     form[ 0 ].reset();
+                //   }
+                // });
              
                 //AddTab form: calls addTab function on submit and closes the dialog
-                var form = dialog.find( "form" ).on( "submit", function( event ) {
-                  addTab();
-                  dialog.dialog( "close" );
-                  event.preventDefault();
-                });
+                $('#btn_sprint_ajouter').click(function() { 
+
+                    $.ajax({ 
+
+                            url: "{{ URL::to('sprints') }}",
+                            type: 'POST',
+                            data: $('#form_sprint').serialize(),
+                            dataType: 'text',
+
+                        success: function (result,status,xhr) {
+     
+                                var id = JSON.parse(result).last_inserted_id;
+                                var numero = JSON.parse(result).numero;
+
+                                // creer_sprint($id, $numero);
+                                addTab(id, numero);
+
+                        },
+                        error(xhr,status,error){
+                            alert("error 1 " + status);
+                            alert("error 2 " + error);
+                        }
+
+                    });
+                }); //$('#btn_tache_ajouter').click(function()
              
                 // Actual addTab function: adds new tab using the input from the form above
-                function addTab() {
-                  var label = noSprint.val() || "Tab " + tabCounter,
+                function addTab(id, numero) {
+                  var label = noSprint.val() || "Sprint " + tabCounter,
                     id = "tabs-" + tabCounter,
                     li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
-                    tabContentHtml = tabContent.val() || "Tab " + tabCounter + " content.";
+                    tabContentHtml = tabContent.val();
              
                   tabs.find( ".ui-tabs-nav" ).append( li );
                   tabs.append( "<div id='" + id + "'><p>" + tabContentHtml + "</p></div>" );
                   tabs.tabs( "refresh" );
                   tabCounter++;
                 }
-                // function addTab() {
-                //   var label = no_sprint.val() || "Tab " + tabCounter,
-                //     id = "tabs-" + tabCounter,
-                //     li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
-                //     tabContentHtml = tabContent.val() || "Tab " + tabCounter + " content.";
-             
-                //     alert(no_sprint.val());
-                //   tabs.find( ".ui-tabs-nav" ).append( li );
-                //   tabs.append( "<div id='" + id + "'><p>" + tabContentHtml + "</p></div>" );
-                //   tabs.tabs( "refresh" );
-                //   tabCounter++;
-                // }
+                
 
-             
-                // AddTab button: just opens the dialog
-                // $( "#add_tab" )
-                //   .button()
-                //   .on( "click", function() {
+                // $( "#creer_item_sprint" ).button().on( "click", function() {
                 //     dialog.dialog( "open" );
                 //   });
-
-                $( "#creer_item_sprint" ).button().on( "click", function() {
-                    dialog.dialog( "open" );
-                  });
              
                 // Close icon: removing the tab on click
                 tabs.on( "click", "span.ui-icon-close", function() {
