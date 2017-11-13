@@ -89,11 +89,11 @@ class TacheController extends Controller
      * @param  \App\Tache  $tache
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tache $tache)
+    public function edit($id)
     {
-        //return View::make('taches.edit', array('tache' => $tache))->with('title', 'Éditer une tâche');
+        $tache = Tache::find($id);
         $data = array( 
-            'tache_id' => $tache->id,
+            'id_tache' => $tache->id,
             'nom_tache' => $tache->nom,
             'description_tache' => $tache->description
        );
@@ -107,15 +107,16 @@ class TacheController extends Controller
      * @param  \App\Tache  $tache
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tache $tache)
+    public function update(Request $request, $id)
     {
-        $tache->nom = request('nom_tache');
-        $tache->description = request('description_tache');
+        $tache = Tache::find($id);
+        $tache->nom = request('modifier_nom_tache');
+        $tache->description = request('modifier_description_tache');
         $tache->update();
         $data = array( 
             'tache_id' => $tache->id,
-            'nom' => request('nom_tache'),
-            'description' => request('description_tache')
+            'nom' => request('modifier_nom_tache'),
+            'description' => request('modifier_description_tache')
        );
        return $data;
     }

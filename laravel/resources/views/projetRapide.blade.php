@@ -99,11 +99,11 @@
             <legend>Modifier une tache</legend>
                 <div class="form-group">
                         <label for="nom_tache">Nom de la tache</label>
-                        <input type="text" class="form-control" id="nom_tache" name="nom_tache" placeholder="Nom" value=test />
+                        <input type="text" class="form-control" id="modifier_nom_tache" name="modifier_nom_tache" placeholder="Nom" />
                 </div>
                 <div class="form-group">
                          <label for="description_tache">Description de la tache todo</label>
-                        <textarea class="form-control" id="description_tache" name="description_tache" placeholder="Description">autretest</textarea>
+                        <textarea class="form-control" id="modifier_description_tache" name="modifier_description_tache" placeholder="Description"></textarea>
                 </div>
                 <div class="form-group">
                     <button type="button" id="btn_tache_modifier" class="btn btn-primary" >Modifier</button>
@@ -147,11 +147,11 @@
             <legend>Modifier une liste</legend>
                 <div class="form-group">
                         <label for="nom_liste">Nom de la liste</label>
-                        <input type="text" class="form-control" id="nom_liste" name="nom_liste" placeholder="Nom" value=test />
+                        <input type="text" class="form-control" id="modifier_nom_liste" name="modifier_nom_liste" placeholder="Nom" />
                 </div>
                 <div class="form-group">
                          <label for="description_liste">Description de la tache</label>
-                        <textarea class="form-control" id="description_liste" name="description_liste" placeholder="Description">
+                        <textarea class="form-control" id="modifier_description_liste" name="modifier_description_liste" placeholder="Description">
                         autretest</textarea>
                 </div>
                 <div class="form-group">
