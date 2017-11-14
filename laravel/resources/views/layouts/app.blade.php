@@ -8,8 +8,9 @@
         <title>Projet Rapide</title>
 
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href={{ asset('css/projetrapide.css') }}>
+
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('js/jquery.blockUI.js') }}"></script>
@@ -49,11 +50,11 @@ $(function(){
 
             var projet_id  = 1;
             var sprint_id  = 1;
+
             // sur double-click d'une t�che
             $("body").delegate('li','dblclick',function() {
 
                 var tache_id =  $(this).attr('id');
-                //alert("bonjour "+tache_id);
                 //on s'assure que le <li> cliqu� est une t�che sinon exit
                 //il faut que le id de <a> commence par btn_ajouter_tache_Liste + _ + le id de la liste dans la bd
                 if(!(typeof tache_id != 'undefined' && tache_id.indexOf("li_tache") >= 0)){
@@ -63,8 +64,7 @@ $(function(){
                 $("body").data("modif_tache_no", $tache_no);
 
                   $url = "taches/" + $tache_no + "/edit";
-                  //alert($url);
-                
+                 
                 // Partie ajax pour éditer le formulaire
                   $.ajax({ statusCode: {
                       500: function(xhr) {
@@ -97,7 +97,7 @@ $(function(){
 
             // Modifier un tâche
             $("body").delegate('#btn_tache_modifier_annuler','click',function(){
-                alert("annuler");
+                //alert("annuler");
                 $.unblockUI();
                 return false;
             });
@@ -108,11 +108,15 @@ $(function(){
                 var nom_tache = $("#form_modifier_tache :input[name='"+input_name+"']").val();
                 
                 if(nom_tache == ""){
-                    nom_tache = "Non Défini";
+                     //confirm("Attention, vous devez entrer une tâche!");
+                     
+                    nom_tache = "Non défini";
+                }
+                if(description_tache == ""){
+                    description_tache = "Non défini"
                 }
 
                 $url = "taches/" + $tache_no;
-                //alert($url + " serialize " + $('#form_modifier_tache').serialize());
 
                 $.ajax({ statusCode: {
                     500: function(xhr) {
@@ -128,7 +132,7 @@ $(function(){
                 success: function (result,status,xhr) {
                     var tache_no = $("body").data("modif_tache_no");
                     var spanAModifier = "tache_titre_" + $tache_no;
-                    $('#'+spanAModifier).html(nom_tache);
+                    $('#'+spanAModifier).text(nom_tache);
                 },error(xhr,status,error){
                     alert("error 1 " + status);
                     alert("error 2 " + error + " "+ xhr.responseText);
@@ -155,7 +159,7 @@ $(function(){
 
                 $liste = '<div class="container-list">'
                 $liste +='    <div class="panel panel-default column left"  id="liste_' + id + '">'
-                $liste +='        <div class="panel-heading" id="liste_panel_' + id + '">'
+                $liste +='        <div class="panel-heading" id="liste_panel_' + id + '" rel="tooltip" title="' + description + '">'
                 $liste +='            <span id="liste_titre_' + id + '">' + nom + '</span>'
                 $liste +='        </div>  <!-- panel-heading -->'
                 $liste +='        <div class="panel-body">'
@@ -196,9 +200,6 @@ $(function(){
                         
                         var data =  "projet_id=" + projet_id + "&sprint_id=" + sprint_id + "&liste_id=" + liste_no + "&tache_id=" + tache_no;
 
-
-
-
                         $.ajax({ statusCode: {
                             500: function(xhr) {
                              alert(500);
@@ -212,7 +213,7 @@ $(function(){
                             // remind that 'data' is the response of the AjaxController
                         success: function (result,status,xhr) {
 
-                               alert("drag drop successs");
+                               //alert("drag drop successs");
 
                         },error(xhr,status,error){
                             alert("error 1 " + status);
@@ -220,7 +221,7 @@ $(function(){
                         },
                             complete: function (xhr,status) {
                                 // Handle the complete event
-                             alert("complete " + status);
+                             //alert("complete " + status);
                             }
                         });  //ajax
                                 
@@ -258,6 +259,7 @@ $(function(){
                     var la_liste = JSON.parse(result);
                     $('#modifier_nom_liste').val(la_liste.nom_liste);
                     $('#modifier_description_liste').val(la_liste.description_liste);
+                    $('#liste_message_modifier').hide();
 
                 },error(xhr,status,error){
                     alert("error 1 " + status);
@@ -288,10 +290,29 @@ $(function(){
                 var liste_no = $("body").data("modif_liste_no");
                 var input_name = "modifier_nom_liste";
                 var nom_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val();
+                var input_name = "modifier_description_liste";
+                var description_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val();
                 
-                if(nom_liste == ""){
-                    nom_liste = "Non Défini";
+                var lblMessageListeModifier = "liste_message_modifier"; // Permet d'afficher un message d'erreur dans le formulaire.
+                
+                var ExpNom = /^[0-9a-zA-Z\s\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿç  Ç_]{2,40}$/;
+                //var ExpDesc = /^[0-9a-zA-Z\s\r\n\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_]{2,150}$/;
+                var ExpDesc = /^[^;]{2,150}$/;
+
+                var res_test_nom = nom_liste.match(ExpNom);
+                var res_test_desc = description_liste.match(ExpDesc);
+                
+                if( nom_liste.replace(/\s/g, '') == "" ||
+                    description_liste.replace(/\s/g, '') == "" || !res_test_nom || !res_test_desc){
+                   
+                    $('#'+lblMessageListeModifier).html("<tr><td width=\"20%\" style=\"vertical-align : middle; font-size: 35px;text-align:center;\"><span>&#9888</span></td><td width=\"80%\" style=\"vertical-align : middle;\">" + 
+                    "<span><strong>Nom de la liste :</strong><br/>(2 à 40 caractères maximum acceptant les caratères : 0 à 9, a à z, A à Z, espace, point, àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_)<br/><strong>Description de la liste :</strong><br/>(2 à 150 caractères).</span></td></tr>");
+                    $('#'+lblMessageListeModifier).show();
+                    message: $('#liste_modifier_form')
+                    return;
                 }
+
+            
                 $url = "listes/" + liste_no;
 
                 $.ajax({ statusCode: {
@@ -306,14 +327,21 @@ $(function(){
                     dataType: 'text',
                     // remind that 'data' is the response of the AjaxController
                 success: function (result,status,xhr) {
-                    var spanAModifier = "liste_titre_"+liste_no;
-                    $('#'+spanAModifier).html(nom_liste);
+                    
+                    var tagAModifier = "liste_titre_"+liste_no;
+                    $('#'+tagAModifier).text(nom_liste);
+
+                    tagAModifier = "liste_panel_"+liste_no;
+                    $('#'+tagAModifier).attr('title', description_liste);
+                 
                 },error(xhr,status,error){
                     alert("error 1 " + status);
                     alert("error 2 " + error);
                 },
                     complete: function (xhr,status) {
-                    
+                        // Remettre la partie message d'erreur du formulaire à rien et chacher cette partie
+                        $('#'+lblMessageListeModifier).html("");
+                        $('#'+lblMessageListeModifier).hide();
                     // Handle the complete event
                     //alert("complete " + status);
                     }
@@ -337,6 +365,10 @@ $(function(){
 
 
 $(document).ready(function() {
+            
+             //Permet d'afficher des tooltips de types Bootstrap 
+            $("[rel=tooltip]").tooltip({ placement: 'top'});
+
             $.ajaxSetup({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -350,8 +382,6 @@ $(document).ready(function() {
                     });
             */
                // })
-
-
 
 
                 $('#btn_tache_fermer').click(function() {
@@ -395,8 +425,7 @@ $(document).ready(function() {
                     success: function (result,status,xhr) {
 
                             var liste_no = $("body").data("ajout_liste_no");
-                            $("#ul_liste_" + liste_no).append( '<li id="li_tache_' + JSON.parse(result).last_inserted_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span id="tache_titre_'+ JSON.parse(result).last_inserted_id + '">' + JSON.parse(result).nom + '</span></li>' );
-
+                            $("#ul_liste_" + liste_no).append( '<li id="li_tache_' + JSON.parse(result).last_inserted_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span id="tache_titre_'+ JSON.parse(result).last_inserted_id + '">' + JSON.parse(result).nom + '</span></li>' );               
 
                     },error(xhr,status,error){
                         alert("error 1 " + status);
@@ -404,7 +433,7 @@ $(document).ready(function() {
                     },
                         complete: function (xhr,status) {
                             // Handle the complete event
-                         alert("complete " + status);
+                         //alert("complete " + status);
                         }
                     });
 
@@ -439,7 +468,7 @@ $(document).ready(function() {
                     },
                     complete: function (xhr,status) {
                             // Handle the complete event
-                         alert("complete " + status);
+                         //alert("complete " + status);
                     }
                     });
 
@@ -472,12 +501,9 @@ $(document).ready(function() {
                 //ajouté dynamiquement... sinon, ca ne marche pas
                 $("body").delegate('a.x-remove','click',function() {
 
-
-
                         var id = $(this).parent().attr("id");
                         var id_no = id.replace("li_tache_","");
                         var url = "taches/" + id_no;
-
 
                         $.ajax({ statusCode: {
                         500: function(xhr) {
@@ -497,7 +523,7 @@ $(document).ready(function() {
                     },
                         complete: function (xhr,status) {
                             // Handle the complete event
-                         alert("complete " + status);
+                         //alert("complete " + status);
                         }
                     });
 

@@ -102,7 +102,7 @@
                         <input type="text" class="form-control" id="modifier_nom_tache" name="modifier_nom_tache" placeholder="Nom" />
                 </div>
                 <div class="form-group">
-                         <label for="description_tache">Description de la tache todo</label>
+                         <label for="description_tache">Description de la tache</label>
                         <textarea class="form-control" id="modifier_description_tache" name="modifier_description_tache" placeholder="Description"></textarea>
                 </div>
                 <div class="form-group">
@@ -146,11 +146,14 @@
         <fieldset>
             <legend>Modifier une liste</legend>
                 <div class="form-group">
+                    <div id="liste_message_modifier" style="display:none;text-align:left;color:darkred;background-color:#DEECF7; border-style:groove;"></div>­­
+                </div>
+                <div class="form-group">
                         <label for="nom_liste">Nom de la liste</label>
                         <input type="text" class="form-control" id="modifier_nom_liste" name="modifier_nom_liste" placeholder="Nom" />
                 </div>
                 <div class="form-group">
-                         <label for="description_liste">Description de la tache</label>
+                         <label for="description_liste">Description de la liste</label>
                         <textarea class="form-control" id="modifier_description_liste" name="modifier_description_liste" placeholder="Description">
                         autretest</textarea>
                 </div>
@@ -164,7 +167,7 @@
 
 </div>
 
-    
+
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
 @endsection
