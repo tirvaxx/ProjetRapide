@@ -49,8 +49,33 @@
 
 
 <p id="message"></p>
-   <div id="center-wrapper">  
-    <h2 id="sprint_no">Sprint 1</h2>
+   <div id="center-wrapper"> 
+       <!-- <div id="dialog" title="Tab data">
+          <form>
+            <fieldset class="ui-helper-reset">
+              <label for="tab_no">Numero</label>
+              <input type="text" name="tab_no" id="tab_no" placeholder="Tab Title" class="ui-widget-content ui-corner-all">
+              <label for="tab_content">Content</label>
+              <textarea name="tab_content" id="tab_content" class="ui-widget-content ui-corner-all">Tab content</textarea>
+            </fieldset>
+          </form>
+        </div> -->
+         
+        <button id="add_tab">Add Tab</button>
+         
+        
+        <div id="tabs">
+          <ul>
+            <!-- <li><a href="#tabs-1">Nunc tincidunt</a> <span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li> -->
+          </ul>
+            <div id="tabs-1">
+                <!-- Les listes viennent ici -->
+                <div class="container-list-lvl2" id="container-list-lvl2">
+            
+                </div> 
+            </div>
+        </div>
+   <!--  <h2 id="sprint_no">Sprint 1</h2>
         <div class="row">
             <h2>GET</h2>
             <button id="getTaches" type="button" class="btn btn-primary">GET</button>
@@ -58,11 +83,15 @@
         <div id="getTachesData">
             
         </div>
+
+            
+    
+    </div>  --> 
+
            
-        <div class="container-list-lvl2" id="container-list-lvl2">
-             <!-- Les listes viennent ici -->
-        </div> <!-- #container-list-lvl2 -->
+        
     </div>  <!-- #center-wrapper -->
+
 
 
 
@@ -139,6 +168,43 @@
     </form>
 
 </div>
+<div class="div_sprint_form" style="display:none">
+    <form id="form_sprint" action="#" >
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <!-- securite contre les failles sur les requests -->
+       
+        <fieldset>
+            <legend>Ajouter un sprint</legend>
+             <div class="form-group">
+                        <label for="no_sprint">Numero du sprint</label>
+                        <input type="text" class="form-control" id="no_sprint" name="no_sprint" placeholder="Sprint" />                            
+                </div>
+                <div class="form-group" >
+                    <label for="date_debut">Date Début :</label>
+                    <input type="text" class="form-control" name="date_debut" id="date_debut">
+                </div>
+                <div class="form-group" >
+                    <label for="date_fin">Date Fin :</label>
+                    <input type="text" class="form-control" name="date_fin" id="date_fin">
+                </div>
+                <script type="text/javascript">
+                    $( function() {
+                        $( "#date_debut" ).datepicker({ dateFormat: 'yy-mm-dd' });
+                    } );
+                    $( function() {
+                        $( "#date_fin" ).datepicker({ dateFormat: 'yy-mm-dd' });
+                    } );
+                </script>
+                <div class="form-group">
+                    <button type="button" id="btn_sprint_ajouter" class="btn btn-primary" >Ajouter</button>
+                    <button type="button" id="btn_sprint_fermer" class="btn btn-primary" >Fermer</button>
+                </div>
+        </fieldset>
+      
+    </form>
+
+</div>
+
 
 <div id="liste_modifier_form" style="display:none">
     <form id="form_modifier_liste" action="#">

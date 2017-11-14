@@ -7,8 +7,12 @@
         <meta name="csrf-token" content="{{ Session::token() }}">
         <title>Projet Rapide</title>
 
+        <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
+
+
+
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+       <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href={{ asset('css/projetrapide.css') }}>
 
         <script src="{{ asset('js/jquery.min.js') }}"></script>
@@ -21,38 +25,17 @@
     <?php ini_set('display_errors', 'On'); ?>
 
 
-
-
-
-
-
-
-
-/*
-https://stackoverflow.com/questions/28386534/post-request-with-jquery-and-laravel-framework
-$(function(){
-         $.post(Urldir,{ _token: $('meta[name=csrf-token]').attr('content'), _method : 'PUT', data :  }, function(response){
-
-               if(response != '')
-                {
-                 console.log('good');
-                }
-
-            });
-        });
-
-*/
-
-
   </script>
 
         <script type="text/javascript">
 
             var projet_id  = 1;
-            var sprint_id  = 1;
 
-            // sur double-click d'une t�che
-            $("body").delegate('li','dblclick',function() {
+            // var sprint_id  = 1;
+
+         // sur double-click d'une t�che
+           $("body").delegate('li','dblclick',function() {
+
 
                 var tache_id =  $(this).attr('id');
                 //on s'assure que le <li> cliqu� est une t�che sinon exit
@@ -153,9 +136,15 @@ $(function(){
                      message: $('.div_tache_form')
                 });
             } //ajouter_tache
+            
 
 
              function creer_liste(id, nom, description){
+
+                var sprint_id_name = $('#tabs .ui-state-active').attr('aria-controls');
+                    alert(sprint_id_name);
+                    var sprint_id = sprint_id_name.replace("tabs-", "");
+                    alert(sprint_id);
 
                 $liste = '<div class="container-list">'
                 $liste +='    <div class="panel panel-default column left"  id="liste_' + id + '">'
@@ -172,7 +161,7 @@ $(function(){
                 $liste +='    </div>  <!-- panel-default -->'
                 $liste +='</div>  <!-- #container-liste -->'
 
-                $("#container-list-lvl2").append($liste);
+                $("#tabs-" + sprint_id).append($liste);
 
                 $("#btn_ajouter_tache_Liste_" + id ).bind('click', function(e)
                 {
@@ -198,6 +187,7 @@ $(function(){
                         
                         
                         
+
                         var data =  "projet_id=" + projet_id + "&sprint_id=" + sprint_id + "&liste_id=" + liste_no + "&tache_id=" + tache_no;
 
                         $.ajax({ statusCode: {
@@ -364,6 +354,7 @@ $(function(){
             }
 
 
+
 $(document).ready(function() {
             
              //Permet d'afficher des tooltips de types Bootstrap 
@@ -395,15 +386,27 @@ $(document).ready(function() {
                  $('#btn_liste_fermer').click(function() {
                     //permet d'effacer les valeurs du form et recommencer à neuf
                     $('#form_liste')[0].reset();
-                    $.unblockUI();
-                    return false;
-                }); //$('#btn_liste_fermer').click(function()
+
+                    $.unblockUI(); 
+                    return false; 
+                }); //$('#btn_liste_fermer').click(function() 
+                 $('#btn_sprint_fermer').click(function() { 
+                    //permet d'effacer les valeurs du form et recommencer à neuf
+                    $('#form_sprint')[0].reset();
+                    $.unblockUI(); 
+                    return false; 
+                }); //$('#btn_liste_fermer').click(function() 
+
 
                $('#btn_tache_ajouter').click(function() {
 
 
+
                     var liste_no = $("body").data("ajout_liste_no");
                     var nom_tache = $("#nom_tache").val();
+                    var sprint_id_name = $("#tabs .ui-tabs-panel:visible").attr("id");
+                    var sprint_id = sprint_id_name.replace("tabs-", "");
+
                     if(nom_tache == ""){
                         nom_tache = "Non Défini";
 
@@ -441,6 +444,14 @@ $(document).ready(function() {
                  }); // $('#btn_tache_ajouter').click(function()
 
                 $('#btn_liste_ajouter').click(function() {
+
+
+                  
+                    var sprint_id_name = $('#tabs .ui-state-active').attr('aria-controls');
+                    alert(sprint_id_name);
+                    var sprint_id = sprint_id_name.replace("tabs-", "");
+                    alert(sprint_id);
+
                     var data =  $('#form_liste').serialize() + "&projet_id=" + projet_id + "&sprint_id=" + sprint_id
                   
                     $.ajax({ statusCode: {
@@ -473,6 +484,8 @@ $(document).ready(function() {
                     });
 
                 }); // $('#btn_liste_ajouter').click(function()
+
+                
 
 
 
@@ -529,6 +542,10 @@ $(document).ready(function() {
 
 
                 }); // $("body").delegate('a.x-remove','click',function()
+
+
+
+                
                 $(document).on("click", "#creer_item_liste", function() {
                     //permet d'effacer les valeurs du form et recommencer à neuf
                     $('#form_liste')[0].reset();
@@ -539,9 +556,108 @@ $(document).ready(function() {
 
                 }); // $(document).on("click", "#creer_item_liste", function()
 
+           
+                
 
+                $(document).on("click", "#creer_item_sprint", function() {
+                    //permet d'effacer les valeurs du form et recommencer à neuf
+                    $('#form_sprint')[0].reset();
+                    $.blockUI({ 
+                        message: $('.div_sprint_form') 
+                    }); 
+                    
+                }); //$(document).on("click", "#creer_item_liste", function() {
+   
 
+                $( function() {
+                var noSprint = $( "#no_sprint" ),
+                  tabContent = $( "#tab_content" ),
+                  tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>",
+                  tabCounter = 2;
+             
+                var tabs = $( "#tabs" ).tabs();
+             
+                // Modal dialog init: custom buttons and a "close" callback resetting the form inside
+                // var dialog = $( "#dialog" ).dialog({
+                //   autoOpen: false,
+                //   modal: true,
+                //   buttons: {
+                //     Add: function() {
+                //       addTab();
+                //       $( this ).dialog( "close" );
+                //     },
+                //     Cancel: function() {
+                //       $( this ).dialog( "close" );
+                //     }
+                //   },
+                //   close: function() {
+                //     form[ 0 ].reset();
+                //   }
+                // });
+             
+                //AddTab form: calls addTab function on submit and closes the dialog
+                $('#btn_sprint_ajouter').click(function() { 
+
+                    $.ajax({ 
+
+                            url: "{{ URL::to('sprints') }}",
+                            type: 'POST',
+                            data: $('#form_sprint').serialize(),
+                            dataType: 'text',
+
+                        success: function (result,status,xhr) {
+     
+                                var id = JSON.parse(result).last_inserted_id;
+                                var numero = JSON.parse(result).numero;
+
+                                // creer_sprint($id, $numero);
+                                addTab(id, numero);
+
+                        },
+                        error(xhr,status,error){
+                            alert("error 1 " + status);
+                            alert("error 2 " + error);
+                        }
+
+                    });
+                }); //$('#btn_tache_ajouter').click(function()
+             
+                // Actual addTab function: adds new tab using the input from the form above
+                function addTab(id, numero) {
+                  var label = noSprint.val() || "Sprint " + tabCounter,
+                    id = "tabs-" + tabCounter,
+                    li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
+                    tabContentHtml = tabContent.val();
+             
+                  tabs.find( ".ui-tabs-nav" ).append( li );
+                  tabs.append( "<div id='" + id + "'><p>" + tabContentHtml + "</p></div>" );
+                  tabs.tabs( "refresh" );
+                  tabCounter++;
+                }
+                
+
+                // $( "#creer_item_sprint" ).button().on( "click", function() {
+                //     dialog.dialog( "open" );
+                //   });
+             
+                // Close icon: removing the tab on click
+                tabs.on( "click", "span.ui-icon-close", function() {
+                  var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
+                  $( "#" + panelId ).remove();
+                  tabs.tabs( "refresh" );
+                });
+             
+                tabs.on( "keyup", function( event ) {
+                  if ( event.altKey && event.keyCode === $.ui.keyCode.BACKSPACE ) {
+                    var panelId = tabs.find( ".ui-tabs-active" ).remove().attr( "aria-controls" );
+                    $( "#" + panelId ).remove();
+                    tabs.tabs( "refresh" );
+                  }
+                });
+               });
 }); //$(document).ready(function()
+
+
 
 
 
