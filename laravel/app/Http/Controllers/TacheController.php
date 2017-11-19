@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 //use View;
+
+use DB;
 use App\Tache;
 use App\SprintActivite;
 use Illuminate\Http\Request;
@@ -51,15 +53,33 @@ class TacheController extends Controller
 
 
 
+        $max_ordre = SprintActivite::where("projet_id", "=", request("projet_id"))
+        ->where("sprint_id","=", request("sprint_id"))
+        ->Where("liste_id", "=", request("liste_id"))
+        ->max(DB::raw('coalesce(ordre,0)'));
+        //->get();
+
+
         $sprint_activite = new SprintActivite;
         $sprint_activite->projet_id = request("projet_id");
         $sprint_activite->sprint_id = request("sprint_id");
         $sprint_activite->liste_id = request("liste_id");
         $sprint_activite->tache_id = $tache->id;
+        $sprint_activite->ordre = $max_ordre + 1;
         $sprint_activite->actif = 1;
         $sprint_activite->creer_par_acteur_id = 2;
         $sprint_activite->assigne_acteur_id = 2;
         $sprint_activite->save();
+
+
+
+        //on met inactif l'enregistrement où il n'y a pas de tache dans la liste
+        SprintActivite::where("projet_id", "=", request("projet_id"))
+        ->where("sprint_id","=", request("sprint_id"))
+        ->Where("liste_id", "=", request("liste_id"))
+        ->WhereNull("tache_id")
+        ->update(["actif" => 0]);
+           
 
 
         $data = array(
@@ -130,11 +150,14 @@ class TacheController extends Controller
     public function destroy($id)
     {
         // delete
-        $tache = Tache::find($id);
-        $tache->delete();
+        //$tache = Tache::find($id);
+        //$tache->delete();
+
+
+        //SprintActivite::Store($json);
 
         $data = array(
-            'id' => $id,
+        
             'message' => 'La tache a été supprimé.'
         );
         return $data;

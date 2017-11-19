@@ -21,8 +21,10 @@ Route::get('/', function () {
 // create ?
 Route::post('/taches', 'TacheController@store');
 Route::get('/taches/{id}/edit', array('tache'=> 'taches', 'uses' => 'TacheController@edit'));
+
 Route::put('/taches/{id}', 'TacheController@update');
 Route::delete('/taches/{id}', 'TacheController@destroy');
+
 
 Route::post('/sprints', 'SprintController@store');
 
@@ -36,7 +38,7 @@ Route::put('/listes/{id}', 'ListeController@update');
 Route::post('/listes',  array( 'uses' => 'ListeController@store'));
 
 Route::post('/sprintactivite',  array( 'uses' => 'SprintActiviteController@store'));
-
+Route::delete('/sprintactivite/{projet_id}/{sprint_id}/{json}', 'SprintActiviteController@destroy'); 
 
 
 

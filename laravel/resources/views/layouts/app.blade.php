@@ -46,16 +46,49 @@
                 $tache_no = tache_id.replace("li_tache_", "");
                 $("body").data("modif_tache_no", $tache_no);
 
+
                   $url = "taches/" + $tache_no + "/edit";
                  
                 // Partie ajax pour éditer le formulaire
+
+                $.blockUI({
+                     message: $('#tache_modifier_form')
+                });
+              });
+
+              // Modifier un tâche
+               $("body").delegate('#btn_tache_modifier_annuler','click',function(){
+             // $('#btn_tache_modifier_annuler').click(function() {
+                  //$('#form_modifier_tache')[0].reset();
+                 
+                  $.unblockUI();
+                  return false;
+              });
+
+              $("body").delegate('#btn_tache_modifier','click',function(){
+                  $tache_no = $("body").data("modif_tache_no");
+                 // alert("tache_numéro " + $tache_no);
+                  //var donnees_form = $('#form_modifier_tache').serialize();
+                  var input_name = "nom_tache";
+                  var nom_tache = $("#form_modifier_tache :input[name='"+input_name+"']").val();
+                  //input_name = "description_tache"; 
+                  //var description_tache = $("#form_modifier_tache :input[name='"+input_name+"']").val(); 
+                  
+                  //alert(nom_tache + " " + description_tache);
+
+                  if(nom_tache == ""){
+                      nom_tache = "Non Défini";
+                  }
+                  $url = "taches/" + $tache_no;
+                 
+
                   $.ajax({ statusCode: {
                       500: function(xhr) {
                        alert(500);
                       }},
                       //the route pointing to the post function
                       url: $url,
-                      type: 'GET',
+                      type: 'PUT',
                       dataType: 'text',
                   success: function (result,status,xhr) {
                       var la_tache = JSON.parse(result);
@@ -73,9 +106,10 @@
                       }
                   }); // Fin partie ajax pour editer le formulaire
                 
-                $.blockUI({
-                     message: $('#tache_modifier_form')
-                });
+			//alain ?
+              //  $.blockUI({
+              //       message: $('#tache_modifier_form')
+              //  });
             });
 
             // Modifier un tâche
@@ -138,6 +172,32 @@
             } //ajouter_tache
             
 
+            function get_all_liste_tache(){
+                var json;
+                var json_ordre_tache;
+                var ordre_tache;
+                json_ordre_tache = '{'
+                $( '.container-list .sortable-list' ).each(function(){
+                    
+                    ordre_tache = String($(this).sortable("toArray"));
+                    json_ordre_tache += '"' + $(this).attr("id") + '":'; 
+                    //if(ordre_tache != ""){
+                       
+                        json_ordre_tache += '{"ordre_tache":[' +  ordre_tache + ']}';
+                        
+                    //}
+                    json_ordre_tache += ",";
+                });
+                json_ordre_tache = json_ordre_tache.substr(0,json_ordre_tache.length-1);
+                json_ordre_tache =  json_ordre_tache.replace(/li_tache_/g,"").replace(/ul_liste_/g,"");
+                json_ordre_tache += '}';
+               
+               // alert(json_ordre_tache);
+                //var sortedIDs = $( '.container-list .sortable-list' ).sortable( "toArray" );
+                //alert(sortedIDs);
+                return json_ordre_tache;
+
+            }
 
              function creer_liste(id, nom, description){
 
@@ -170,26 +230,36 @@
                 });
 
 
-                // Example 1.3: Sortable and connectable lists with visual helper
+               
                 $('.container-list .sortable-list').sortable({
                     connectWith: '.container-list .sortable-list',
                     placeholder: 'placeholder',
+
                 
-                    receive: function( event, ui ){
+                   
+
+                    stop: function( event, ui ){
+
+                        var json_liste_tache = get_all_liste_tache();
+        
 
 
-                        //on récupere le numéro de la liste
+
+                    /*    //on récupere le numéro de la liste
                         var liste_id_name = $(this).attr("id");
                         var liste_no = liste_id_name.replace("ul_liste_", "");
 
                         var tache_id_name = $(ui.item).attr("id");
                         var tache_no = tache_id_name.replace("li_tache_", "");
-                        
+                      */  
                         
                         
 
-                        var data =  "projet_id=" + projet_id + "&sprint_id=" + sprint_id + "&liste_id=" + liste_no + "&tache_id=" + tache_no;
+                        var data =  "projet_id=" + projet_id + "&sprint_id=" + sprint_id + "&liste_tache=" + json_liste_tache;
 
+
+
+  
                         $.ajax({ statusCode: {
                             500: function(xhr) {
                              alert(500);
@@ -200,7 +270,7 @@
                             // send the csrf-token and the input to the controller
                             data: data,
                             dataType: 'text',
-                            // remind that 'data' is the response of the AjaxController
+                         
                         success: function (result,status,xhr) {
 
                                //alert("drag drop successs");
@@ -214,8 +284,14 @@
                              //alert("complete " + status);
                             }
                         });  //ajax
-                                
-                    } // update function
+
+
+
+
+
+                                 
+                    } // stop function
+                    
 
                 }); //$('.container-list .sortable-list').sortable
 
@@ -366,6 +442,7 @@ $(document).ready(function() {
                                 }
             });
 
+
                 //$('#getTaches').on('click',function(){
             /*        $.get("{{URL::to('/getTaches')}}", function(data){
                         $('#getTachesData').append(data);
@@ -373,6 +450,7 @@ $(document).ready(function() {
                     });
             */
                // })
+
 
 
                 $('#btn_tache_fermer').click(function() {
@@ -479,7 +557,9 @@ $(document).ready(function() {
                     },
                     complete: function (xhr,status) {
                             // Handle the complete event
+
                          //alert("complete " + status);
+
                     }
                     });
 
@@ -514,10 +594,26 @@ $(document).ready(function() {
                 //ajouté dynamiquement... sinon, ca ne marche pas
                 $("body").delegate('a.x-remove','click',function() {
 
-                        var id = $(this).parent().attr("id");
-                        var id_no = id.replace("li_tache_","");
-                        var url = "taches/" + id_no;
+<<<<<<< HEAD
+=======
 
+                        
+                        
+>>>>>>> develop
+                        var id = $(this).parent().attr("id");
+
+<<<<<<< HEAD
+=======
+
+                       $('#' + id).detach();
+
+
+                        var id_no = id.replace("li_tache_","");
+                        var json_liste_tache = get_all_liste_tache();
+                        var url = "sprintactivite/" + projet_id + "/"+ sprint_id + "/" + json_liste_tache;
+          
+
+>>>>>>> develop
                         $.ajax({ statusCode: {
                         500: function(xhr) {
                          alert(500);
@@ -528,7 +624,7 @@ $(document).ready(function() {
 
                     success: function (result,status,xhr) {
 
-                          $('#' + id).parent().remove();
+                          $('#' + id).remove();
 
                     },error(xhr,status,error){
                         alert("error 1 " + status);
