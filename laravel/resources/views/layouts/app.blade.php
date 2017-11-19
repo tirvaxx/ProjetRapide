@@ -33,7 +33,7 @@
 
             // var sprint_id  = 1;
 
-         // sur double-click d'une t�che
+         // sur double-click d'une tache
            $("body").delegate('li','dblclick',function() {
 
 
@@ -106,10 +106,7 @@
                       }
                   }); // Fin partie ajax pour editer le formulaire
                 
-			//alain ?
-              //  $.blockUI({
-              //       message: $('#tache_modifier_form')
-              //  });
+			
             });
 
             // Modifier un tâche
@@ -253,7 +250,8 @@
                         var tache_no = tache_id_name.replace("li_tache_", "");
                       */  
                         
-                        
+                        var sprint_id_name = $("#tabs .ui-tabs-panel:visible").attr("id");
+                        var sprint_id = sprint_id_name.replace("tabs-", "");
 
                         var data =  "projet_id=" + projet_id + "&sprint_id=" + sprint_id + "&liste_tache=" + json_liste_tache;
 
@@ -526,9 +524,9 @@ $(document).ready(function() {
 
                   
                     var sprint_id_name = $('#tabs .ui-state-active').attr('aria-controls');
-                    alert(sprint_id_name);
+                   // alert(sprint_id_name);
                     var sprint_id = sprint_id_name.replace("tabs-", "");
-                    alert(sprint_id);
+                   // alert(sprint_id);
 
                     var data =  $('#form_liste').serialize() + "&projet_id=" + projet_id + "&sprint_id=" + sprint_id
                   
@@ -594,26 +592,20 @@ $(document).ready(function() {
                 //ajouté dynamiquement... sinon, ca ne marche pas
                 $("body").delegate('a.x-remove','click',function() {
 
-<<<<<<< HEAD
-=======
-
-                        
-                        
->>>>>>> develop
                         var id = $(this).parent().attr("id");
 
-<<<<<<< HEAD
-=======
+
 
                        $('#' + id).detach();
 
+                        var sprint_id_name = $("#tabs .ui-tabs-panel:visible").attr("id");
+                        var sprint_id = sprint_id_name.replace("tabs-", "");
 
                         var id_no = id.replace("li_tache_","");
                         var json_liste_tache = get_all_liste_tache();
                         var url = "sprintactivite/" + projet_id + "/"+ sprint_id + "/" + json_liste_tache;
           
 
->>>>>>> develop
                         $.ajax({ statusCode: {
                         500: function(xhr) {
                          alert(500);
