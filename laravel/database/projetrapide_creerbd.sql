@@ -358,6 +358,7 @@ CREATE TABLE IF NOT EXISTS `sprint_activite` (
   `sprint_id` int(11) NOT NULL,
   `liste_id` int(11) NOT NULL,
   `tache_id` int(11) DEFAULT NULL,
+  `ordre` tinyint(4) DEFAULT NULL,
   `actif` tinyint(1) NOT NULL,
   `creer_par_acteur_id` int(11) NOT NULL,
   `assigne_acteur_id` int(11) NOT NULL,
