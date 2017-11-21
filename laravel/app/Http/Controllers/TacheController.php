@@ -113,9 +113,9 @@ class TacheController extends Controller
     {
         $tache = Tache::find($id);
         $data = array( 
-            'id_tache' => $tache->id,
-            'nom_tache' => $tache->nom,
-            'description_tache' => $tache->description
+            'tache_id' => $tache->id,
+            'tache_nom' => $tache->nom,
+            'tache_description' => $tache->description
        );
        return $data;
     }
@@ -130,13 +130,13 @@ class TacheController extends Controller
     public function update(Request $request, $id)
     {
         $tache = Tache::find($id);
-        $tache->nom = request('modifier_nom_tache');
-        $tache->description = request('modifier_description_tache');
+        $tache->nom = $request->modifier_nom_tache;
+        $tache->description = $request->modifier_description_tache;
         $tache->update();
+
+
         $data = array( 
-            'tache_id' => $tache->id,
-            'nom' => request('modifier_nom_tache'),
-            'description' => request('modifier_description_tache')
+           'message' => 'La tâche a été modifié avec succès.'
        );
        return $data;
     }
@@ -158,7 +158,7 @@ class TacheController extends Controller
 
         $data = array(
         
-            'message' => 'La tache a été supprimé.'
+            'message' => 'La tâche a été supprimé.'
         );
         return $data;
     }

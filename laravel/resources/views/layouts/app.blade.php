@@ -40,7 +40,7 @@
             // var sprint_id  = 1;
 
          // sur double-click d'une tache
-           $("body").delegate('li','dblclick',function() {
+            $("body").delegate('li','dblclick',function() {
 
 
                 var tache_id =  $(this).attr('id');
@@ -53,74 +53,57 @@
                 $("body").data("modif_tache_no", $tache_no);
 
 
-                  $url = "taches/" + $tache_no + "/edit";
+                 $url = "taches/" + $tache_no + "/edit";
+                 $.ajax({ statusCode: {
+                    500: function(xhr) {
+                    alert(500);
+                    }},
+                    //the route pointing to the post function
+                    url: $url,
+                    type: 'GET',
+                    dataType: 'text',
+                    
+                success: function (result,status,xhr) {
+                    var la_tache = JSON.parse(result);
+                    $('#modifier_nom_tache').val(la_tache.tache_nom);
+                    $('#modifier_description_tache').val(la_tache.tache_description);
+                   // $('#tache_message_modifier').hide();
+
+                },error(xhr,status,error){
+                    alert("error 1 " + status);
+                    alert("error 2 " + error);
+                },
+
+                    complete: function (xhr,status) {
+                    // Handle the complete event
+                    //alert("complete " + status);
+                    }
+                });
                  
                 // Partie ajax pour éditer le formulaire
 
                 $.blockUI({
                      message: $('#tache_modifier_form')
                 });
-              });
+            }); //  $("body").delegate('li','dblclick',function
 
               // Modifier un tâche
-               $("body").delegate('#btn_tache_modifier_annuler','click',function(){
+            $("body").delegate('#btn_tache_modifier_annuler','click',function(){
              // $('#btn_tache_modifier_annuler').click(function() {
                   //$('#form_modifier_tache')[0].reset();
                  
                   $.unblockUI();
                   return false;
-              });
+            }); // $("body").delegate('#btn_tache_modifier_annuler','click',function
 
-              $("body").delegate('#btn_tache_modifier','click',function(){
-                  $tache_no = $("body").data("modif_tache_no");
-                 // alert("tache_numéro " + $tache_no);
-                  //var donnees_form = $('#form_modifier_tache').serialize();
-                  var input_name = "nom_tache";
-                  var nom_tache = $("#form_modifier_tache :input[name='"+input_name+"']").val();
-                  //input_name = "description_tache"; 
-                  //var description_tache = $("#form_modifier_tache :input[name='"+input_name+"']").val(); 
-                  
-                  //alert(nom_tache + " " + description_tache);
-
-                  if(nom_tache == ""){
-                      nom_tache = "Non Défini";
-                  }
-                  $url = "taches/" + $tache_no;
-                 
-
-                  $.ajax({ statusCode: {
-                      500: function(xhr) {
-                       alert(500);
-                      }},
-                      //the route pointing to the post function
-                      url: $url,
-                      type: 'PUT',
-                      dataType: 'text',
-                  success: function (result,status,xhr) {
-                      var la_tache = JSON.parse(result);
-                      $('#modifier_nom_tache').val(la_tache.nom_tache);
-                      $('#modifier_description_tache').val(la_tache.description_tache);
-
-                  },error(xhr,status,error){
-                      alert("error 1 " + status);
-                      alert("error 2 " + error);
-                  },
-
-                      complete: function (xhr,status) {
-                        // Handle the complete event
-                        //alert("complete " + status);
-                      }
-                  }); // Fin partie ajax pour editer le formulaire
-                
-			
-            });
+             
 
             // Modifier un tâche
             $("body").delegate('#btn_tache_modifier_annuler','click',function(){
                 //alert("annuler");
                 $.unblockUI();
                 return false;
-            });
+            });  // $("body").delegate('#btn_tache_modifier_annuler','click',function
 
             $("body").delegate('#btn_tache_modifier','click',function(){
                 $tache_no = $("body").data("modif_tache_no");
@@ -732,7 +715,8 @@ $(document).ready(function() {
            //     $( function() {
                 var noSprint = $( "#no_sprint" ),
                   tabContent = $( "#tab_content" ),
-                  tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>",
+                  //tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>",
+                  tabTemplate = "<li><a href='#{href}'>#{label}</a></li>",
                   tabCounter = 2;
              
                 var tabs = $( "#tabs" ).tabs();
