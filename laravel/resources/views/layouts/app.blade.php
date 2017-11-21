@@ -24,12 +24,18 @@
 
     <?php ini_set('display_errors', 'On'); ?>
 
+      
+    $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+    });
 
   </script>
 
         <script type="text/javascript">
 
-            var projet_id  = 1;
+            var g_selected_projet_id  = 1;
 
             // var sprint_id  = 1;
 
@@ -196,12 +202,12 @@
 
             }
 
-             function creer_liste(id, nom, description){
+             function creer_liste(sprint_id_name,id, nom, description){
 
-                var sprint_id_name = $('#tabs .ui-state-active').attr('aria-controls');
-                    alert(sprint_id_name);
-                    var sprint_id = sprint_id_name.replace("tabs-", "");
-                    alert(sprint_id);
+               // var sprint_id_name = $('#tabs .ui-state-active').attr('aria-controls');
+                  //  alert(sprint_id_name);
+                //    var sprint_id = sprint_id_name.replace("sprint_", "");
+                  //  alert(sprint_id);
 
                 $liste = '<div class="container-list">'
                 $liste +='    <div class="panel panel-default column left"  id="liste_' + id + '">'
@@ -218,7 +224,7 @@
                 $liste +='    </div>  <!-- panel-default -->'
                 $liste +='</div>  <!-- #container-liste -->'
 
-                $("#tabs-" + sprint_id).append($liste);
+                $("#" + sprint_id_name).append($liste);
 
                 $("#btn_ajouter_tache_Liste_" + id ).bind('click', function(e)
                 {
@@ -232,8 +238,6 @@
                     connectWith: '.container-list .sortable-list',
                     placeholder: 'placeholder',
 
-                
-                   
 
                     stop: function( event, ui ){
 
@@ -250,10 +254,10 @@
                         var tache_no = tache_id_name.replace("li_tache_", "");
                       */  
                         
-                        var sprint_id_name = $("#tabs .ui-tabs-panel:visible").attr("id");
-                        var sprint_id = sprint_id_name.replace("tabs-", "");
+                        //var sprint_id_name = $("#tabs .ui-tabs-panel:visible").attr("id");
+                        var sprint_id = sprint_id_name.replace("sprint_", "");
 
-                        var data =  "projet_id=" + projet_id + "&sprint_id=" + sprint_id + "&liste_tache=" + json_liste_tache;
+                        var data =  "projet_id=" + g_selected_projet_id+ "&sprint_id=" + sprint_id + "&liste_tache=" + json_liste_tache;
 
 
 
@@ -295,6 +299,11 @@
 
             } //creer_liste
 
+
+            function creer_tache(liste_id, tache_id, tache_nom, tache_description){
+                 $("#ul_liste_" + liste_id).append( '<li id="li_tache_' + tache_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span id="tache_titre_'+ tache_id + '">' + tache_nom + '</span></li>' );  
+
+            }
 
 
            // sur double-click d'un div aller chercher la liste pour cette fois-ci
@@ -414,7 +423,7 @@
 
             });//#btn_liste_modifier
             // Fin modifier une liste
-
+/*
             function afficherTache(data) {
                 var tache = JSON.stringify(data);
                 var tachef = JSON.parse(tache);
@@ -427,18 +436,74 @@
 
             }
 
-
+*/
 
 $(document).ready(function() {
             
-             //Permet d'afficher des tooltips de types Bootstrap 
-            $("[rel=tooltip]").tooltip({ placement: 'top'});
 
-            $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                }
+            $("body").delegate('#btn_projet_charger','click', function() {
+           
+                
+                var p_id = $(this).attr("projet_id");
+                g_selected_projet_id = p_id;
+                var titre = $(this).attr("projet_nom");
+                $("#titre_projet").html(titre);
+                $("#projet_wrapper").hide();
+                $("#center-wrapper").show();
+
+
+
+                $.ajax({ 
+
+                            url: "/" + p_id,
+                            type: 'GET',
+                            dataType: 'text',
+
+                        success: function (result,status,xhr) {
+     
+                          //   alert(result);
+                             var json_obj = JSON.parse(result);
+                             var prev_sprint;
+                             var prev_liste;
+                           //alert(j[0].projet_nom);
+                          for (var i in json_obj) 
+                        {
+
+                            if(prev_sprint != json_obj[i].sprint_id){
+                                sprint_add_tab(json_obj[i].sprint_id, json_obj[i].sprint_numero);
+                                
+                                $( "#tabs" ).tabs({ active: i });
+                                $( "#tabs" ).tabs( "refresh" );
+                            }
+                            
+                            if(json_obj[i].liste_id != null && prev_liste != json_obj[i].liste_id){
+                                creer_liste("sprint_" + json_obj[i].sprint_id, json_obj[i].liste_id, json_obj[i].liste_nom, json_obj[i].liste_description);
+                            }
+
+                            if(json_obj[i].tache_nom != null){
+                                creer_tache( json_obj[i].liste_id,  json_obj[i].tache_id,  json_obj[i].tache_nom,  json_obj[i].tache_description);
+                            }
+                            prev_liste = json_obj[i].liste_id
+                            prev_sprint = json_obj[i].sprint_id;
+                           
+                        }
+
+                                                
+                        if(! jQuery.isEmptyObject(json_obj) ){   
+                             $( "#tabs" ).tabs({ active: 0 })
+                        }
+             },
+                        error(xhr,status,error){
+                            alert("error 1 " + status);
+                            alert("error 2 " + error);
+                        }
+
+                });
+
+
             });
+//Permet d'afficher des tooltips de types Bootstrap 
+            $("[rel=tooltip]").tooltip({ placement: 'top'});
 
 
                 //$('#getTaches').on('click',function(){
@@ -480,15 +545,17 @@ $(document).ready(function() {
 
                     var liste_no = $("body").data("ajout_liste_no");
                     var nom_tache = $("#nom_tache").val();
-                    var sprint_id_name = $("#tabs .ui-tabs-panel:visible").attr("id");
-                    var sprint_id = sprint_id_name.replace("tabs-", "");
+     
+                    var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
+      //  alert(sprint_id_name);                    
+                    var sprint_id = sprint_id_name.replace("sprint_", "");
 
                     if(nom_tache == ""){
                         nom_tache = "Non Défini";
 
                     }
 
-                    var data =  $('#form_tache').serialize() + "&projet_id=" + projet_id + "&sprint_id=" + sprint_id + "&liste_id=" + liste_no;
+                    var data =  $('#form_tache').serialize() + "&projet_id=" + g_selected_projet_id+ "&sprint_id=" + sprint_id + "&liste_id=" + liste_no;
 
                     $.ajax({ statusCode: {
                         500: function(xhr) {
@@ -504,7 +571,11 @@ $(document).ready(function() {
                     success: function (result,status,xhr) {
 
                             var liste_no = $("body").data("ajout_liste_no");
+
+                             creer_tache(liste_no, JSON.parse(result).last_inserted_id, JSON.parse(result).nom , JSON.parse(result).description);
+                            /*
                             $("#ul_liste_" + liste_no).append( '<li id="li_tache_' + JSON.parse(result).last_inserted_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span id="tache_titre_'+ JSON.parse(result).last_inserted_id + '">' + JSON.parse(result).nom + '</span></li>' );               
+                            */
 
                     },error(xhr,status,error){
                         alert("error 1 " + status);
@@ -524,11 +595,11 @@ $(document).ready(function() {
 
                   
                     var sprint_id_name = $('#tabs .ui-state-active').attr('aria-controls');
-                   // alert(sprint_id_name);
-                    var sprint_id = sprint_id_name.replace("tabs-", "");
+    
+                    var sprint_id = sprint_id_name.replace("sprint_", "");
                    // alert(sprint_id);
 
-                    var data =  $('#form_liste').serialize() + "&projet_id=" + projet_id + "&sprint_id=" + sprint_id
+                    var data =  $('#form_liste').serialize() + "&projet_id=" + g_selected_projet_id+ "&sprint_id=" + sprint_id
                   
                     $.ajax({ statusCode: {
                         500: function(xhr) {
@@ -542,11 +613,11 @@ $(document).ready(function() {
                         dataType: 'text',
                         // remind that 'data' is the response of the AjaxController
                     success: function (result,status,xhr) {
-
+                                
                             var id = JSON.parse(result).last_inserted_id;
                             var nom = JSON.parse(result).nom;
                             var description = JSON.parse(result).description;
-                            creer_liste(id, nom, description);
+                            creer_liste(sprint_id_name, id, nom, description);
 
                     },
                     error(xhr,status,error){
@@ -596,23 +667,24 @@ $(document).ready(function() {
 
 
 
-                       $('#' + id).detach();
+                        $('#' + id).detach();
 
-                        var sprint_id_name = $("#tabs .ui-tabs-panel:visible").attr("id");
-                        var sprint_id = sprint_id_name.replace("tabs-", "");
+                        var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
+                        var sprint_id = sprint_id_name.replace("sprint_", "");
 
                         var id_no = id.replace("li_tache_","");
                         var json_liste_tache = get_all_liste_tache();
-                        var url = "sprintactivite/" + projet_id + "/"+ sprint_id + "/" + json_liste_tache;
-          
+                      //  var url = "sprintactivite/rendreInactif/" + g_selected_projet_id+ "/"+ sprint_id + "/" + json_liste_tache;
 
+                        var url = "sprintactivite/rendreInactif";
                         $.ajax({ statusCode: {
                         500: function(xhr) {
                          alert(500);
                         }},
                         //the route pointing to the post function
                         url: url,
-                        type: 'DELETE',
+                        data:{"projet_id" : g_selected_projet_id, "sprint_id" : sprint_id, "json" : json_liste_tache },
+                        type: 'PUT',
 
                     success: function (result,status,xhr) {
 
@@ -657,7 +729,7 @@ $(document).ready(function() {
                 }); //$(document).on("click", "#creer_item_liste", function() {
    
 
-                $( function() {
+           //     $( function() {
                 var noSprint = $( "#no_sprint" ),
                   tabContent = $( "#tab_content" ),
                   tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>",
@@ -671,7 +743,7 @@ $(document).ready(function() {
                 //   modal: true,
                 //   buttons: {
                 //     Add: function() {
-                //       addTab();
+                //       sprint_add_tab();
                 //       $( this ).dialog( "close" );
                 //     },
                 //     Cancel: function() {
@@ -690,7 +762,7 @@ $(document).ready(function() {
 
                             url: "{{ URL::to('sprints') }}",
                             type: 'POST',
-                            data: $('#form_sprint').serialize(),
+                            data: $('#form_sprint').serialize() + "&projet_id=" + g_selected_projet_id,
                             dataType: 'text',
 
                         success: function (result,status,xhr) {
@@ -699,7 +771,7 @@ $(document).ready(function() {
                                 var numero = JSON.parse(result).numero;
 
                                 // creer_sprint($id, $numero);
-                                addTab(id, numero);
+                                sprint_add_tab(id, numero);
 
                         },
                         error(xhr,status,error){
@@ -708,19 +780,23 @@ $(document).ready(function() {
                         }
 
                     });
-                }); //$('#btn_tache_ajouter').click(function()
+                }); // $('#btn_sprint_ajouter').click(function()
              
                 // Actual addTab function: adds new tab using the input from the form above
-                function addTab(id, numero) {
-                  var label = noSprint.val() || "Sprint " + tabCounter,
-                    id = "tabs-" + tabCounter,
-                    li = $( tabTemplate.replace( /#\{href\}/g, "#" + id ).replace( /#\{label\}/g, label ) ),
-                    tabContentHtml = tabContent.val();
+                function sprint_add_tab(id, numero) {
+                  //var label = noSprint.val() || "Sprint " + tabCounter,
+                  var label = "Sprint " + numero;
+                 //   id = "tabs-" + tabCounter,
+                  //  id = "tabs-" + id,
+                    li = $( tabTemplate.replace( /#\{href\}/g, "#sprint_" + id ).replace( /#\{label\}/g, label ) ),
+                  //  tabContentHtml = tabContent.val();
              
                   tabs.find( ".ui-tabs-nav" ).append( li );
-                  tabs.append( "<div id='" + id + "'><p>" + tabContentHtml + "</p></div>" );
+                  //tabs.append( "<div id='" + id + "'><p></p></div>" );
+                  tabs.append( "<div id='sprint_" + id + "'><p></p></div>" );
                   tabs.tabs( "refresh" );
-                  tabCounter++;
+                  tabs.tabs({ active: 0 });
+                 // tabCounter++;
                 }
                 
 
@@ -742,7 +818,12 @@ $(document).ready(function() {
                     tabs.tabs( "refresh" );
                   }
                 });
-               });
+
+
+               
+
+
+            //   });
 }); //$(document).ready(function()
 
 

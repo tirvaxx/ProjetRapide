@@ -24,7 +24,7 @@ LOG::info("debut  maj_bd");
 
 
   foreach($json as $liste => $json_tache){
-  //          LOG::info("liste=" + $liste);
+            LOG::info("in foreach liste=" + $liste);
 
 
 
@@ -180,12 +180,26 @@ LOG::info("debut  maj_bd");
      * @param  \App\SprintActivite  $sprintActivite
      * @return \Illuminate\Http\Response
      */
-    public function destroy($projet_id, $sprint_id, $json)
+    public function destroy()
     {
         
-        LOG::info(request("projet = " + $projet_id));
-        LOG::info(request("sprint = " + $sprint_id));
-        self::maj_bd($projet_id, $sprint_id,json_decode($json));
+       //
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\SprintActivite  $sprintActivite
+     * @return \Illuminate\Http\Response
+     */
+    public function rendreInactif(Request $request)
+    {
+        
+        LOG::info("projet = " + $request->projet_id);
+        LOG::info("sprint = " +  $request->sprint_id);
+        LOG::info("json = " + $request->json);
+        self::maj_bd($request->projet_id, $request->sprint_id,json_decode($request->json));
 
 
     }

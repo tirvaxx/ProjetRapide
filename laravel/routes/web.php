@@ -10,12 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::get('/', function () {
-    return view('projetrapide');
+    
+	return view('projetrapide');
 });
+*/
 
 
+Route::get('/{id}',  array('uses' => 'ProjetRapideController@projetInit'));
+
+
+Route::get('/',  array('uses' => 'ProjetController@index'));
 
 //Route::get('/taches', 'TacheController@index');
 // create ?
@@ -38,10 +44,15 @@ Route::put('/listes/{id}', 'ListeController@update');
 Route::post('/listes',  array( 'uses' => 'ListeController@store'));
 
 Route::post('/sprintactivite',  array( 'uses' => 'SprintActiviteController@store'));
-Route::delete('/sprintactivite/{projet_id}/{sprint_id}/{json}', 'SprintActiviteController@destroy'); 
+//Route::put('/sprintactivite/rendreInactif/{projet_id}/{sprint_id}/{json}', array( 'uses' => 'SprintActiviteController@rendreInactif')); 
+
+Route::put('/sprintactivite/rendreInactif', array( 'uses' => 'SprintActiviteController@rendreInactif')); 
 
 
 
+
+Route::resource('projet', 'ProjetController');
+Route::resource('projetrapide', 'ProjetRapideController');
 Route::resource('acteurs', 'ActeurController');
 Route::resource('acteurEmployes', 'acteurEmployeController');
 Route::resource('taches', 'TacheController');

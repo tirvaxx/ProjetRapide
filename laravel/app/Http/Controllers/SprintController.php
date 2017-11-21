@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Sprint;
+use App\SprintActivite;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
@@ -43,11 +44,21 @@ class SprintController extends Controller
         //Debugbar::info($request);
          $sprint = new Sprint; 
         $sprint->numero = request('no_sprint');
-        $sprint->projet_id = 1;
+        $sprint->projet_id = request('projet_id');
         $sprint->creer_par_acteur_id = 2;
         $sprint->date_debut = $request->input('date_debut');
         $sprint->date_fin = $request->input('date_fin');
         $sprint->save();
+
+
+
+        $sprint_activite = new SprintActivite;
+        $sprint_activite->projet_id = request("projet_id");
+        $sprint_activite->sprint_id = $sprint->id;
+        $sprint_activite->actif = 1;
+        $sprint_activite->creer_par_acteur_id = 2;
+        $sprint_activite->assigne_acteur_id = 2;
+        $sprint_activite->save();
 
         
         $data = array( 

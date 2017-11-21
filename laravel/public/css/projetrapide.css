@@ -18,7 +18,10 @@ fieldset legend {
    
 }
 
-
+#fieldset_projet{
+    width:75%;
+    margin:0 auto;
+}
 
 .container-list-lvl2{
 
@@ -41,6 +44,12 @@ fieldset legend {
     right: 4px;
     color:#C0C0C0;
     text-decoration: none;
+}
+
+#accordion.panel-group{
+    width:70%;
+    margin:0 auto;
+
 }
 
 

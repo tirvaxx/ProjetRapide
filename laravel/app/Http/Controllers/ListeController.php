@@ -43,7 +43,12 @@ class ListeController extends Controller
         $liste->creer_par_acteur_id = 2;
         $liste->save();
         
-
+        //on met inactif l'enregistrement où il n'y a pas de liste dans le sprint
+        SprintActivite::where("projet_id", "=", request("projet_id"))
+        ->where("sprint_id","=", request("sprint_id"))
+        ->WhereNull("liste_id")
+        ->update(["actif" => 0]);
+           
 
         $sprint_activite = new SprintActivite;
         $sprint_activite->projet_id = request("projet_id");

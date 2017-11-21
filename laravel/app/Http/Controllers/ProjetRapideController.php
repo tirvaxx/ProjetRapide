@@ -3,27 +3,36 @@
 namespace App\Http\Controllers;
 
 use DB;
-use App\Projet;
+use App\ProjetRapide;
 use Illuminate\Http\Request;
 
-class ProjetController extends Controller
+class ProjetRapideController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function projetInit($id)
+    {
+
+
+        //non complete
+        //a la selection d'un projet... appeler ce controller
+            $projet = DB::table('vw_sprint_activite_actif')->select("projet_id", "projet_nom", "projet_description", "projet_date_du", "projet_date_complete", "sprint_id", "sprint_numero", "liste_id", "liste_nom", "liste_description", "tache_id", "tache_nom", "tache_description")
+            ->where("projet_id", "=", $id)
+            ->orderby("sprint_id", "asc")
+            ->orderby("liste_id", "asc")
+            ->orderby("tache_ordre", "asc")
+            ->get();
+
+            return  $projet;
+    }
+
     public function index()
     {
 
-        $projet = DB::table('projet')->select("id as projet_id", "nom as projet_nom"
-                                            , "description as projet_description"
-                                            , "date_du as projet_date_du")
-        ->whereNull("date_complete")
-        ->get();
-
-          
-        return view("projetRapide")->with("dataProjet", $projet->toArray());
+    
     }
 
     /**
@@ -50,10 +59,10 @@ class ProjetController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Projet  $projet
+     * @param  \App\ProjetRapide  $projetRapide
      * @return \Illuminate\Http\Response
      */
-    public function show(Projet $projet)
+    public function show(ProjetRapide $projetRapide)
     {
         //
     }
@@ -61,10 +70,10 @@ class ProjetController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Projet  $projet
+     * @param  \App\ProjetRapide  $projetRapide
      * @return \Illuminate\Http\Response
      */
-    public function edit(Projet $projet)
+    public function edit(ProjetRapide $projetRapide)
     {
         //
     }
@@ -73,10 +82,10 @@ class ProjetController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Projet  $projet
+     * @param  \App\ProjetRapide  $projetRapide
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Projet $projet)
+    public function update(Request $request, ProjetRapide $projetRapide)
     {
         //
     }
@@ -84,10 +93,10 @@ class ProjetController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Projet  $projet
+     * @param  \App\ProjetRapide  $projetRapide
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Projet $projet)
+    public function destroy(ProjetRapide $projetRapide)
     {
         //
     }

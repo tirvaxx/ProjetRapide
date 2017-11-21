@@ -44,12 +44,41 @@
 <hr />
 
 
+ 
+ 
+    
 
 
+@if(isset($dataProjet))
+    <div id="projet_wrapper">
+        <fieldset id="fieldset_projet">
+            <legend>Projets actifs</legend>
+            <div class="panel-group" id="accordion">
+            @foreach ( $dataProjet as $value) 
+                <div class="panel panel-default"> 
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse_{{$value->projet_id}}">
+                        {{ $value->projet_nom }}</a>
+                      </h4>
+                    </div>
+                    <div id="collapse_{{$value->projet_id}}" class="panel-collapse collapse">
+                        <div class="panel-body">{{$value->projet_description}}</div>
+                        <button id="btn_projet_charger" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Charger</button>
+                    </div>
+                </div>
+            @endforeach
+            </div> 
+        </fieldset>
+    </div>
+@elseif(!isset($dataProjetRapide))
+    <p>Aucun projet</p>
+@endif
 
 
+<h1 id="titre_projet"></h1>
 <p id="message"></p>
-   <div id="center-wrapper"> 
+   <div id="center-wrapper" style="display:none;" > 
        <!-- <div id="dialog" title="Tab data">
           <form>
             <fieldset class="ui-helper-reset">
@@ -60,33 +89,21 @@
             </fieldset>
           </form>
         </div> -->
-         
-        <button id="add_tab">Add Tab</button>
-         
+  
         
         <div id="tabs">
           <ul>
-            <!-- <li><a href="#tabs-1">Nunc tincidunt</a> <span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li> -->
+  <!--           <li><a href="#tabs-1">Nunc tincidunt</a> <span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>    -->
           </ul>
+
+<!--
             <div id="tabs-1">
-                <!-- Les listes viennent ici -->
+               
                 <div class="container-list-lvl2" id="container-list-lvl2">
             
                 </div> 
             </div>
-        </div>
-   <!--  <h2 id="sprint_no">Sprint 1</h2>
-        <div class="row">
-            <h2>GET</h2>
-            <button id="getTaches" type="button" class="btn btn-primary">GET</button>
-        </div> 
-        <div id="getTachesData">
-            
-        </div>
-
-            
-    
-    </div>  --> 
+-->
 
            
         
@@ -96,7 +113,7 @@
 
 
 
-<div class="div_tache_form" style="display:none">
+<div class="div_tache_form"  style="display:none">
     <form id="form_tache" action="#" >
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <!-- securite contre les failles sur les requests -->
