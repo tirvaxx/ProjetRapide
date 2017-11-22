@@ -16,7 +16,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">Projet Rapide</a>
+              <a class="navbar-brand" href="http://localhost:8000">Projet Rapide</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
