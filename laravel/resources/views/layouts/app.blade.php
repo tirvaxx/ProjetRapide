@@ -24,7 +24,7 @@
 
     <?php ini_set('display_errors', 'On'); ?>
 
-      
+
     $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -62,7 +62,7 @@
                     url: $url,
                     type: 'GET',
                     dataType: 'text',
-                    
+
                 success: function (result,status,xhr) {
                     var la_tache = JSON.parse(result);
                     $('#modifier_nom_tache').val(la_tache.tache_nom);
@@ -79,7 +79,7 @@
                     //alert("complete " + status);
                     }
                 });
-                 
+
                 // Partie ajax pour éditer le formulaire
 
                 $.blockUI({
@@ -91,12 +91,12 @@
             $("body").delegate('#btn_tache_modifier_annuler','click',function(){
              // $('#btn_tache_modifier_annuler').click(function() {
                   //$('#form_modifier_tache')[0].reset();
-                 
+
                   $.unblockUI();
                   return false;
             }); // $("body").delegate('#btn_tache_modifier_annuler','click',function
 
-             
+
 
             // Modifier un tâche
             $("body").delegate('#btn_tache_modifier_annuler','click',function(){
@@ -109,10 +109,10 @@
                 $tache_no = $("body").data("modif_tache_no");
                 var input_name = "modifier_nom_tache";
                 var nom_tache = $("#form_modifier_tache :input[name='"+input_name+"']").val();
-                
+
                 if(nom_tache == ""){
                      //confirm("Attention, vous devez entrer une tâche!");
-                     
+
                     nom_tache = "Non défini";
                 }
                 if(description_tache == ""){
@@ -147,7 +147,7 @@
                     }
                 });
                 $.unblockUI();
-                
+
             });//#btn_tache_modifier
             // Fin modifier une tâche
 
@@ -156,7 +156,7 @@
                      message: $('.div_tache_form')
                 });
             } //ajouter_tache
-            
+
 
             function get_all_liste_tache(){
                 var json;
@@ -164,20 +164,20 @@
                 var ordre_tache;
                 json_ordre_tache = '{'
                 $( '.container-list .sortable-list' ).each(function(){
-                    
+
                     ordre_tache = String($(this).sortable("toArray"));
-                    json_ordre_tache += '"' + $(this).attr("id") + '":'; 
+                    json_ordre_tache += '"' + $(this).attr("id") + '":';
                     //if(ordre_tache != ""){
-                       
+
                         json_ordre_tache += '{"ordre_tache":[' +  ordre_tache + ']}';
-                        
+
                     //}
                     json_ordre_tache += ",";
                 });
                 json_ordre_tache = json_ordre_tache.substr(0,json_ordre_tache.length-1);
                 json_ordre_tache =  json_ordre_tache.replace(/li_tache_/g,"").replace(/ul_liste_/g,"");
                 json_ordre_tache += '}';
-               
+
                // alert(json_ordre_tache);
                 //var sortedIDs = $( '.container-list .sortable-list' ).sortable( "toArray" );
                 //alert(sortedIDs);
@@ -216,7 +216,7 @@
                 });
 
 
-               
+
                 $('.container-list .sortable-list').sortable({
                     connectWith: '.container-list .sortable-list',
                     placeholder: 'placeholder',
@@ -225,7 +225,7 @@
                     stop: function( event, ui ){
 
                         var json_liste_tache = get_all_liste_tache();
-        
+
 
 
 
@@ -235,8 +235,8 @@
 
                         var tache_id_name = $(ui.item).attr("id");
                         var tache_no = tache_id_name.replace("li_tache_", "");
-                      */  
-                        
+                      */
+
                         //var sprint_id_name = $("#tabs .ui-tabs-panel:visible").attr("id");
                         var sprint_id = sprint_id_name.replace("sprint_", "");
 
@@ -244,7 +244,7 @@
 
 
 
-  
+
                         $.ajax({ statusCode: {
                             500: function(xhr) {
                              alert(500);
@@ -255,7 +255,7 @@
                             // send the csrf-token and the input to the controller
                             data: data,
                             dataType: 'text',
-                         
+
                         success: function (result,status,xhr) {
 
                                //alert("drag drop successs");
@@ -274,22 +274,23 @@
 
 
 
-                                 
+
                     } // stop function
-                    
+
 
                 }); //$('.container-list .sortable-list').sortable
 
             } //creer_liste
 
 
+
             function creer_tache(liste_id, tache_id, tache_nom, tache_description){
-                 $("#ul_liste_" + liste_id).append( '<li id="li_tache_' + tache_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span id="tache_titre_'+ tache_id + '">' + tache_nom + '</span></li>' );  
+                 $("#ul_liste_" + liste_id).append( '<li id="li_tache_' + tache_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span id="tache_titre_'+ tache_id + '">' + tache_nom + '</span></li>' );
 
             }
 
 
-           // sur double-click d'un div aller chercher la liste pour cette fois-ci
+           // sur double-clique d'un div aller chercher la liste et l'afficher pour modification, sinon ne rien faire
            $("body").delegate('div','dblclick',function() {
 
                 var liste_id =  $(this).attr('id');
@@ -310,7 +311,7 @@
                     url: $url,
                     type: 'GET',
                     dataType: 'text',
-                    
+
                 success: function (result,status,xhr) {
                     var la_liste = JSON.parse(result);
                     $('#modifier_nom_liste').val(la_liste.nom_liste);
@@ -327,7 +328,7 @@
                     //alert("complete " + status);
                     }
                 });
-                
+
                 $.blockUI({
                      message: $('#liste_modifier_form')
                 });
@@ -342,33 +343,33 @@
 
             // Sur appuie du bouton modifier de la liste
             $("body").delegate('#btn_liste_modifier','click',function(){
-                  
+
                 var liste_no = $("body").data("modif_liste_no");
                 var input_name = "modifier_nom_liste";
                 var nom_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val();
                 var input_name = "modifier_description_liste";
                 var description_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val();
-                
+
                 var lblMessageListeModifier = "liste_message_modifier"; // Permet d'afficher un message d'erreur dans le formulaire.
-                
+
                 var ExpNom = /^[0-9a-zA-Z\s\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿç  Ç_]{2,40}$/;
                 //var ExpDesc = /^[0-9a-zA-Z\s\r\n\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_]{2,150}$/;
                 var ExpDesc = /^[^;]{2,150}$/;
 
                 var res_test_nom = nom_liste.match(ExpNom);
                 var res_test_desc = description_liste.match(ExpDesc);
-                
+
                 if( nom_liste.replace(/\s/g, '') == "" ||
                     description_liste.replace(/\s/g, '') == "" || !res_test_nom || !res_test_desc){
-                   
-                    $('#'+lblMessageListeModifier).html("<tr><td width=\"20%\" style=\"vertical-align : middle; font-size: 35px;text-align:center;\"><span>&#9888</span></td><td width=\"80%\" style=\"vertical-align : middle;\">" + 
+
+                    $('#'+lblMessageListeModifier).html("<tr><td width=\"20%\" style=\"vertical-align : middle; font-size: 35px;text-align:center;\"><span>&#9888</span></td><td width=\"80%\" style=\"vertical-align : middle;\">" +
                     "<span><strong>Nom de la liste :</strong><br/>(2 à 40 caractères maximum acceptant les caratères : 0 à 9, a à z, A à Z, espace, point, àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_)<br/><strong>Description de la liste :</strong><br/>(2 à 150 caractères).</span></td></tr>");
                     $('#'+lblMessageListeModifier).show();
                     message: $('#liste_modifier_form')
                     return;
                 }
 
-            
+
                 $url = "listes/" + liste_no;
 
                 $.ajax({ statusCode: {
@@ -383,13 +384,13 @@
                     dataType: 'text',
                     // remind that 'data' is the response of the AjaxController
                 success: function (result,status,xhr) {
-                    
+
                     var tagAModifier = "liste_titre_"+liste_no;
                     $('#'+tagAModifier).text(nom_liste);
 
                     tagAModifier = "liste_panel_"+liste_no;
                     $('#'+tagAModifier).attr('title', description_liste);
-                 
+
                 },error(xhr,status,error){
                     alert("error 1 " + status);
                     alert("error 2 " + error);
@@ -422,11 +423,11 @@
 */
 
 $(document).ready(function() {
-            
+
 
             $("body").delegate('#btn_projet_charger','click', function() {
-           
-                
+
+
                 var p_id = $(this).attr("projet_id");
                 g_selected_projet_id = p_id;
                 var titre = $(this).attr("projet_nom");
@@ -436,29 +437,29 @@ $(document).ready(function() {
 
 
 
-                $.ajax({ 
+                $.ajax({
 
                             url: "/" + p_id,
                             type: 'GET',
                             dataType: 'text',
 
                         success: function (result,status,xhr) {
-     
+
                           //   alert(result);
                              var json_obj = JSON.parse(result);
                              var prev_sprint;
                              var prev_liste;
                            //alert(j[0].projet_nom);
-                          for (var i in json_obj) 
+                          for (var i in json_obj)
                         {
 
                             if(prev_sprint != json_obj[i].sprint_id){
                                 sprint_add_tab(json_obj[i].sprint_id, json_obj[i].sprint_numero);
-                                
+
                                 $( "#tabs" ).tabs({ active: i });
                                 $( "#tabs" ).tabs( "refresh" );
                             }
-                            
+
                             if(json_obj[i].liste_id != null && prev_liste != json_obj[i].liste_id){
                                 creer_liste("sprint_" + json_obj[i].sprint_id, json_obj[i].liste_id, json_obj[i].liste_nom, json_obj[i].liste_description);
                             }
@@ -468,11 +469,11 @@ $(document).ready(function() {
                             }
                             prev_liste = json_obj[i].liste_id
                             prev_sprint = json_obj[i].sprint_id;
-                           
+
                         }
 
-                                                
-                        if(! jQuery.isEmptyObject(json_obj) ){   
+
+                        if(! jQuery.isEmptyObject(json_obj) ){
                              $( "#tabs" ).tabs({ active: 0 })
                         }
              },
@@ -485,7 +486,9 @@ $(document).ready(function() {
 
 
             });
-//Permet d'afficher des tooltips de types Bootstrap 
+
+
+//Permet d'afficher des tooltips de types Bootstrap
             $("[rel=tooltip]").tooltip({ placement: 'top'});
 
 
@@ -511,15 +514,15 @@ $(document).ready(function() {
                     //permet d'effacer les valeurs du form et recommencer à neuf
                     $('#form_liste')[0].reset();
 
-                    $.unblockUI(); 
-                    return false; 
-                }); //$('#btn_liste_fermer').click(function() 
-                 $('#btn_sprint_fermer').click(function() { 
+                    $.unblockUI();
+                    return false;
+                }); //$('#btn_liste_fermer').click(function()
+                 $('#btn_sprint_fermer').click(function() {
                     //permet d'effacer les valeurs du form et recommencer à neuf
                     $('#form_sprint')[0].reset();
-                    $.unblockUI(); 
-                    return false; 
-                }); //$('#btn_liste_fermer').click(function() 
+                    $.unblockUI();
+                    return false;
+                }); //$('#btn_liste_fermer').click(function()
 
 
                $('#btn_tache_ajouter').click(function() {
@@ -528,9 +531,9 @@ $(document).ready(function() {
 
                     var liste_no = $("body").data("ajout_liste_no");
                     var nom_tache = $("#nom_tache").val();
-     
+
                     var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
-      //  alert(sprint_id_name);                    
+      //  alert(sprint_id_name);
                     var sprint_id = sprint_id_name.replace("sprint_", "");
 
                     if(nom_tache == ""){
@@ -557,7 +560,7 @@ $(document).ready(function() {
 
                              creer_tache(liste_no, JSON.parse(result).last_inserted_id, JSON.parse(result).nom , JSON.parse(result).description);
                             /*
-                            $("#ul_liste_" + liste_no).append( '<li id="li_tache_' + JSON.parse(result).last_inserted_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span id="tache_titre_'+ JSON.parse(result).last_inserted_id + '">' + JSON.parse(result).nom + '</span></li>' );               
+                            $("#ul_liste_" + liste_no).append( '<li id="li_tache_' + JSON.parse(result).last_inserted_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span id="tache_titre_'+ JSON.parse(result).last_inserted_id + '">' + JSON.parse(result).nom + '</span></li>' );
                             */
 
                     },error(xhr,status,error){
@@ -576,14 +579,14 @@ $(document).ready(function() {
                 $('#btn_liste_ajouter').click(function() {
 
 
-                  
+
                     var sprint_id_name = $('#tabs .ui-state-active').attr('aria-controls');
-    
+
                     var sprint_id = sprint_id_name.replace("sprint_", "");
                    // alert(sprint_id);
 
                     var data =  $('#form_liste').serialize() + "&projet_id=" + g_selected_projet_id+ "&sprint_id=" + sprint_id
-                  
+
                     $.ajax({ statusCode: {
                         500: function(xhr) {
                          alert(500);
@@ -596,7 +599,7 @@ $(document).ready(function() {
                         dataType: 'text',
                         // remind that 'data' is the response of the AjaxController
                     success: function (result,status,xhr) {
-                                
+
                             var id = JSON.parse(result).last_inserted_id;
                             var nom = JSON.parse(result).nom;
                             var description = JSON.parse(result).description;
@@ -617,7 +620,43 @@ $(document).ready(function() {
 
                 }); // $('#btn_liste_ajouter').click(function()
 
-                
+                $('#btn_projet_ajouter').click(function() {
+
+                    var nom_projet = $("#nom_projet").val();
+                    var description_projet = $("#description_projet").val();
+                    var data =  $('#form_projet').serialize();
+
+                    $.ajax({ statusCode: {
+                        500: function(xhr) {
+                         alert(500);
+                        }},
+                        //the route pointing to the post function
+                        url: "{{ URL::to('projets') }}",
+                        type: 'POST',
+                        // send the csrf-token and the input to the controller
+                        data: data,
+                        dataType: 'text',
+                        // remind that 'data' is the response of the AjaxController
+                    success: function (result,status,xhr) {
+
+                            // on retourne au home pour voir les projets... en attendant todo a continuer
+                            //url = "http://localhost:8000";
+                            //$( location ).attr("href", url);
+
+                    },
+                    error(xhr,status,error){
+                        alert("error 1 " + status);
+                        alert("error 2 " + error);
+                    },
+                    complete: function (xhr,status) {
+                            // Handle the complete event
+
+                        //alert("complete " + status);
+
+                    }
+                    });
+
+                }); // $('#btn_projet_ajouter').click(function()
 
 
 
@@ -688,7 +727,7 @@ $(document).ready(function() {
 
 
 
-                
+
                 $(document).on("click", "#creer_item_liste", function() {
                     //permet d'effacer les valeurs du form et recommencer à neuf
                     $('#form_liste')[0].reset();
@@ -699,18 +738,26 @@ $(document).ready(function() {
 
                 }); // $(document).on("click", "#creer_item_liste", function()
 
-           
-                
+
+
 
                 $(document).on("click", "#creer_item_sprint", function() {
                     //permet d'effacer les valeurs du form et recommencer à neuf
                     $('#form_sprint')[0].reset();
-                    $.blockUI({ 
-                        message: $('.div_sprint_form') 
-                    }); 
-                    
-                }); //$(document).on("click", "#creer_item_liste", function() {
-   
+                    $.blockUI({
+                        message: $('.div_sprint_form')
+                    });
+
+                }); //$(document).on("click", "#creer_item_sprint", function() {
+
+                  $(document).on("click", "#creer_item_projet", function() {
+                      //permet d'effacer les valeurs du form et recommencer à neuf
+                      $('#form_projet')[0].reset();
+                      $.blockUI({
+                           message: $('.div_projet_form')
+                      });
+
+                  }); // $(document).on("click", "#creer_item_projet", function()
 
            //     $( function() {
                 var noSprint = $( "#no_sprint" ),
@@ -718,9 +765,9 @@ $(document).ready(function() {
                   //tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>",
                   tabTemplate = "<li><a href='#{href}'>#{label}</a></li>",
                   tabCounter = 2;
-             
+
                 var tabs = $( "#tabs" ).tabs();
-             
+
                 // Modal dialog init: custom buttons and a "close" callback resetting the form inside
                 // var dialog = $( "#dialog" ).dialog({
                 //   autoOpen: false,
@@ -738,11 +785,11 @@ $(document).ready(function() {
                 //     form[ 0 ].reset();
                 //   }
                 // });
-             
-                //AddTab form: calls addTab function on submit and closes the dialog
-                $('#btn_sprint_ajouter').click(function() { 
 
-                    $.ajax({ 
+                //AddTab form: calls addTab function on submit and closes the dialog
+                $('#btn_sprint_ajouter').click(function() {
+
+                    $.ajax({
 
                             url: "{{ URL::to('sprints') }}",
                             type: 'POST',
@@ -750,7 +797,7 @@ $(document).ready(function() {
                             dataType: 'text',
 
                         success: function (result,status,xhr) {
-     
+
                                 var id = JSON.parse(result).last_inserted_id;
                                 var numero = JSON.parse(result).numero;
 
@@ -765,7 +812,7 @@ $(document).ready(function() {
 
                     });
                 }); // $('#btn_sprint_ajouter').click(function()
-             
+
                 // Actual addTab function: adds new tab using the input from the form above
                 function sprint_add_tab(id, numero) {
                   //var label = noSprint.val() || "Sprint " + tabCounter,
@@ -774,7 +821,7 @@ $(document).ready(function() {
                   //  id = "tabs-" + id,
                     li = $( tabTemplate.replace( /#\{href\}/g, "#sprint_" + id ).replace( /#\{label\}/g, label ) ),
                   //  tabContentHtml = tabContent.val();
-             
+
                   tabs.find( ".ui-tabs-nav" ).append( li );
                   //tabs.append( "<div id='" + id + "'><p></p></div>" );
                   tabs.append( "<div id='sprint_" + id + "'><p></p></div>" );
@@ -782,19 +829,19 @@ $(document).ready(function() {
                   tabs.tabs({ active: 0 });
                  // tabCounter++;
                 }
-                
+
 
                 // $( "#creer_item_sprint" ).button().on( "click", function() {
                 //     dialog.dialog( "open" );
                 //   });
-             
+
                 // Close icon: removing the tab on click
                 tabs.on( "click", "span.ui-icon-close", function() {
                   var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
                   $( "#" + panelId ).remove();
                   tabs.tabs( "refresh" );
                 });
-             
+
                 tabs.on( "keyup", function( event ) {
                   if ( event.altKey && event.keyCode === $.ui.keyCode.BACKSPACE ) {
                     var panelId = tabs.find( ".ui-tabs-active" ).remove().attr( "aria-controls" );
@@ -804,7 +851,7 @@ $(document).ready(function() {
                 });
 
 
-               
+
 
 
             //   });

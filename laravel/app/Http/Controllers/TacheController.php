@@ -43,7 +43,6 @@ class TacheController extends Controller
     public function store(Request $request)
     {
 
-       
 
         $tache = new Tache;
         $tache->nom = request('nom_tache');
@@ -79,7 +78,7 @@ class TacheController extends Controller
         ->Where("liste_id", "=", request("liste_id"))
         ->WhereNull("tache_id")
         ->update(["actif" => 0]);
-           
+
 
 
         $data = array(
@@ -88,7 +87,7 @@ class TacheController extends Controller
              'description' => request('description_tache')
         );
         return $data;
-   
+
 
     }
 
@@ -112,7 +111,7 @@ class TacheController extends Controller
     public function edit($id)
     {
         $tache = Tache::find($id);
-        $data = array( 
+        $data = array(
             'tache_id' => $tache->id,
             'tache_nom' => $tache->nom,
             'tache_description' => $tache->description
@@ -135,7 +134,7 @@ class TacheController extends Controller
         $tache->update();
 
 
-        $data = array( 
+        $data = array(
            'message' => 'La tâche a été modifié avec succès.'
        );
        return $data;
@@ -157,7 +156,7 @@ class TacheController extends Controller
         //SprintActivite::Store($json);
 
         $data = array(
-        
+
             'message' => 'La tâche a été supprimé.'
         );
         return $data;

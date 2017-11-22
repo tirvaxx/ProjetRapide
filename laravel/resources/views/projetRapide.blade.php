@@ -1,6 +1,6 @@
 
  @extends('layouts.app')
-        
+
 @section('content')
 
 
@@ -40,13 +40,13 @@
             </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-     
+
 <hr />
 
 
- 
- 
-    
+
+
+
 
 
 @if(isset($dataProjet))
@@ -54,8 +54,8 @@
         <fieldset id="fieldset_projet">
             <legend>Projets actifs</legend>
             <div class="panel-group" id="accordion">
-            @foreach ( $dataProjet as $value) 
-                <div class="panel panel-default"> 
+            @foreach ( $dataProjet as $value)
+                <div class="panel panel-default">
                     <div class="panel-heading">
                       <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse_{{$value->projet_id}}">
@@ -65,10 +65,11 @@
                     <div id="collapse_{{$value->projet_id}}" class="panel-collapse collapse">
                         <div class="panel-body">{{$value->projet_description}}</div>
                         <button id="btn_projet_charger" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Charger</button>
+                        <button id="btn_projet_modifier" class="btn btn-default">Modifier</button>
                     </div>
                 </div>
             @endforeach
-            </div> 
+            </div>
         </fieldset>
     </div>
 @elseif(!isset($dataProjetRapide))
@@ -78,7 +79,7 @@
 
 <h1 id="titre_projet"></h1>
 <p id="message"></p>
-   <div id="center-wrapper" style="display:none;" > 
+   <div id="center-wrapper" style="display:none;" >
        <!-- <div id="dialog" title="Tab data">
           <form>
             <fieldset class="ui-helper-reset">
@@ -89,8 +90,8 @@
             </fieldset>
           </form>
         </div> -->
-  
-        
+
+
         <div id="tabs">
           <ul>
   <!--           <li><a href="#tabs-1">Nunc tincidunt</a> <span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>    -->
@@ -98,15 +99,15 @@
 
 <!--
             <div id="tabs-1">
-               
+
                 <div class="container-list-lvl2" id="container-list-lvl2">
-            
-                </div> 
+
+                </div>
             </div>
 -->
 
-           
-        
+
+
     </div>  <!-- #center-wrapper -->
 
 
@@ -117,16 +118,16 @@
     <form id="form_tache" action="#" >
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <!-- securite contre les failles sur les requests -->
-    
+
         <fieldset>
             <legend>Ajouter une tache</legend>
                 <div class="form-group">
                         <label for="nom_tache">Nom de la tache</label>
-                        <input type="text" class="form-control" id="nom_tache" name="nom_tache" placeholder="Nom" />                            
+                        <input type="text" class="form-control" id="nom_tache" name="nom_tache" placeholder="Nom" />
                 </div>
                 <div class="form-group">
                          <label for="description_tache">Description de la tache</label>
-                        <textarea class="form-control" id="description_tache" name="description_tache" placeholder="Description"></textarea>               
+                        <textarea class="form-control" id="description_tache" name="description_tache" placeholder="Description"></textarea>
                 </div>
                 <div class="form-group">
                     <button type="button" id="btn_tache_ajouter" class="btn btn-primary" >Ajouter</button>
@@ -165,36 +166,103 @@
     <form id="form_liste" action="#" >
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <!-- securite contre les failles sur les requests -->
-       
+
         <fieldset>
             <legend>Ajouter une liste</legend>
                 <div class="form-group">
                         <label for="nom_liste">Nom de la liste</label>
-                        <input type="text" class="form-control" id="nom_liste" name="nom_liste" placeholder="Liste" />                            
+                        <input type="text" class="form-control" id="nom_liste" name="nom_liste" placeholder="Liste" />
                 </div>
                 <div class="form-group">
                          <label for="description_liste">Description de la liste</label>
-                        <textarea class="form-control" id="description_liste" name="description_liste" placeholder="Description"></textarea>               
+                        <textarea class="form-control" id="description_liste" name="description_liste" placeholder="Description"></textarea>
                 </div>
                 <div class="form-group">
                     <button type="button" id="btn_liste_ajouter" class="btn btn-primary" >Ajouter</button>
                     <button type="button" id="btn_liste_fermer" class="btn btn-primary" >Fermer</button>
                 </div>
         </fieldset>
-      
+
     </form>
 
 </div>
+<div class="div_projet_form"  style="display:none">
+    <form id="form_projet" action="#" >
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <!-- securite contre les failles sur les requests -->
+
+        <fieldset>
+            <legend>Créer un projet</legend>
+                <div class="form-group">
+                        <label for="nom_projet">Nom du projet</label>
+                        <input type="text" class="form-control" id="nom_projet" name="nom_projet" placeholder="Nom" />
+                </div>
+                <div class="form-group">
+                         <label for="description_projet">Description du projet</label>
+                        <textarea class="form-control" id="description_projet" name="description_projet" placeholder="Description"></textarea>
+                </div>
+                <div class="form-group" >
+                    <label for="date_du_projet">Date dû :</label>
+                    <input type="text" class="form-control" name="date_du_projet" id="date_du_projet">
+                </div>
+                <script type="text/javascript">
+                    $( function() {
+                        $( "#date_du_projet" ).datepicker({ dateFormat: 'yy-mm-dd' });
+                    } );
+                </script>
+                <div class="form-group">
+                    <button type="button" id="btn_projet_ajouter" class="btn btn-primary" >Créer</button>
+                    <button type="button" id="btn_projet_fermer" class="btn btn-primary" >Fermer</button>
+                </div>
+        </fieldset>
+    </form>
+</div>
+
+<div id="projet_modifier_form" style="display:none">
+    <form id="form_modifier_projet" action="#">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <fieldset>
+            <legend>Modifier un projet</legend>
+                <div class="form-group">
+                    <div id="projet_message_modifier" style="display:none;text-align:left;color:darkred;background-color:#DEECF7; border-style:groove;"></div>­­
+                </div>
+                <div class="form-group">
+                        <label for="nom_projet">Nom du projet</label>
+                        <input type="text" class="form-control" id="modifier_nom_projet" name="modifier_nom_projet" placeholder="Nom" />
+                </div>
+                <div class="form-group">
+                         <label for="description_liste">Description du projet</label>
+                        <textarea class="form-control" id="modifier_description_projet" name="modifier_description_projet" placeholder="Description">
+                        autretest</textarea>
+                </div>
+                <div class="form-group" >
+                    <label for="date_du_projet">Date dû :</label>
+                    <input type="text" class="form-control" name="modifier_date_du_projet" id="modifier_date_du_projet">
+                </div>
+                <div class="form-group" >
+                    <label for="date_complete_projet">Date Fin :</label>
+                    <input type="text" class="form-control" name="modifier_date_complete_projet" id="modifier_date_complete_projet">
+                </div>
+                <div class="form-group">
+                    <button type="button" id="btn_projet_modifier" class="btn btn-primary" >Modifier</button>
+                    <button type="button" id="btn_projet_formmodifier_annuler" class="btn btn-primary" >Annuler</button>
+                </div>
+        </fieldset>
+
+    </form>
+
+</div>
+
 <div class="div_sprint_form" style="display:none">
     <form id="form_sprint" action="#" >
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <!-- securite contre les failles sur les requests -->
-       
+
         <fieldset>
             <legend>Ajouter un sprint</legend>
              <div class="form-group">
                         <label for="no_sprint">Numero du sprint</label>
-                        <input type="text" class="form-control" id="no_sprint" name="no_sprint" placeholder="Sprint" />                            
+                        <input type="text" class="form-control" id="no_sprint" name="no_sprint" placeholder="Sprint" />
                 </div>
                 <div class="form-group" >
                     <label for="date_debut">Date Début :</label>
@@ -217,7 +285,7 @@
                     <button type="button" id="btn_sprint_fermer" class="btn btn-primary" >Fermer</button>
                 </div>
         </fieldset>
-      
+
     </form>
 
 </div>
