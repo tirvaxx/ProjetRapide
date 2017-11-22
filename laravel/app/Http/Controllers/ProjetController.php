@@ -45,7 +45,7 @@ class ProjetController extends Controller
     public function store(Request $request)
     {
         $projet = new Projet;
-        $projet->increments('id');
+        
         $projet->creer_par_acteur_id = 2;
         $projet->nom = request('nom_projet');
         $projet->description = request('description_projet');

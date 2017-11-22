@@ -523,6 +523,12 @@ $(document).ready(function() {
                     $.unblockUI();
                     return false;
                 }); //$('#btn_liste_fermer').click(function()
+                 $('#btn_projet_fermer').click(function() {
+                    //permet d'effacer les valeurs du form et recommencer à neuf
+                    $('#form_projet')[0].reset();
+                    $.unblockUI();
+                    return false;
+                }); //$('#btn_projet_fermer').click(function()
 
 
                $('#btn_tache_ajouter').click(function() {

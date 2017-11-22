@@ -24,7 +24,7 @@ LOG::info("debut  maj_bd");
 
 
   foreach($json as $liste => $json_tache){
-            LOG::info("in foreach liste=" + $liste);
+            //LOG::info("in foreach liste=" + $liste);
 
 
 
