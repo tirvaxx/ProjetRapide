@@ -646,9 +646,8 @@ $(document).ready(function() {
                     success: function (result,status,xhr) {
 
                             // on retourne au home pour voir les projets... en attendant todo a continuer
-                            //url = "http://localhost:8000";
-                            //$( location ).attr("href", url);
-
+                            url = "http://localhost:8000";
+                            $( location ).attr("href", url);
                     },
                     error(xhr,status,error){
                         alert("error 1 " + status);
