@@ -387,11 +387,6 @@
                   // remind that 'data' is the response of the AjaxController
               success: function (result,status,xhr) {
                   afficher_liste_modifiee(id_liste, nom_liste, description_liste);
-                  /*var tagAModifier = "liste_titre_"+liste_no;
-                  $('#'+tagAModifier).text(nom_liste);
-
-                  tagAModifier = "liste_panel_"+liste_no;
-                  $('#'+tagAModifier).attr('title', description_liste);*/
 
               },error(xhr,status,error){
                   alert("error 1 " + status);
@@ -422,39 +417,7 @@
                   return;
 
                 modifier_liste_bd(id_liste, nom_liste, description_liste);
-                /*$url = "listes/" + liste_no;
 
-                $.ajax({ statusCode: {
-                    500: function(xhr) {
-                    alert(500);
-                    }},
-                    //the route pointing to the post function
-                    url: $url,
-                    type: 'PUT',
-                    // send the csrf-token and the input to the controller
-                    data: $('#form_modifier_liste').serialize(),
-                    dataType: 'text',
-                    // remind that 'data' is the response of the AjaxController
-                success: function (result,status,xhr) {
-
-                    var tagAModifier = "liste_titre_"+liste_no;
-                    $('#'+tagAModifier).text(nom_liste);
-
-                    tagAModifier = "liste_panel_"+liste_no;
-                    $('#'+tagAModifier).attr('title', description_liste);
-
-                },error(xhr,status,error){
-                    alert("error 1 " + status);
-                    alert("error 2 " + error);
-                },
-                    complete: function (xhr,status) {
-                        // Remettre la partie message d'erreur du formulaire à rien et chacher cette partie
-                        $('#'+lblMessageListeModifier).html("");
-                        $('#'+lblMessageListeModifier).hide();
-                    // Handle the complete event
-                    //alert("complete " + status);
-                    }
-                });*/
                 $.unblockUI();
 
             });//#btn_liste_modifier
