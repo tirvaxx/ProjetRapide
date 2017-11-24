@@ -360,9 +360,19 @@
 
             }// valider_champs_liste
 
+            // Permet d'afficher la modification du nom de la liste
+            function afficher_liste_modifiee(id_liste, nom_liste, description_liste){
+
+              var tagAModifier = "liste_titre_"+id_liste;
+              $('#'+tagAModifier).text(nom_liste);
+
+              tagAModifier = "liste_panel_"+id_liste;
+              $('#'+tagAModifier).attr('title', description_liste);
+            }
+
             // Permet de modifier la liste dans la bd
-            function modifier_liste_bd(liste_no, nom_liste, description_liste){
-              $url = "listes/" + liste_no;
+            function modifier_liste_bd(id_liste, nom_liste, description_liste){
+              $url = "listes/" + id_liste;
 
               $.ajax({ statusCode: {
                   500: function(xhr) {
@@ -376,12 +386,12 @@
                   dataType: 'text',
                   // remind that 'data' is the response of the AjaxController
               success: function (result,status,xhr) {
-
-                  var tagAModifier = "liste_titre_"+liste_no;
+                  afficher_liste_modifiee(id_liste, nom_liste, description_liste);
+                  /*var tagAModifier = "liste_titre_"+liste_no;
                   $('#'+tagAModifier).text(nom_liste);
 
                   tagAModifier = "liste_panel_"+liste_no;
-                  $('#'+tagAModifier).attr('title', description_liste);
+                  $('#'+tagAModifier).attr('title', description_liste);*/
 
               },error(xhr,status,error){
                   alert("error 1 " + status);
@@ -400,7 +410,7 @@
             // Sur appuie du bouton modifier de la liste
             $("body").delegate('#btn_liste_modifier','click',function(){
 
-                var liste_no = $("body").data("modif_liste_no");
+                var id_liste = $("body").data("modif_liste_no");
                 var input_name = "modifier_nom_liste";
                 var nom_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val();
                 var input_name = "modifier_description_liste";
@@ -411,7 +421,7 @@
                 if(!champs_valides)
                   return;
 
-                modifier_liste_bd(liste_no, nom_liste, description_liste);
+                modifier_liste_bd(id_liste, nom_liste, description_liste);
                 /*$url = "listes/" + liste_no;
 
                 $.ajax({ statusCode: {
