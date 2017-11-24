@@ -484,7 +484,7 @@ $(document).ready(function() {
 
                 var p_id = $(this).attr("projet_id");
                 g_selected_projet_id = p_id;
-                alert("id "+p_id);
+
                 var titre = $(this).attr("projet_nom");
                 //$("#titre_projet").html(titre);
                 //$("#projet_wrapper").hide();
@@ -504,7 +504,7 @@ $(document).ready(function() {
 
                 success: function (result,status,xhr) {
                     var le_projet = JSON.parse(result);
-                    alert("resultat : "+ result);
+                    //alert("resultat : "+ result);
                     $('#modifier_nom_projet').val(le_projet.projet_nom);
                     $('#modifier_description_projet').val(le_projet.projet_description);
                     $('#modifier_date_du_projet').val(le_projet.projet_date_du);
