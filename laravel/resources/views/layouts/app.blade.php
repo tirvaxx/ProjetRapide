@@ -336,6 +336,67 @@
                 return false;
             });
 
+            // Permet de valider les champs d'une liste
+            function valider_champs_liste(nom_liste, description_liste){
+              var lblMessageListeModifier = "liste_message_modifier"; // Permet d'afficher un message d'erreur dans le formulaire.
+
+              var ExpNom = /^[0-9a-zA-Z\s\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿç  Ç_]{2,40}$/;
+              //var ExpDesc = /^[0-9a-zA-Z\s\r\n\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_]{2,150}$/;
+              var ExpDesc = /^[^;]{2,150}$/;
+
+              var res_test_nom = nom_liste.match(ExpNom);
+              var res_test_desc = description_liste.match(ExpDesc);
+
+              if( nom_liste.replace(/\s/g, '') == "" ||
+                  description_liste.replace(/\s/g, '') == "" || !res_test_nom || !res_test_desc){
+
+                  $('#'+lblMessageListeModifier).html("<tr><td width=\"20%\" style=\"vertical-align : middle; font-size: 35px;text-align:center;\"><span>&#9888</span></td><td width=\"80%\" style=\"vertical-align : middle;\">" +
+                  "<span><strong>Nom de la liste :</strong><br/>(2 à 40 caractères maximum acceptant les caratères : 0 à 9, a à z, A à Z, espace, point, àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_)<br/><strong>Description de la liste :</strong><br/>(2 à 150 caractères excluant le ;)</span></td></tr>");
+                  $('#'+lblMessageListeModifier).show();
+                  message: $('#liste_modifier_form')
+                  return false;
+              }
+              return true;
+
+            }// valider_champs_liste
+
+            // Permet de modifier la liste dans la bd
+            function modifier_liste_bd(liste_no, nom_liste, description_liste){
+              $url = "listes/" + liste_no;
+
+              $.ajax({ statusCode: {
+                  500: function(xhr) {
+                  alert(500);
+                  }},
+                  //the route pointing to the post function
+                  url: $url,
+                  type: 'PUT',
+                  // send the csrf-token and the input to the controller
+                  data: $('#form_modifier_liste').serialize(),
+                  dataType: 'text',
+                  // remind that 'data' is the response of the AjaxController
+              success: function (result,status,xhr) {
+
+                  var tagAModifier = "liste_titre_"+liste_no;
+                  $('#'+tagAModifier).text(nom_liste);
+
+                  tagAModifier = "liste_panel_"+liste_no;
+                  $('#'+tagAModifier).attr('title', description_liste);
+
+              },error(xhr,status,error){
+                  alert("error 1 " + status);
+                  alert("error 2 " + error);
+              },
+                  complete: function (xhr,status) {
+                      // Remettre la partie message d'erreur du formulaire à rien et chacher cette partie
+                      $('#'+lblMessageListeModifier).html("");
+                      $('#'+lblMessageListeModifier).hide();
+                  // Handle the complete event
+                  //alert("complete " + status);
+                  }
+              });
+            }
+
             // Sur appuie du bouton modifier de la liste
             $("body").delegate('#btn_liste_modifier','click',function(){
 
@@ -345,27 +406,13 @@
                 var input_name = "modifier_description_liste";
                 var description_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val();
 
-                var lblMessageListeModifier = "liste_message_modifier"; // Permet d'afficher un message d'erreur dans le formulaire.
+                var champs_valides = valider_champs_liste(nom_liste, description_liste);
+                // Si les champs ne sont pas valides, on ne continue pas le processus de modification.
+                if(!champs_valides)
+                  return;
 
-                var ExpNom = /^[0-9a-zA-Z\s\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿç  Ç_]{2,40}$/;
-                //var ExpDesc = /^[0-9a-zA-Z\s\r\n\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_]{2,150}$/;
-                var ExpDesc = /^[^;]{2,150}$/;
-
-                var res_test_nom = nom_liste.match(ExpNom);
-                var res_test_desc = description_liste.match(ExpDesc);
-
-                if( nom_liste.replace(/\s/g, '') == "" ||
-                    description_liste.replace(/\s/g, '') == "" || !res_test_nom || !res_test_desc){
-
-                    $('#'+lblMessageListeModifier).html("<tr><td width=\"20%\" style=\"vertical-align : middle; font-size: 35px;text-align:center;\"><span>&#9888</span></td><td width=\"80%\" style=\"vertical-align : middle;\">" +
-                    "<span><strong>Nom de la liste :</strong><br/>(2 à 40 caractères maximum acceptant les caratères : 0 à 9, a à z, A à Z, espace, point, àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_)<br/><strong>Description de la liste :</strong><br/>(2 à 150 caractères excluant le ;)</span></td></tr>");
-                    $('#'+lblMessageListeModifier).show();
-                    message: $('#liste_modifier_form')
-                    return;
-                }
-
-
-                $url = "listes/" + liste_no;
+                modifier_liste_bd(liste_no, nom_liste, description_liste);
+                /*$url = "listes/" + liste_no;
 
                 $.ajax({ statusCode: {
                     500: function(xhr) {
@@ -397,7 +444,7 @@
                     // Handle the complete event
                     //alert("complete " + status);
                     }
-                });
+                });*/
                 $.unblockUI();
 
             });//#btn_liste_modifier
