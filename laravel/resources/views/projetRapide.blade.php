@@ -65,7 +65,7 @@
                     <div id="collapse_{{$value->projet_id}}" class="panel-collapse collapse">
                         <div class="panel-body">{{$value->projet_description}}</div>
                         <button id="btn_projet_charger" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Charger</button>
-                        <button id="btn_projet_modifier" class="btn btn-default">Modifier</button>
+                        <button id="btn_projet_modifier" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Modifier</button>
                     </div>
                 </div>
             @endforeach
@@ -233,18 +233,26 @@
                 <div class="form-group">
                          <label for="description_liste">Description du projet</label>
                         <textarea class="form-control" id="modifier_description_projet" name="modifier_description_projet" placeholder="Description">
-                        autretest</textarea>
+                        Description</textarea>
                 </div>
                 <div class="form-group" >
                     <label for="date_du_projet">Date dû :</label>
                     <input type="text" class="form-control" name="modifier_date_du_projet" id="modifier_date_du_projet">
                 </div>
                 <div class="form-group" >
-                    <label for="date_complete_projet">Date Fin :</label>
+                    <label for="date_complete_projet">Date complété :</label>
                     <input type="text" class="form-control" name="modifier_date_complete_projet" id="modifier_date_complete_projet">
                 </div>
+                <script type="text/javascript">
+                    $( function() {
+                        $( "#modifier_date_du_projet" ).datepicker({ dateFormat: 'yy-mm-dd' });
+                    } );
+                    $( function() {
+                        $( "#modifier_date_complete_projet" ).datepicker({ dateFormat: 'yy-mm-dd' });
+                    } );
+                </script>
                 <div class="form-group">
-                    <button type="button" id="btn_projet_modifier" class="btn btn-primary" >Modifier</button>
+                    <button type="button" id="btn_projet_formmodifier" class="btn btn-primary" >Modifier</button>
                     <button type="button" id="btn_projet_formmodifier_annuler" class="btn btn-primary" >Annuler</button>
                 </div>
         </fieldset>

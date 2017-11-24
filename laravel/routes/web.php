@@ -23,6 +23,8 @@ Route::get('/{id}',  array('uses' => 'ProjetRapideController@projetInit'));
 
 Route::get('/',  array('uses' => 'ProjetController@index'));
 Route::post('/projets', 'ProjetController@store');
+Route::get('/projets/{id}/edit', array('projet'=> 'projets', 'uses' => 'ProjetController@edit'));
+Route::put('/projets/{id}', 'ProjetController@update');
 
 //Route::get('/taches', 'TacheController@index');
 // create ?

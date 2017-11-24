@@ -45,7 +45,7 @@ class ProjetController extends Controller
     public function store(Request $request)
     {
         $projet = new Projet;
-        
+
         $projet->creer_par_acteur_id = 2;
         $projet->nom = request('nom_projet');
         $projet->description = request('description_projet');
@@ -94,7 +94,7 @@ class ProjetController extends Controller
             'projet_id' => $projet->id,
             'projet_nom' => $projet->nom,
             'projet_description' => $projet->description,
-            'projet_date_du' => $prjet->date_du,
+            'projet_date_du' => $projet->date_du,
             'projet_date_complete' => $projet->date_complete
        );
        return $data;
@@ -109,11 +109,11 @@ class ProjetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $projet = Tache::find($id);
+        $projet = Projet::find($id);
         $projet->nom = $request->modifier_nom_projet;
         $projet->description = $request->modifier_description_projet;
-        $projet->projet_date_du = $request->input('modifier_date_du');
-        $projet->projet_date_complete = $request->input('modifier_date_complete');
+        $projet->date_du = $request->input('modifier_date_du_projet');
+        $projet->date_complete = $request->input('modifier_date_complete_projet');
         $projet->update();
 
         $data = array(

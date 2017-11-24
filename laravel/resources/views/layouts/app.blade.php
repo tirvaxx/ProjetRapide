@@ -98,13 +98,6 @@
 
 
 
-            // Modifier un tâche
-            $("body").delegate('#btn_tache_modifier_annuler','click',function(){
-                //alert("annuler");
-                $.unblockUI();
-                return false;
-            });  // $("body").delegate('#btn_tache_modifier_annuler','click',function
-
             $("body").delegate('#btn_tache_modifier','click',function(){
                 $tache_no = $("body").data("modif_tache_no");
                 var input_name = "modifier_nom_tache";
@@ -318,10 +311,10 @@
                     $('#modifier_description_liste').val(la_liste.description_liste);
                     $('#liste_message_modifier').hide();
 
-                },error(xhr,status,error){
-                    alert("error 1 " + status);
-                    alert("error 2 " + error);
-                },
+                    },error(xhr,status,error){
+                        alert("error 1 " + status);
+                        alert("error 2 " + error);
+                    },
 
                     complete: function (xhr,status) {
                     // Handle the complete event
@@ -487,6 +480,130 @@ $(document).ready(function() {
 
             });
 
+            $("body").delegate('#btn_projet_modifier','click', function() {
+
+                var p_id = $(this).attr("projet_id");
+                g_selected_projet_id = p_id;
+                alert("id "+p_id);
+                var titre = $(this).attr("projet_nom");
+                //$("#titre_projet").html(titre);
+                //$("#projet_wrapper").hide();
+                //$("#center-wrapper").show();
+
+                $("body").data("modif_projet_no", p_id);
+                $url = "projets/" + p_id + "/edit";
+
+                $.ajax({ statusCode: {
+                    500: function(xhr) {
+                    alert(500);
+                    }},
+                    //the route pointing to the post function
+                    url: $url,
+                    type: 'GET',
+                    dataType: 'text',
+
+                success: function (result,status,xhr) {
+                    var le_projet = JSON.parse(result);
+                    alert("resultat : "+ result);
+                    $('#modifier_nom_projet').val(le_projet.projet_nom);
+                    $('#modifier_description_projet').val(le_projet.projet_description);
+                    $('#modifier_date_du_projet').val(le_projet.projet_date_du);
+                    if(le_projet.projet_date_complete != null)
+                      $('#modifier_date_complete_projet').val(le_projet.projet_date_complete);
+                },error(xhr,status,error){
+                    alert("error 1 " + status);
+                    alert("error 2 " + error);
+                },
+
+                    complete: function (xhr,status) {
+                    // Handle the complete event
+                    //alert("complete " + status);
+                    }
+                });
+
+                $.blockUI({
+                     message: $('#projet_modifier_form')
+                });
+
+
+            }); // btn_projet_modifier click
+
+            $("body").delegate('#btn_projet_formmodifier','click',function(){
+
+                $projet_no = $("body").data("modif_projet_no");
+
+                var input_name = "modifier_nom_projet";
+                var nom_projet = $("#form_modifier_projet :input[name='"+input_name+"']").val();
+                var input_name = "modifier_description_projet";
+                var description_liste = $("#form_modifier_projet :input[name='"+input_name+"']").val();
+                var input_name = "modifier_date_du_projet";
+                var description_liste = $("#form_modifier_projet :input[name='"+input_name+"']").val();
+                var input_name = "modifier_date_complete_projet";
+                var description_liste = $("#form_modifier_projet :input[name='"+input_name+"']").val();
+
+
+                /*var lblMessageListeModifier = "liste_message_modifier"; // Permet d'afficher un message d'erreur dans le formulaire.
+
+                var ExpNom = /^[0-9a-zA-Z\s\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿç  Ç_]{2,40}$/;
+                var ExpDesc = /^[0-9a-zA-Z\s\r\n\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_]{2,150}$/;
+                var ExpDesc = /^[^;]{2,150}$/;
+
+                var res_test_nom = nom_liste.match(ExpNom);
+                var res_test_desc = description_liste.match(ExpDesc);
+
+                if( nom_projet.replace(/\s/g, '') == "" ||
+                    description_projet.replace(/\s/g, '') == "" || !res_test_nom || !res_test_desc){
+
+                    $('#'+lblMessageListeModifier).html("<tr><td width=\"20%\" style=\"vertical-align : middle; font-size: 35px;text-align:center;\"><span>&#9888</span></td><td width=\"80%\" style=\"vertical-align : middle;\">" +
+                    "<span><strong>Nom de la liste :</strong><br/>(2 à 40 caractères maximum acceptant les caratères : 0 à 9, a à z, A à Z, espace, point, àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_)<br/><strong>Description de la liste :</strong><br/>(2 à 150 caractères).</span></td></tr>");
+                    $('#'+lblMessageListeModifier).show();
+                    message: $('#liste_modifier_form')
+                    return;
+                }*/
+
+                $url = "projets/" + $projet_no;
+
+                $.ajax({ statusCode: {
+                    500: function(xhr) {
+                    alert(500);
+                    }},
+                    //the route pointing to the post function
+                    url: $url,
+                    type: 'PUT',
+                    // send the csrf-token and the input to the controller
+                    data: $('#form_modifier_projet').serialize(),
+                    dataType: 'text',
+                    // remind that 'data' is the response of the AjaxController
+                    success: function (result,status,xhr) {
+                      // on retourne au home pour voir les projets... en attendant todo a continuer
+                      url = "http://localhost:8000";
+                      $( location ).attr("href", url);
+
+                    },error(xhr,status,error){
+                        alert("error 1 " + status);
+                        alert("error 2 " + error);
+                    },
+                    complete: function (xhr,status) {
+                        // Remettre la partie message d'erreur du formulaire à rien et chacher cette partie
+                        /*$('#'+lblMessageListeModifier).html("");
+                        $('#'+lblMessageListeModifier).hide();*/
+                    // Handle the complete event
+                    //alert("complete " + status);
+                    }
+                });
+                $.unblockUI();
+
+            });//#btn_projet_formmodifier click
+
+            // Fin modifier une tâche
+            // Modifier un projet
+            $("body").delegate('#btn_projet_formmodifier_annuler','click',function(){
+                //alert("annuler");
+                $.unblockUI();
+                //$("#center-wrapper").show();
+                return false;
+            });  // $("body").delegate('#btn_projet_formmodifier_annuler','click',function
+
 
 //Permet d'afficher des tooltips de types Bootstrap
             $("[rel=tooltip]").tooltip({ placement: 'top'});
@@ -532,8 +649,6 @@ $(document).ready(function() {
 
 
                $('#btn_tache_ajouter').click(function() {
-
-
 
                     var liste_no = $("body").data("ajout_liste_no");
                     var nom_tache = $("#nom_tache").val();
