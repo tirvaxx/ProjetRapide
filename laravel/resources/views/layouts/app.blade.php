@@ -283,49 +283,51 @@
             }
 
 
+            function sur_double_clique_liste(liste_id){
+
+              //var liste_id =  $(this).attr('id');
+              //on s'assure qu'on a bien cliqué sur la partie liste sinon exit
+              if(!(typeof liste_id != 'undefined' && liste_id.indexOf("liste_panel_") >= 0)){
+                      return;
+              }
+              var liste_no = liste_id.replace("liste_panel_", "");
+              $("body").data("modif_liste_no", liste_no);
+
+              $url = "listes/" + liste_no + "/edit";
+
+              $.ajax({ statusCode: {
+                  500: function(xhr) {
+                  alert(500);
+                  }},
+                  //the route pointing to the post function
+                  url: $url,
+                  type: 'GET',
+                  dataType: 'text',
+
+              success: function (result,status,xhr) {
+                  var la_liste = JSON.parse(result);
+                  $('#modifier_nom_liste').val(la_liste.nom_liste);
+                  $('#modifier_description_liste').val(la_liste.description_liste);
+                  $('#liste_message_modifier').hide();
+
+                  },error(xhr,status,error){
+                      alert("error 1 " + status);
+                      alert("error 2 " + error);
+                  },
+
+                  complete: function (xhr,status) {
+                  // Handle the complete event
+                  //alert("complete " + status);
+                  }
+              });
+
+              $.blockUI({
+                   message: $('#liste_modifier_form')
+              });
+            }
+
            // sur double-clique d'un div aller chercher la liste et l'afficher pour modification, sinon ne rien faire
-           $("body").delegate('div','dblclick',function() {
-
-                var liste_id =  $(this).attr('id');
-                //on s'assure qu'on a bien cliqué sur la partie liste sinon exit
-                if(!(typeof liste_id != 'undefined' && liste_id.indexOf("liste_panel_") >= 0)){
-                        return;
-                }
-                var liste_no = liste_id.replace("liste_panel_", "");
-                $("body").data("modif_liste_no", liste_no);
-
-                $url = "listes/" + liste_no + "/edit";
-
-                $.ajax({ statusCode: {
-                    500: function(xhr) {
-                    alert(500);
-                    }},
-                    //the route pointing to the post function
-                    url: $url,
-                    type: 'GET',
-                    dataType: 'text',
-
-                success: function (result,status,xhr) {
-                    var la_liste = JSON.parse(result);
-                    $('#modifier_nom_liste').val(la_liste.nom_liste);
-                    $('#modifier_description_liste').val(la_liste.description_liste);
-                    $('#liste_message_modifier').hide();
-
-                    },error(xhr,status,error){
-                        alert("error 1 " + status);
-                        alert("error 2 " + error);
-                    },
-
-                    complete: function (xhr,status) {
-                    // Handle the complete event
-                    //alert("complete " + status);
-                    }
-                });
-
-                $.blockUI({
-                     message: $('#liste_modifier_form')
-                });
-            });
+           $("body").delegate('div','dblclick',function(){return sur_double_clique_liste($(this).attr('id'))});
 
             // Annuler la modification d'une liste
             $("body").delegate('#btn_liste_formmodifier_annuler','click',function(){
