@@ -356,7 +356,7 @@
                     description_liste.replace(/\s/g, '') == "" || !res_test_nom || !res_test_desc){
 
                     $('#'+lblMessageListeModifier).html("<tr><td width=\"20%\" style=\"vertical-align : middle; font-size: 35px;text-align:center;\"><span>&#9888</span></td><td width=\"80%\" style=\"vertical-align : middle;\">" +
-                    "<span><strong>Nom de la liste :</strong><br/>(2 à 40 caractères maximum acceptant les caratères : 0 à 9, a à z, A à Z, espace, point, àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_)<br/><strong>Description de la liste :</strong><br/>(2 à 150 caractères).</span></td></tr>");
+                    "<span><strong>Nom de la liste :</strong><br/>(2 à 40 caractères maximum acceptant les caratères : 0 à 9, a à z, A à Z, espace, point, àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_)<br/><strong>Description de la liste :</strong><br/>(2 à 150 caractères excluant le ;)</span></td></tr>");
                     $('#'+lblMessageListeModifier).show();
                     message: $('#liste_modifier_form')
                     return;
