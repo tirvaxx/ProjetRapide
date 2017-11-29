@@ -36,16 +36,32 @@ fieldset legend {
     
 }
 
+.i-info > .glyphicon-info-sign {
+    position: relative;
+    font-size: 0.8em;
+    top: -17px;
+    margin-left:10px;
+    color:#C0C0C0;
+    text-decoration: none;
+}
+
+.c-comment > .glyphicon-comment {
+    position: relative;
+    font-size: 0.8em;
+    top: -17px;
+    margin-left:5px;
+    color:#C0C0C0;
+    text-decoration: none;
+}
 
 .x-remove > .glyphicon-remove {
     position: relative;
     font-size: 0.8em;
     top: -17px;
-    right: 4px;
+    right: 5px;
     color:#C0C0C0;
     text-decoration: none;
 }
-
 #accordion.panel-group{
     width:70%;
     margin:0 auto;

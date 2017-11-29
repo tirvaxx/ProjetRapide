@@ -83,7 +83,8 @@
                 // Partie ajax pour éditer le formulaire
 
                 $.blockUI({
-                     message: $('#tache_modifier_form')
+                     message: $('#tache_modifier_form'),
+                     css: { top:'20%'}
                 });
             }); //  $("body").delegate('li','dblclick',function
 
@@ -146,7 +147,8 @@
 
             function ajouter_tache(liste_no){
                 $.blockUI({
-                     message: $('.div_tache_form')
+                     message: $('.div_tache_form'),
+                     css: { top:'20%'}
                 });
             } //ajouter_tache
 
@@ -278,7 +280,7 @@
 
 
             function creer_tache(liste_id, tache_id, tache_nom, tache_description){
-                 $("#ul_liste_" + liste_id).append( '<li id="li_tache_' + tache_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span id="tache_titre_'+ tache_id + '">' + tache_nom + '</span></li>' );
+                 $("#ul_liste_" + liste_id).append( '<li id="li_tache_' + tache_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><a href="#"  class="c-comment"><span class="glyphicon glyphicon-comment pull-left"></a><a href="#" class="i-info"><span class="glyphicon glyphicon-info-sign pull-left"></a><span id="tache_titre_'+ tache_id + '">' + tache_nom + '</span></li>' );
 
             }
 
@@ -322,7 +324,8 @@
               });
 
               $.blockUI({
-                   message: $('#liste_modifier_form')
+                    message: $('#liste_modifier_form'),
+                    css: { top:'20%'}
               });
             }
 
@@ -544,7 +547,8 @@ $(document).ready(function() {
                 });
 
                 $.blockUI({
-                     message: $('#projet_modifier_form')
+                     message: $('#projet_modifier_form'),
+                     css: { top:'20%'}
                 });
 
 
@@ -822,48 +826,75 @@ $(document).ready(function() {
 
                 }); //$("body").delegate('a.btn','click', function()
 
+    $("body").delegate('a.c-comment','click',function(e) {
+        //$('[data-toggle="popover"]').popover(); 
+        e.preventDefault();
+        $.blockUI({
+            message: $('#tache_commentaire'),
+            css: { top:'20%'}
+        });
+      
+
+
+    }); //$("body").delegate('a.c-comment','click',function()
+    $("body").delegate('a.i-info','click',function(e) {
+
+         e.preventDefault();
+       $.blockUI({
+            message: $('#tache_info'),
+            css: { top:'20%'}
+        });
+      
+    }); //$("body").delegate('a.i-info','click',function()
+
+
+    $(".btn_fermer").click(function(){
+        $.unblockUI();
+    });
+
 
                 //utilisation de delegate au lieu de juste click car la fonctionalité est
                 //ajouté dynamiquement... sinon, ca ne marche pas
                 $("body").delegate('a.x-remove','click',function() {
 
-                        var id = $(this).parent().attr("id");
+                    if(confirm("Voulez-vous supprimer la tâche?")){
+                            var id = $(this).parent().attr("id");
 
 
 
-                        $('#' + id).detach();
+                            $('#' + id).detach();
 
-                        var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
-                        var sprint_id = sprint_id_name.replace("sprint_", "");
+                            var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
+                            var sprint_id = sprint_id_name.replace("sprint_", "");
 
-                        var id_no = id.replace("li_tache_","");
-                        var json_liste_tache = get_all_liste_tache();
-                      //  var url = "sprintactivite/rendreInactif/" + g_selected_projet_id+ "/"+ sprint_id + "/" + json_liste_tache;
+                            var id_no = id.replace("li_tache_","");
+                            var json_liste_tache = get_all_liste_tache();
+                          //  var url = "sprintactivite/rendreInactif/" + g_selected_projet_id+ "/"+ sprint_id + "/" + json_liste_tache;
 
-                        var url = "sprintactivite/rendreInactif";
-                        $.ajax({ statusCode: {
-                        500: function(xhr) {
-                         alert(500);
-                        }},
-                        //the route pointing to the post function
-                        url: url,
-                        data:{"projet_id" : g_selected_projet_id, "sprint_id" : sprint_id, "json" : json_liste_tache },
-                        type: 'PUT',
+                            var url = "sprintactivite/rendreInactif";
+                            $.ajax({ statusCode: {
+                            500: function(xhr) {
+                             alert(500);
+                            }},
+                            //the route pointing to the post function
+                            url: url,
+                            data:{"projet_id" : g_selected_projet_id, "sprint_id" : sprint_id, "json" : json_liste_tache },
+                            type: 'PUT',
 
-                    success: function (result,status,xhr) {
+                        success: function (result,status,xhr) {
 
-                          $('#' + id).remove();
+                              $('#' + id).remove();
 
-                    },error(xhr,status,error){
-                        alert("error 1 " + status);
-                        alert("error 2 " + error);
-                    },
-                        complete: function (xhr,status) {
-                            // Handle the complete event
-                         //alert("complete " + status);
-                        }
-                    });
-
+                        },error(xhr,status,error){
+                            alert("error 1 " + status);
+                            alert("error 2 " + error);
+                        },
+                            complete: function (xhr,status) {
+                                // Handle the complete event
+                             //alert("complete " + status);
+                            }
+                        });
+                    }
 
                 }); // $("body").delegate('a.x-remove','click',function()
 
@@ -874,7 +905,8 @@ $(document).ready(function() {
                     //permet d'effacer les valeurs du form et recommencer à neuf
                     $('#form_liste')[0].reset();
                     $.blockUI({
-                         message: $('.div_liste_form')
+                        message: $('.div_liste_form'),
+                        css: { top:'20%'}
                     });
 
 
@@ -887,7 +919,8 @@ $(document).ready(function() {
                     //permet d'effacer les valeurs du form et recommencer à neuf
                     $('#form_sprint')[0].reset();
                     $.blockUI({
-                        message: $('.div_sprint_form')
+                        message: $('.div_sprint_form'),
+                        css: { top:'20%'}
                     });
 
                 }); //$(document).on("click", "#creer_item_sprint", function() {
@@ -896,7 +929,8 @@ $(document).ready(function() {
                       //permet d'effacer les valeurs du form et recommencer à neuf
                       $('#form_projet')[0].reset();
                       $.blockUI({
-                           message: $('.div_projet_form')
+                            message: $('.div_projet_form'),
+                            css: { top:'20%'}
                       });
 
                   }); // $(document).on("click", "#creer_item_projet", function()

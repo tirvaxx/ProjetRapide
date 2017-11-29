@@ -42,9 +42,7 @@ class TacheController extends Controller
      */
     public function store(Request $request)
     {
-
-
-        $tache = new Tache;
+        $tache = new Tache;      
         $tache->nom = request('nom_tache');
         $tache->description = request('description_tache');
         $tache->creer_par_acteur_id = 2;
@@ -56,8 +54,8 @@ class TacheController extends Controller
         ->where("sprint_id","=", request("sprint_id"))
         ->Where("liste_id", "=", request("liste_id"))
         ->max(DB::raw('coalesce(ordre,0)'));
-        //->get();
-
+      
+      
 
         $sprint_activite = new SprintActivite;
         $sprint_activite->projet_id = request("projet_id");
@@ -79,13 +77,14 @@ class TacheController extends Controller
         ->WhereNull("tache_id")
         ->update(["actif" => 0]);
 
-
-
+  
         $data = array(
              'last_inserted_id' => $tache->id,
              'nom' => request('nom_tache'),
              'description' => request('description_tache')
-        );
+     );
+
+
         return $data;
 
 
