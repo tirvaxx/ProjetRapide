@@ -32,6 +32,7 @@ Route::post('/taches', 'TacheController@store');
 Route::get('/taches/{id}/edit', array('tache'=> 'taches', 'uses' => 'TacheController@edit'));
 Route::put('/taches/{id}', 'TacheController@update');
 Route::delete('/taches/{id}', 'TacheController@destroy');
+Route::get('/taches/{id}', 'TacheController@show');
 
 
 Route::post('/sprints', 'SprintController@store');

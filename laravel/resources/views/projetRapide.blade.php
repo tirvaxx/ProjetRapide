@@ -110,14 +110,14 @@
 
     </div>  <!-- #center-wrapper -->
 
-  <div id="tache_commentaire"  style="display:none">
-  COMMENTAIRE
-  <button id="btn_tache_commentaire_fermer"  class="btn btn-primary btn_fermer">Fermer</button>
-  </div>
-<div id="tache_info"  style="display:none">
-  INFO
-  <button id="btn_tache_info_fermer"  class="btn btn-primary btn_fermer">Fermer</button>
-  </div>
+    <div id="tache_commentaire" class="btn_fermer_ui" style="display:none">
+       
+
+    </div>
+    <div id="tache_info" class="btn_fermer_ui" style="display:none">
+      
+
+    </div>
 
 
 
