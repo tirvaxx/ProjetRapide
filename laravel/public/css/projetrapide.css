@@ -75,6 +75,21 @@ fieldset legend {
 
 }
 
+
+.table_info {
+
+    text-align: left;
+}
+
+.table_info td:first-child  {
+    font-weight: bold;
+}
+.table_info caption {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
 /*
     Stylesheet for examples by DevHeart.
     http://devheart.org/

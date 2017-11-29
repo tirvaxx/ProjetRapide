@@ -845,16 +845,62 @@ $(document).ready(function() {
     }); //$("body").delegate('a.c-comment','click',function()
     $("body").delegate('a.i-info','click',function(e) {
 
-         e.preventDefault();
+        e.preventDefault();
+
+        var t_no = $(this).parent().attr("id").replace("li_tache_", "");
+        var url = "/taches/" + t_no;
+        $.ajax({ statusCode: {
+                500: function(xhr) {
+                 alert(500);
+                }},
+                //the route pointing to the post function
+                url: url,
+                type: 'get',
+                dataType: 'text',
+                // remind that 'data' is the response of the AjaxController
+            success: function (result,status,xhr) {
+                var res =  JSON.parse(result)[0];
+                var t = "<span class='glyphicon glyphicon-remove pull-right' style='color:#BBB;'></span>";
+                t += "<table class='table table_info'>";
+                t += "<caption>" + res.tache_nom + "</caption>";
+                t += "<tr><td>Creer par</td><td>" + res.creer_par + "</td></tr>";
+                t += "<tr><td>Telephone</td><td>" + res.telephone + "</td></tr>";
+                t += "<tr><td>Courriel</td><td>" + res.courriel + "</td></tr>";
+                t += "<tr><td>Date Création</td><td>" + res.tache_creer_date + "</td></tr>";
+                t += "<tr><td>Date Modification</td><td>" + res.tache_maj_date + "</td></tr>";
+                t += "<tr><td>Description</td><td>" +  res.tache_description + "</td></tr>";
+                t += "</table>";
+
+
+                $('#tache_info').html(t);
+                
+
+                 // alert( result);
+            },
+            error(xhr,status,error){
+                alert("error 1 " + status);
+                alert("error 2 " + error);
+            },
+            complete: function (xhr,status) {
+                    // Handle the complete event
+
+                //alert("complete " + status);
+
+            }
+        });
+
+      
        $.blockUI({
             message: $('#tache_info'),
-            css: { top:'20%'}
+            css: { top:'20%'},
+            textAlign: 'left'
         });
 
     }); //$("body").delegate('a.i-info','click',function()
 
 
-    $(".btn_fermer").click(function(){
+
+    $(".btn_fermer_ui").click(function(){
         $.unblockUI();
     });
 
