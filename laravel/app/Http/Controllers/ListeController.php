@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\SprintActivite;
 use App\Liste;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ListeController extends Controller
 {
@@ -37,18 +38,18 @@ class ListeController extends Controller
     {
 
 
-        $liste = new Liste;    
+        $liste = new Liste;
         $liste->nom = request('nom_liste');
         $liste->description = request('description_liste');
         $liste->creer_par_acteur_id = 2;
         $liste->save();
-        
+
         //on met inactif l'enregistrement où il n'y a pas de liste dans le sprint
         SprintActivite::where("projet_id", "=", request("projet_id"))
         ->where("sprint_id","=", request("sprint_id"))
         ->WhereNull("liste_id")
         ->update(["actif" => 0]);
-           
+
 
         $sprint_activite = new SprintActivite;
         $sprint_activite->projet_id = request("projet_id");
@@ -59,7 +60,7 @@ class ListeController extends Controller
         $sprint_activite->assigne_acteur_id = 2;
         $sprint_activite->save();
 
-        $data = array( 
+        $data = array(
              'last_inserted_id' => $liste->id,
              'nom' => request('nom_liste'),
              'description' => request('description_liste')
@@ -87,9 +88,9 @@ class ListeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
+    {
         $liste = Liste::find($id);
-        $data = array( 
+        $data = array(
              'liste_id' => $liste->id,
              'nom_liste' => $liste->nom,
              'description_liste' => $liste->description
@@ -106,15 +107,27 @@ class ListeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $liste = Liste::find($id);
-        $liste->nom = request('modifier_nom_liste');
-        $liste->description = request('modifier_description_liste');
-        $liste->update();
-        $data = array( 
-             'liste_id' => $liste->id,
-             'nom' => request('modifier_nom_liste'),
-             'description' => request('modifier_description_liste')
+      try{
+
+        $data = array(
+             'liste_id' => $id,
+             'nom' => $request->modifier_nom_liste,
+             'description' => $request->modifier_description_liste
         );
+        $liste = Liste::find($id);
+        $liste->nom = htmlspecialchars($request->modifier_nom_liste);
+        $liste->description = htmlspecialchars($request->modifier_description_liste);
+        // attempt validation
+        if ($liste->validate($data))
+          $liste->update();
+      }
+      catch(\Exception $e)
+      {
+        return response()->json([
+                'success' => 'false',
+                'errors'  => "Les valeurs entrées ne sont pas conformes aux valeurs attentues ou dépassent les limites permises.<br/>Nom (2 à 50 caractères)<br/>Description (2 à 200 caractères)",
+            ], 200);
+      }
         return $data;
     }
 

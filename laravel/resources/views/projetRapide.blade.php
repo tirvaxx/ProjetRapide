@@ -312,7 +312,7 @@
         <fieldset>
             <legend>Modifier une liste</legend>
                 <div class="form-group">
-                    <div id="liste_message_modifier" style="display:none;text-align:left;color:darkred;background-color:#DEECF7; border-style:groove;"></div>­­
+                  <div id="liste_message_modifier" class="alert alert-warning">{{ Session::get('liste_message_modifier') }}</div>
                 </div>
                 <div class="form-group">
                         <label for="nom_liste">Nom de la liste</label>
