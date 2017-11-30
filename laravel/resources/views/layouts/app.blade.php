@@ -662,7 +662,6 @@ $(document).ready(function() {
                  $('#btn_liste_fermer').click(function() {
                     //permet d'effacer les valeurs du form et recommencer à neuf
                     $('#form_liste')[0].reset();
-
                     $.unblockUI();
                     return false;
                 }); //$('#btn_liste_fermer').click(function()
@@ -742,9 +741,9 @@ $(document).ready(function() {
 
                     var id_liste = $("body").data("modif_liste_no");
                     var input_name = "nom_liste";
-                    var nom_liste = $("#form_ajouter_liste :input[name='"+input_name+"']").val();
+                    var nom_liste = $("#form_liste :input[name='"+input_name+"']").val();
                     var input_name = "description_liste";
-                    var description_liste = $("#form_ajouter_liste :input[name='"+input_name+"']").val();
+                    var description_liste = $("#form_liste :input[name='"+input_name+"']").val();
 
                     var champs_valides = valider_champs_liste(nom_liste, description_liste, "#liste_message_ajouter");
                     // Si les champs ne sont pas valides, on ne continue pas le processus de modification.
@@ -990,6 +989,7 @@ $(document).ready(function() {
                 $(document).on("click", "#creer_item_liste", function() {
                     //permet d'effacer les valeurs du form et recommencer à neuf
                     $('#form_liste')[0].reset();
+                    $('#liste_message_ajouter').hide();
                     $.blockUI({
                         message: $('.div_liste_form'),
                         css: { top:'20%'}
