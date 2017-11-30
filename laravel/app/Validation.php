@@ -9,7 +9,7 @@ class Validation extends Model
 {
     protected $rules = array();
 
-    protected $errors;
+    protected $errors = array();
 
     public function validate($data)
     {
@@ -20,7 +20,7 @@ class Validation extends Model
         if ($v->fails())
         {
             // set errors and return false
-            $this->errors = $v->errors;
+            $this->errors = $v->errors();
             return false;
         }
 

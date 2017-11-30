@@ -252,7 +252,7 @@
                             dataType: 'text',
 
                         success: function (result,status,xhr) {
-
+                            $('#liste_message_ajouter').hide();
                                //alert("drag drop successs");
 
                         },error(xhr,status,error){
@@ -339,16 +339,16 @@
                 return false;
             });
 
-            // Permet de valider les champs d'une liste Ne sert plus à rien car maintenant, on fait les validations en backend.
-            function valider_champs_liste(nom_liste, description_liste){
+            // Permet de valider les champs d'une liste
+            function valider_champs_liste(nom_liste, description_liste, tag){
 
               if( nom_liste.replace(/\s/g, '') == ""){
-                $("#liste_message_modifier").html("Le nom de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
+                $(tag).html("Le nom de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
                 return false;
               }
 
               if( description_liste.replace(/\s/g, '') == ""){
-                $("#liste_message_modifier").html("La description de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
+                $(tag).html("La description de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
                 return false;
               }
               return true;
@@ -422,7 +422,7 @@
                 var input_name = "modifier_description_liste";
                 var description_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val();
 
-                var champs_valides = valider_champs_liste(nom_liste, description_liste);
+                var champs_valides = valider_champs_liste(nom_liste, description_liste, "#liste_message_modifier");
                 // Si les champs ne sont pas valides, on ne continue pas le processus de modification.
                 if(!champs_valides)
                   return;
@@ -740,6 +740,17 @@ $(document).ready(function() {
 
                     var data =  $('#form_liste').serialize() + "&projet_id=" + g_selected_projet_id+ "&sprint_id=" + sprint_id
 
+                    var id_liste = $("body").data("modif_liste_no");
+                    var input_name = "nom_liste";
+                    var nom_liste = $("#form_ajouter_liste :input[name='"+input_name+"']").val();
+                    var input_name = "description_liste";
+                    var description_liste = $("#form_ajouter_liste :input[name='"+input_name+"']").val();
+
+                    var champs_valides = valider_champs_liste(nom_liste, description_liste, "#liste_message_ajouter");
+                    // Si les champs ne sont pas valides, on ne continue pas le processus de modification.
+                    if(!champs_valides)
+                      return;
+
                     $.ajax({ statusCode: {
                         500: function(xhr) {
                          alert(500);
@@ -752,17 +763,40 @@ $(document).ready(function() {
                         dataType: 'text',
                         // remind that 'data' is the response of the AjaxController
                     success: function (result,status,xhr) {
+                            $('#liste_message_ajouter').hide();
+                            //alert("result, status, xhr"+ result + ','+status+','+xhr);
+                             //xhr{"success":"false","errors":"Controller : Les valeurs entr\u00e9es ne sont pas conformes aux valeurs attentues."},success,[object Object]
+                            var json_rep = JSON.parse(xhr.responseText);
 
-                            var id = JSON.parse(result).last_inserted_id;
-                            var nom = JSON.parse(result).nom;
-                            var description = JSON.parse(result).description;
-                            creer_liste(sprint_id_name, id, nom, description);
+                            if(json_rep.success != null && json_rep.success == "false"){
+                              $erreur = json_rep.errors == null? "Une valeur entrée n'est pas conforme." : json_rep.errors;
+                              $("#liste_message_ajouter").html($erreur).removeClass().addClass("alert alert-warning").show();
+                              return false;
+                            }
+                            else {
+                              //afficher_liste_modifiee(id_liste, nom_liste, description_liste);
+                              $("#liste_message_ajouter").hide();
 
-                    },
-                    error(xhr,status,error){
-                        alert("error 1 " + status);
-                        alert("error 2 " + error);
-                    },
+                              var id = JSON.parse(result).last_inserted_id;
+                              var nom = JSON.parse(result).nom;
+                              var description = JSON.parse(result).description;
+                              creer_liste(sprint_id_name, id, nom, description);
+                              $("#sprint_message").html("Ajout de la liste réussie avec succès.").removeClass().addClass("alert alert-success").show().fadeOut(8000);
+
+                            }
+
+                            $.unblockUI();
+                            return true;
+
+                        },error(xhr,status,error){
+                            alert("error 1 " + status);
+                            alert("error 2 " + error);
+
+                            $("#sprint_message").html("Une erreur est survenue lors de la modification de la liste.").removeClass().addClass("alert alert-danger").show().fadeOut(8000);
+                            return true;
+                            //$.unblockUI();
+                        },
+
                     complete: function (xhr,status) {
                             // Handle the complete event
 
@@ -873,7 +907,7 @@ $(document).ready(function() {
 
 
                 $('#tache_info').html(t);
-                
+
 
                  // alert( result);
             },
@@ -889,7 +923,7 @@ $(document).ready(function() {
             }
         });
 
-      
+
        $.blockUI({
             message: $('#tache_info'),
             css: { top:'20%'},
@@ -970,6 +1004,7 @@ $(document).ready(function() {
                 $(document).on("click", "#creer_item_sprint", function() {
                     //permet d'effacer les valeurs du form et recommencer à neuf
                     $('#form_sprint')[0].reset();
+                    $("#sprint_message_ajouter").hide();//Cache le message d'erreur
                     $.blockUI({
                         message: $('.div_sprint_form'),
                         css: { top:'20%'}
@@ -1014,8 +1049,61 @@ $(document).ready(function() {
                 //   }
                 // });
 
+                // Permet de valider les champs d'un sprint
+                function valider_champs_sprint(no_sprint, date_debut, date_fin){
+                  $("#sprint_message_ajouter").html("").hide();
+                  if(no_sprint.trim() == '' ||
+                  no_sprint.trim() == '0' ||
+                  no_sprint.trim() == '00' ||
+                  no_sprint.trim() == '000'){
+                    $("#sprint_message_ajouter").html("").hide();
+                    $("#sprint_message_ajouter").html("Le numéro de sprint ne doit pas être vide ou 0.").removeClass().addClass("alert alert-warning").show();
+                    return false;
+                  }
+
+                  var date_deb = Date.parse(date_debut, "yy-MM-dd");
+                  if(!date_deb){
+                    $("#sprint_message_ajouter").html("").hide();
+                    $("#sprint_message_ajouter").html("La date de début n'est pas conforme selon une date.").removeClass().addClass("alert alert-warning").show();
+                    return false;
+                  }
+                  var date_f = Date.parse(date_fin, "yy-MM-dd");
+                  if(!date_f){
+                    $("#sprint_message_ajouter").html("").hide();
+                    $("#sprint_message_ajouter").html("La date de fin n'est pas conforme selon une date.").removeClass().addClass("alert alert-warning").show();
+                    return false;
+                  }
+
+                  /* TODO : incapable pour l'instant de faire cette vérification var now = new Date();
+                  if(new Date(date_debut).getTime() < now.getTime()){
+                    $("#sprint_message_ajouter").html("").hide();
+                    $("#sprint_message_ajouter").html("La date de début doit être plus grande que la date du jour.").removeClass().addClass("alert alert-warning").show();
+                    return false;
+                  }*/
+
+                  if(new Date(date_debut).getTime() > new Date(date_fin).getTime()){
+                    $("#sprint_message_ajouter").html("").hide();
+                    $("#sprint_message_ajouter").html("La date de début ne doit pas être plus grande que la date de fin.").removeClass().addClass("alert alert-warning").show();
+                    return false;
+                  }
+
+                  return true;
+
+                }// valider_champs_sprint
+
                 //AddTab form: calls addTab function on submit and closes the dialog
                 $('#btn_sprint_ajouter').click(function() {
+                    var input_name = "no_sprint";
+                    var no_sprint = $("#form_sprint :input[name='"+input_name+"']").val();
+                    var input_name = "date_debut";
+                    var date_debut = $("#form_sprint :input[name='"+input_name+"']").val();
+                    var input_name = "date_fin";
+                    var date_fin = $("#form_sprint :input[name='"+input_name+"']").val();
+
+                    var champs_valides = valider_champs_sprint(no_sprint, date_debut, date_fin);
+                    // Si les champs ne sont pas valides, on ne continue pas le processus d'ajout'.
+                    if(!champs_valides)
+                      return false;
 
                     $.ajax({
 
@@ -1029,8 +1117,26 @@ $(document).ready(function() {
                                 var id = JSON.parse(result).last_inserted_id;
                                 var numero = JSON.parse(result).numero;
 
-                                // creer_sprint($id, $numero);
-                                sprint_add_tab(id, numero);
+                                var json_rep = JSON.parse(xhr.responseText);
+
+                                if((!numero)){
+                                  $erreur = json_rep.errors;
+                                  if($erreur == null)
+                                    $erreur = "Une valeur entrée n'est pas conforme ou il y a eu une erreur inattendue, veuillez réessayer.";
+                                  else {
+                                    $erreur = json_rep.errors;
+                                    //alert($erreur);
+                                  }
+                                  $("#sprint_message_ajouter").html($erreur).removeClass().addClass("alert alert-warning").show();
+                                  return;
+                                }
+                                else {
+                                  $("#sprint_message_ajouter").hide();
+                                  $("#sprint_message_ajouter").html("Le sprint " + numero + " a bien été ajouté.").removeClass().addClass("alert alert-info").show();
+                                  $("#sprint_message_ajouter").html("Le sprint " + numero + " a bien été ajouté.").removeClass().addClass("alert alert-info").fadeOut(7000);
+                                  // creer_sprint($id, $numero);
+                                  sprint_add_tab(id, numero);
+                                }
 
                         },
                         error(xhr,status,error){

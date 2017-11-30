@@ -111,11 +111,11 @@
     </div>  <!-- #center-wrapper -->
 
     <div id="tache_commentaire" class="btn_fermer_ui" style="display:none">
-       
+
 
     </div>
     <div id="tache_info" class="btn_fermer_ui" style="display:none">
-      
+
 
     </div>
 
@@ -176,6 +176,9 @@
 
         <fieldset>
             <legend>Ajouter une liste</legend>
+              <div class="form-group">
+                <div id="liste_message_ajouter" class="alert alert-warning">{{ Session::get('liste_message_ajouter') }}</div>
+              </div>
                 <div class="form-group">
                         <label for="nom_liste">Nom de la liste</label>
                         <input type="text" class="form-control" id="nom_liste" name="nom_liste" placeholder="Liste" />
@@ -275,7 +278,10 @@
 
         <fieldset>
             <legend>Ajouter un sprint</legend>
-             <div class="form-group">
+                <div class="form-group">
+                        <div id="sprint_message_ajouter" class="alert alert-warning">{{ Session::get('sprint_message_ajouter') }}</div>
+                </div>
+                <div class="form-group">
                         <label for="no_sprint">Numero du sprint</label>
                         <input type="text" class="form-control" id="no_sprint" name="no_sprint" placeholder="Sprint" />
                 </div>
