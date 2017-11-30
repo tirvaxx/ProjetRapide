@@ -836,9 +836,13 @@ $(document).ready(function() {
         //$('[data-toggle="popover"]').popover();
         e.preventDefault();
         $.blockUI({
+            theme:false,
             message: $('#tache_commentaire'),
-            css: { top:'20%'}
+            css: { textAlign:'left',overflow:'auto',top:'10%',left:'10%',width:'80%',height:'90%', cursor: 'default' }
+            
+            
         });
+
 
 
 
@@ -891,8 +895,9 @@ $(document).ready(function() {
 
       
        $.blockUI({
+
             message: $('#tache_info'),
-            css: { top:'20%'},
+            css: { top:'20%',  cursor: 'default'},
             textAlign: 'left'
         });
 
