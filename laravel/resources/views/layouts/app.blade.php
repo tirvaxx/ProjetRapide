@@ -88,6 +88,159 @@
                 });
             }); //  $("body").delegate('li','dblclick',function
 
+/****************** Partie UTILISATEURS ******************/
+function get_all_liste_utilisateur(actif){
+    var json;
+    var json_ordre_utilisateur;
+    var ordre_utilisateur;
+    json_ordre_tache = '{'
+    $( '.container-list .sortable-list' ).each(function(){
+
+        ordre_utilisateur = String($(this).sortable("toArray"));
+        json_ordre_utilisateur += '"' + $(this).attr("nom") + '":';
+        //if(ordre_tache != ""){
+
+            json_ordre_utilisateur += '{"ordre_utilisateur":[' +  ordre_utilisateur + ']}';
+
+        //}
+        json_ordre_utilisateur += ",";
+    });
+    json_ordre_utilisateur = json_ordre_utilisateur.substr(0,json_ordre_utilisateur.length-1);
+    json_ordre_utilisateur =  json_ordre_utilisateur.replace(/li_utilisateur_/g,"").replace(/ul_liste_utilisateurs_/g,"");
+    json_ordre_utilisateur += '}';
+
+    return json_ordre_utilisateur;
+
+}
+
+function creer_utilisateur(nom_actif, utilisateur_id, utilisateur_nom){
+     $("#ul_liste_utilisateurs_" + nom_actif).append( '<li id="li_utilisateur_' + utilisateur_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span><a href="#" class="i-info"><span class="glyphicon glyphicon-info-sign pull-left"></a><span id="utilisateur_nom_'+ utilisateur_id + '">' + utilisateur_nom + '</span></li>' );
+
+}
+// Permet d'afficher une liste d'utilisateurs afin de gérer les utilisateurs
+function afficher_liste_utilisateurs(actif){
+
+  if(actif == true)
+    $nom_actif = "actifs";
+  else
+    $nom_actif = "inactifs";
+
+   $liste = '<div class="container-list">'
+   $liste +='    <div class="panel panel-default column left"  id="liste_utilisateurs_' + $nom_actif + '">'
+   $liste +='        <div class="panel-heading" id="liste_panel_utilisateurs_' + $nom_actif + '" rel="tooltip" title="Utilisateurs inactifs dans le système.">'
+   $liste +='            <span id="liste_titre_utilisateurs_' + $nom_actif + '">Utilisateurs ' + $nom_actif + '</span>'
+   $liste +='        </div>  <!-- panel-heading -->'
+   $liste +='        <div class="panel-body">'
+   $liste +='            <ul class="sortable-list" id="ul_liste_utilisateurs_' + $nom_actif + '">'
+   $liste +='            </ul>'
+   $liste +='        </div> <!-- panel-body -->'
+   $liste +='        <div class="panel-footer">'
+   $liste +='            <a href="#" id="btn_ajouter_utilisateur_Liste_' + $nom_actif + '" class="btn btn-link right">ajouter un utilisateur</a>'
+   $liste +='        </div> <!-- panel-footer -->'
+   $liste +='    </div>  <!-- panel-default -->'
+   $liste +='</div>  <!-- #container-liste -->'
+
+   //$("#form_gerer_utilisateurs").append($liste);
+
+   $( $liste ).insertAfter( ".utilisateurs_form_ajouter_listes" );
+
+   $("#btn_ajouter_utilisateur_Liste_" + $nom_actif ).bind('click', function(e)
+   {
+       e.preventDefault();
+       ajouter_utilisateur();
+   });
+
+   $('.container-list .sortable-list').sortable({
+       connectWith: '.container-list .sortable-list',
+       placeholder: 'placeholder',
+
+       stop: function( event, ui ){
+
+           var json_liste_utilisateur = get_all_liste_utilisateur(actif);
+           //var sprint_id_name = $("#tabs .ui-tabs-panel:visible").attr("id");
+
+           var data =  "&liste_utilisateur=" + json_liste_utilisateur;
+
+           $.ajax({ statusCode: {
+               500: function(xhr) {
+                alert(500);
+               }},
+               //the route pointing to the post function
+               url: "/acteurs" ,
+               type: 'GET',
+
+           success: function (data) {
+
+             alert(data);
+             jQuery.each(data, function (index, value) {
+               // need to create divs with *icon and *title from data
+             })
+           },error(xhr,status,error){
+               alert("error 1 " + status);
+               alert("error 2 " + error);
+           },
+               complete: function (xhr,status) {
+                   // Handle the complete event
+                //alert("complete " + status);
+               }
+           });  //ajax
+
+
+       } // stop function
+
+   }); //$('.container-list .sortable-list').sortable
+
+} //creer_liste
+
+function ajouter_utilisateur(){
+    $("#utilisateur_message_ajouter").hide();
+    $('#ajouter_utilisateur_type_1_et_type_2').show();
+    $('#form_utilisateur')[0].reset();
+    $.blockUI({
+        message: $('.div_ajouter_utilisateur_form'),
+        css: { top:'20%'}
+    });
+} //ajouter_utilisateur
+
+// Sur fermer la fenêtre gérer utilisateurs
+$("body").delegate('#btn_utilisateurs_fermer','click',function(){
+    $.unblockUI();
+    return false;
+});
+
+// Sur fermer la fenêtre ajouter utilisateur
+$("body").delegate('#btn_utilisateur_ajouter_fermer','click',function(){
+    $.unblockUI();
+    return false;
+});
+
+// Lorsqu'on clique sur un item du menu
+$("body").delegate('#selection_type_utilisateur', 'change', onSelectChangeTypeUtilisateur);
+
+function onSelectChangeTypeUtilisateur(){
+    var id_type = 0,
+        $this = $(this);
+
+    if($this.val() != 0){
+        id_type = $this.find('option:selected').val();
+    }
+
+    // Si de type 1 et 2 afficher la partie Gestionnaire et utilisateur
+    if(id_type == 1 || id_type == 2){
+      $('#ajouter_utilisateur_type_3').hide();
+      $('#ajouter_utilisateur_type_1_et_type_2').show();
+    }
+    else { // Afficher la partie 3 client
+      $('#ajouter_utilisateur_type_1_et_type_2').hide();
+      $('#ajouter_utilisateur_type_3').show();
+    }
+}
+
+
+/****************FIN PARTIE UTILISATEURS *****************/
+
+
+
               // Modifier un tâche
             $("body").delegate('#btn_tache_modifier_annuler','click',function(){
              // $('#btn_tache_modifier_annuler').click(function() {
@@ -197,7 +350,7 @@
                 $liste +='            </ul>'
                 $liste +='        </div> <!-- panel-body -->'
                 $liste +='        <div class="panel-footer">'
-                $liste +='            <a href="#" id="btn_ajouter_tache_Liste_' + id + '" class="btn btn-link right">ajouter une tache</a>'
+                $liste +='            <a href="#" id="btn_ajouter_tache_Liste_' + id + '" class="btn btn-link right">ajouter une tâche</a>'
                 $liste +='        </div> <!-- panel-footer -->'
                 $liste +='    </div>  <!-- panel-default -->'
                 $liste +='</div>  <!-- #container-liste -->'
@@ -1021,6 +1174,19 @@ $(document).ready(function() {
                       });
 
                   }); // $(document).on("click", "#creer_item_projet", function()
+
+                  // Ouvre un formulaire pour gérer les utilisateurs
+                  $(document).on("click", "#gerer_utilisateurs", function() {
+                      //permet d'effacer les valeurs du form et recommencer à neuf
+                      afficher_liste_utilisateurs(true);
+                      afficher_liste_utilisateurs(false);
+                      $.blockUI({
+                          message: $('.div_utilisateurs_form'),
+                          css: { top:'20%'}
+                      });
+
+
+                  }); // $(document).on("click", "#creer_item_liste", function()
 
            //     $( function() {
                 var noSprint = $( "#no_sprint" ),

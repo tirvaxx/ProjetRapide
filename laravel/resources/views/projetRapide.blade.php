@@ -28,6 +28,7 @@
                     <li><a id="creer_item_projet" href="#">Projet</a></li>
                     <li><a id="creer_item_sprint" href="#">Sprint</a></li>
                     <li><a id="creer_item_liste" href="#">Liste</a></li>
+                    <li><a id="gerer_utilisateurs" href="#">Utilisateurs</a></li>
                   </ul>
                 </li>
               </ul>
@@ -127,13 +128,13 @@
         <!-- securite contre les failles sur les requests -->
 
         <fieldset>
-            <legend>Ajouter une tache</legend>
+            <legend>Ajouter une tâche</legend>
                 <div class="form-group">
-                        <label for="nom_tache">Nom de la tache</label>
+                        <label for="nom_tache">Nom de la tâche</label>
                         <input type="text" class="form-control" id="nom_tache" name="nom_tache" placeholder="Nom" />
                 </div>
                 <div class="form-group">
-                         <label for="description_tache">Description de la tache</label>
+                         <label for="description_tache">Description de la tâche</label>
                         <textarea class="form-control" id="description_tache" name="description_tache" placeholder="Description"></textarea>
                 </div>
                 <div class="form-group">
@@ -150,13 +151,13 @@
         <!-- securite contre les failles sur les requests -->
 
         <fieldset>
-            <legend>Modifier une tache</legend>
+            <legend>Modifier une tâche</legend>
                 <div class="form-group">
-                        <label for="nom_tache">Nom de la tache</label>
+                        <label for="nom_tache">Nom de la tâche</label>
                         <input type="text" class="form-control" id="modifier_nom_tache" name="modifier_nom_tache" placeholder="Nom" />
                 </div>
                 <div class="form-group">
-                         <label for="description_tache">Description de la tache</label>
+                         <label for="description_tache">Description de la tâche</label>
                         <textarea class="form-control" id="modifier_description_tache" name="modifier_description_tache" placeholder="Description"></textarea>
                 </div>
                 <div class="form-group">
@@ -312,6 +313,21 @@
 </div>
 
 
+<!-- Permet de gérer les utilisateurs, les ajouter, les supprimer, les rendre actifs ou inactifs-->
+<div class="div_utilisateurs_form"  style="display:none">
+    <form id="form_gerer_utilisateurs" action="#" >
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <!-- securite contre les failles sur les requests -->
+            <legend>Gérer les utilisateurs</legend>
+            <div class="utilisateurs_form_ajouter_listes"></div>
+            <!-- TODO : insérer ici les listes des utiliateurs actifs et inactifs -->
+
+            <div class="form-group">
+                    <button type="button" id="btn_utilisateurs_fermer" class="btn btn-primary" >Fermer</button>
+            </div>
+    </form>
+</div>
+
 <div id="liste_modifier_form" style="display:none">
     <form id="form_modifier_liste" action="#">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -333,6 +349,143 @@
                     <button type="button" id="btn_liste_modifier" class="btn btn-primary" >Modifier</button>
                     <button type="button" id="btn_liste_formmodifier_annuler" class="btn btn-primary" >Annuler</button>
                 </div>
+        </fieldset>
+
+    </form>
+
+</div>
+
+<div class="div_ajouter_utilisateur_form"  style="display:none">
+    <form id="form_utilisateur" action="#" >
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <!-- securite contre les failles sur les requests -->
+
+        <fieldset>
+            <legend>Ajouter un utilisateur</legend>
+
+                <div class="form-group">
+                  <div id="utilisateur_message_ajouter" class="alert alert-warning">{{ Session::get('utilisateur_message_ajouter') }}</div>
+                </div>
+
+                <div class="form_groupe">
+                  <select id="selection_type_utilisateur">
+                         <option value="2" data-value="item_type_utilisateur_2">Utilisateur</option>
+                         <option value="3" data-value="item_type_utilisateur_3">Client</option>
+                         <option value="1" data-value="item_type_utilisateur_1">Gestionnaire de Projet</option>
+                  </select>
+                </div>
+
+                <div id="ajouter_utilisateur_type_1_et_type_2" style="display:none">
+                  <div class="form-group">
+                          <label for="prenom_utilisateur">Prénom de l'utilisateur</label>
+                          <input type="text" class="form-control" id="prenom_utilisateur" name="nom_utilisateur" placeholder="Prenom" />
+                  </div>
+                  <div class="form-group">
+                          <label for="nom_utilisateur">Nom de l'utilisateur</label>
+                          <input type="text" class="form-control" id="nom_utilisateur" name="nom_utilisateur" placeholder="Nom" />
+                  </div>
+                  <div class="form-group">
+                          <label for="courriel_utilisateur">Courriel de l'utilisateur</label>
+                          <input type="text" id="courriel_utilisateur" name="courriel_utilisateur" placeholder="Courriel de l'utilisateur"></textarea>
+                  </div>
+                  <div class="form-group">
+                          <label for="telephone_utilisateur">Téléphone de l'utilisateur</label>
+                          <input type="text" id="telephone_utilisateur" name="telephone_utilisateur" placeholder="Téléphone de l'utilisateur"></textarea>
+                  </div>
+                </div>
+                <div id="ajouter_utilisateur_type_3" style="display:none">
+                  <div class="form-group">
+                          <label for="nom_client">Nom du client</label>
+                          <input type="text" class="form-control" id="nom_client" name="nom_client" placeholder="Nom" />
+                  </div>
+                  <div class="form-group">
+                           <label for="contact_client">Nom du contact client</label>
+                          <input type="text" id="contact_client" name="contact_client" placeholder="La personne à contacter"></textarea>
+                  </div>
+                  <div class="form-group">
+                           <label for="telephone_client">Téléphone du client</label>
+                          <input type="text" id="telephone_client" name="telephone_client" placeholder="Téléphone du client"></textarea>
+                  </div>
+                  <div class="form-group">
+                           <label for="adresse_client">Adresse du client</label>
+                          <textarea class="form-control" id="adresse_client" name="adresse_client" placeholder="Adresse du client"></textarea>
+                  </div>
+                  <div class="form-group">
+                           <label for="code_postal_client">Code postal du client</label>
+                          <input type="text" id="code_postal_client" name="code_postal_client" placeholder=""></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" id="btn_utilisateur_ajouter" class="btn btn-primary" >Ajouter</button>
+                    <button type="button" id="btn_utilisateur_ajouter_fermer" class="btn btn-primary" >Fermer</button>
+                </div>
+        </fieldset>
+    </form>
+</div>
+
+<div id="utilisateur_modifier_form" style="display:none">
+    <form id="form_modifier_utilisateur" action="#">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <!-- securite contre les failles sur les requests -->
+
+        <fieldset>
+            <legend>Modifier un utilisateur</legend>
+                <div class="form-group">
+                  <div id="utilisateur_message_modifier" class="alert alert-warning">{{ Session::get('utilisateur_message_modifier') }}</div>
+                </div>
+
+                <div id="modifier_utilisateur_type_1_et_type_2" style="display:none">
+                  <div class="form-group">
+                    <label for="type_utiliateur">Type de l'utilisateur</label>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  <span class="caret"></span></a>
+                      <ul id="dd_type_utilisateur_modifier" class="dropdown-menu">
+                        <li><a id="item_modifier_type_1" href="#">Gestionnaire de Projet</a></li>
+                        <li><a id="item_modifier_type_2" href="#">Utilisateur</a></li>
+                      </ul>
+                    </li>
+                  </div>
+                  <div class="form-group">
+                          <label for="prenom_utilisateur">Prénom de l'utilisateur</label>
+                          <input type="text" class="form-control" id="modifier_prenom_utilisateur" name="modifier_nom_utilisateur" placeholder="Prenom" />
+                  </div>
+                  <div class="form-group">
+                          <label for="nom_utilisateur">Nom de l'utilisateur</label>
+                          <input type="text" class="form-control" id="modifier_nom_utilisateur" name="modifier_nom_utilisateur" placeholder="Nom" />
+                  </div>
+                  <div class="form-group">
+                          <label for="courriel_utilisateur">Courriel de l'utilisateur</label>
+                          <input type="text" id="modifier_courriel_utilisateur" name="modifier_courriel_utilisateur" placeholder="Courriel de l'utilisateur"></textarea>
+                  </div>
+                  <div class="form-group">
+                          <label for="telephone_utilisateur">Téléphone de l'utilisateur</label>
+                          <input type="text" id="modifier_telephone_utilisateur" name="modifier_telephone_utilisateur" placeholder="Téléphone de l'utilisateur"></textarea>
+                  </div>
+                </div>
+
+                <div id="modifier_utilisateur_type_3" style="display:none">
+                  <div class="form-group">
+                          <label for="nom_client">Nom du client</label>
+                          <input type="text" class="form-control" id="modifier_nom_client" name="modifier_nom_client" placeholder="Nom" />
+                  </div>
+                  <div class="form-group">
+                           <label for="contact_client">Nom du contact client</label>
+                          <input type="text" id="modifier_contact_client" name="modifier_contact_client" placeholder="La personne à contacter"></textarea>
+                  </div>
+                  <div class="form-group">
+                           <label for="telephone_client">Téléphone du client</label>
+                          <input type="text" id="modifier_telephone_client" name="modifier_telephone_client" placeholder="Téléphone du client"></textarea>
+                  </div>
+                  <div class="form-group">
+                           <label for="adresse_client">Adresse du client</label>
+                          <textarea class="form-control" id="modifier_adresse_client" name="modifier_adresse_client" placeholder="Adresse du client"></textarea>
+                  </div>
+                  <div class="form-group">
+                           <label for="code_postal_client">Code postal du client</label>
+                          <input type="text" id="modifier_code_postal_client" name="modifier_code_postal_client" placeholder=""></textarea>
+                  </div>
+                </div>
+
         </fieldset>
 
     </form>
