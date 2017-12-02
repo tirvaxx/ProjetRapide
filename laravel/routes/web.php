@@ -10,18 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*
+
 Route::get('/', function () {
 
-	return view('projetrapide');
+	return view('auth/login');
 });
-*/
 
 
-Route::get('/{id}',  array('uses' => 'ProjetRapideController@projetInit'));
+
+Route::get('/home/{id}',  array('uses' => 'ProjetRapideController@projetInit'));
 
 
-Route::get('/',  array('uses' => 'ProjetController@index'));
+Route::get('/home',  array('uses' => 'ProjetController@index'));
 Route::post('/projets', 'ProjetController@store');
 Route::get('/projets/{id}/edit', array('projet'=> 'projets', 'uses' => 'ProjetController@edit'));
 Route::put('/projets/{id}', 'ProjetController@update');
@@ -61,3 +61,7 @@ Route::resource('acteurEmployes', 'acteurEmployeController');
 Route::resource('taches', 'TacheController');
 Route::resource('listes', 'ListeController');
 Route::resource('sprintactivites', 'SprintActiviteController');
+
+Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
