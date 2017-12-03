@@ -7,6 +7,7 @@ use App\SprintActivite;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use Illuminate\Http\Response;
 use Barryvdh\Debugbar\Facade as Debugbar;
 
 
@@ -42,18 +43,51 @@ class SprintController extends Controller
     {
         // echo "ca marche";
         //Debugbar::info($request);
-         $sprint = new Sprint; 
-        $sprint->numero = request('no_sprint');
-        $sprint->projet_id = request('projet_id');
-        $sprint->creer_par_acteur_id = 2;
-        $sprint->date_debut = $request->input('date_debut');
-        $sprint->date_fin = $request->input('date_fin');
-        $sprint->save();
-
-
+        try{
+          $sprint = new Sprint;
+          $sprint->numero = $request->no_sprint;
+          $sprint->projet_id = $request->projet_id;
+          $sprint->creer_par_acteur_id = 2;
+          $sprint->date_debut = $request->input('date_debut');
+          $sprint->date_fin = $request->input('date_fin');
+          $data = array(
+               'numero' => $request->no_sprint,
+          );
+          if($sprint->validate($data)){
+            $sprint->save();
+          }
+          else {
+            return response()->json([
+                'success' => 'false',
+                'errors'  => "Valeur inattendue : le Numéro de sprint doit être entre 1 et 999.",
+            ], 200);
+          }
+        }
+        catch(\Exception $e)
+        {
+            // TODO : faire quelque chose d'autre pour les erreurs innatendues, ça ne fonctionne pas vraiment ici je pense à tester encore
+            if(isset($e->statusCode) && $e->statusCode != 200){
+              return response()->json([
+                  'success' => 'false',
+                  'errors'  => "Valeurs innatendues." + $e->getMessage(),
+              ], app('Illuminate\Http\Response')->status());
+               //return response()->json('Exception ' . $e->getMessage());
+             }
+             else {
+              if($e->success = true){
+                return response()->json('Exception ' . $e->getMessage());
+              }
+              else{
+                return response()->json([
+                    'success' => 'false',
+                    'errors'  => "Valeurs innatendues.",
+                ], 200);
+              }
+            }
+        }
 
         $sprint_activite = new SprintActivite;
-        $sprint_activite->projet_id = request("projet_id");
+        $sprint_activite->projet_id = $request->projet_id;
         $sprint_activite->sprint_id = $sprint->id;
         $sprint_activite->actif = 1;
         $sprint_activite->creer_par_acteur_id = 2;
