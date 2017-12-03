@@ -111,7 +111,27 @@
 
     </div>  <!-- #center-wrapper -->
 
-    <div id="tache_commentaire" class="btn_fermer_ui" style="display:none">
+    <div id="tache_commentaire" style="display:none">
+        <a href="#"><span class='glyphicon glyphicon-remove btn_fermer_ui pull-right' style='color:#BBB;'></span></a>
+
+        <div class="container">
+          
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     </div>

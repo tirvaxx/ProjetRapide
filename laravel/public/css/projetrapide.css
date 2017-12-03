@@ -91,17 +91,21 @@ fieldset legend {
 }
 
 
-.commentaire{
-color:red;
-    top:10px!important;
-    left:10%!important;
-    width:50%!important;
-    position: absolute!important;
-    height:90%!important;
-    overflow:auto!important;
-    text-align: left;
+
+p.commentaire{
+    margin:0px;
+}
+.media{
+
+    display: block;
+    width:100%;
 }
 
+div.form_commentaire{
+
+    margin-left:0px;
+    margin-top:20px;
+}
 /*
     Stylesheet for examples by DevHeart.
     http://devheart.org/
