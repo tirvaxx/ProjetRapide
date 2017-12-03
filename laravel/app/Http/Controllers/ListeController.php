@@ -37,12 +37,27 @@ class ListeController extends Controller
     public function store(Request $request)
     {
 
-
+      try{
         $liste = new Liste;
         $liste->nom = request('nom_liste');
         $liste->description = request('description_liste');
         $liste->creer_par_acteur_id = 2;
-        $liste->save();
+
+        $data = array(
+             'nom' => $request->nom_liste,
+             'description' => $request->description_liste
+        );
+
+        if ($liste->validate($data))
+          $liste->save();
+        }
+        catch(\Exception $e)
+        {
+          return response()->json([
+                  'success' => 'false',
+                  'errors'  => "Les valeurs entrées ne sont pas conformes aux valeurs attentues ou dépassent les limites permises.<br/>Nom (2 à 50 caractères)<br/>Description (2 à 200 caractères)",
+              ], 200);
+        }
 
         //on met inactif l'enregistrement où il n'y a pas de liste dans le sprint
         SprintActivite::where("projet_id", "=", request("projet_id"))

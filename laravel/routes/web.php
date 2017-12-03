@@ -10,18 +10,27 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*
+
 Route::get('/', function () {
 
-	return view('projetrapide');
+	return view('welcome');
 });
-*/
 
 
-Route::get('/{id}',  array('uses' => 'ProjetRapideController@projetInit'));
+
+Route::get('/home', 'HomeController@index');
+Route::get('/admin', 'AdminController@index');
 
 
-Route::get('/',  array('uses' => 'ProjetController@index'));
+
+Route::get('/admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+Route::post('/admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+Route::get('/admin', 'AdminController@index');
+
+// Route::get('/home/{id}',  array('uses' => 'ProjetRapideController@projetInit'));
+
+
+// Route::get('/home',  array('uses' => 'ProjetController@index'));
 Route::post('/projets', 'ProjetController@store');
 Route::get('/projets/{id}/edit', array('projet'=> 'projets', 'uses' => 'ProjetController@edit'));
 Route::put('/projets/{id}', 'ProjetController@update');
@@ -55,9 +64,14 @@ Route::put('/sprintactivite/rendreInactif', array( 'uses' => 'SprintActiviteCont
 
 
 Route::resource('projets', 'ProjetController');
+Route::resource('admins', 'AdminController');
 Route::resource('projetrapide', 'ProjetRapideController');
 Route::resource('acteurs', 'ActeurController');
 Route::resource('acteurEmployes', 'acteurEmployeController');
 Route::resource('taches', 'TacheController');
 Route::resource('listes', 'ListeController');
 Route::resource('sprintactivites', 'SprintActiviteController');
+
+Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
