@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\Projet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjetController extends Controller
 {
@@ -46,7 +47,7 @@ class ProjetController extends Controller
     {
         $projet = new Projet;
 
-        $projet->creer_par_acteur_id = 2;
+        $projet->creer_par_acteur_id = Auth::id();
         $projet->nom = request('nom_projet');
         $projet->description = request('description_projet');
         $projet->date_du = $request->input('date_du_projet');

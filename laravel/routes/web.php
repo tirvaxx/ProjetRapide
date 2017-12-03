@@ -18,8 +18,8 @@ Route::get('/', function () {
 
 
 
-Route::get('/home', 'HomeController@index');
-Route::get('/admin', 'AdminController@index');
+//Route::get('/home', 'HomeController@index');
+
 
 
 
@@ -27,10 +27,10 @@ Route::get('/admin/login', 'Auth\AdminLoginController@showLoginForm')->name('adm
 Route::post('/admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
 Route::get('/admin', 'AdminController@index');
 
-// Route::get('/home/{id}',  array('uses' => 'ProjetRapideController@projetInit'));
+Route::get('/home/{id}',  array('uses' => 'ProjetRapideController@projetInit'));
 
 
-// Route::get('/home',  array('uses' => 'ProjetController@index'));
+Route::get('/home',  array('uses' => 'ProjetController@index'));
 Route::post('/projets', 'ProjetController@store');
 Route::get('/projets/{id}/edit', array('projet'=> 'projets', 'uses' => 'ProjetController@edit'));
 Route::put('/projets/{id}', 'ProjetController@update');

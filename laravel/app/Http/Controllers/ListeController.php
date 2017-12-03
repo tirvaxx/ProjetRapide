@@ -6,6 +6,8 @@ use App\Liste;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use Illuminate\Support\Facades\Auth;
+
 class ListeController extends Controller
 {
     /**
@@ -41,7 +43,7 @@ class ListeController extends Controller
         $liste = new Liste;
         $liste->nom = request('nom_liste');
         $liste->description = request('description_liste');
-        $liste->creer_par_acteur_id = 2;
+        $liste->creer_par_acteur_id = Auth::id();
 
         $data = array(
              'nom' => $request->nom_liste,
@@ -71,8 +73,8 @@ class ListeController extends Controller
         $sprint_activite->sprint_id = request("sprint_id");
         $sprint_activite->liste_id = $liste->id;
         $sprint_activite->actif = 1;
-        $sprint_activite->creer_par_acteur_id = 2;
-        $sprint_activite->assigne_acteur_id = 2;
+        $sprint_activite->creer_par_acteur_id = Auth::id();
+        $sprint_activite->assigne_acteur_id = Auth::id();
         $sprint_activite->save();
 
         $data = array(
