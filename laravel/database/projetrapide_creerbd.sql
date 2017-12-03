@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 02, 2017 at 05:26 PM
+-- Generation Time: Dec 03, 2017 at 06:00 PM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -149,7 +149,6 @@ INSERT INTO `acteur_type` (`id`, `description`) VALUES
 DROP TABLE IF EXISTS `commentaire`;
 CREATE TABLE IF NOT EXISTS `commentaire` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `parent_id` int(11) DEFAULT NULL,
   `projet_id` int(11) NOT NULL,
   `tache_id` int(11) NOT NULL,
   `creer_par_acteur_id` int(11) NOT NULL,
@@ -157,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 
 
@@ -336,6 +335,8 @@ CREATE TABLE IF NOT EXISTS `sprint` (
 
 
 
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `sprint_activite`
 --
@@ -376,7 +377,6 @@ CREATE TABLE IF NOT EXISTS `tache` (
 ) ENGINE=MyISAM AUTO_INCREMENT=353 DEFAULT CHARSET=utf8;
 
 
-
 -- --------------------------------------------------------
 
 --
@@ -386,19 +386,12 @@ CREATE TABLE IF NOT EXISTS `tache` (
 DROP VIEW IF EXISTS `vw_commentaires`;
 CREATE TABLE IF NOT EXISTS `vw_commentaires` (
 `id` int(10) unsigned
-,`parent_id` int(11)
 ,`projet_id` int(11)
 ,`tache_id` int(11)
 ,`commentaire` varchar(8000)
 ,`date_creation` timestamp
 ,`nom_employe` varchar(101)
 ,`photo` varchar(50)
-,`enfant_id` int(10) unsigned
-,`enfant_parent_id` int(11)
-,`enfant_commentaire` varchar(8000)
-,`enfant_date_creation` timestamp
-,`enfant_nom_employe` varchar(101)
-,`enfant_photo` varchar(50)
 );
 
 -- --------------------------------------------------------
@@ -455,7 +448,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`projetrapide`@`localhost` SQL SECURITY DEFIN
 --
 DROP TABLE IF EXISTS `vw_commentaires`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`projetrapide`@`%` SQL SECURITY DEFINER VIEW `vw_commentaires`  AS  select `c`.`id` AS `id`,`c`.`parent_id` AS `parent_id`,`c`.`projet_id` AS `projet_id`,`c`.`tache_id` AS `tache_id`,`c`.`commentaire` AS `commentaire`,`c`.`created_at` AS `date_creation`,concat(`ae`.`prenom`,' ',`ae`.`nom`) AS `nom_employe`,`ae`.`photo` AS `photo`,`c_enfant`.`id` AS `enfant_id`,`c_enfant`.`parent_id` AS `enfant_parent_id`,`c_enfant`.`commentaire` AS `enfant_commentaire`,`c_enfant`.`created_at` AS `enfant_date_creation`,concat(`enfant_ae`.`prenom`,' ',`enfant_ae`.`nom`) AS `enfant_nom_employe`,`enfant_ae`.`photo` AS `enfant_photo` from (((`commentaire` `c` join `acteur_employe` `ae` on((`ae`.`id` = `c`.`creer_par_acteur_id`))) left join `commentaire` `c_enfant` on((`c_enfant`.`parent_id` = `c`.`id`))) left join `acteur_employe` `enfant_ae` on((`enfant_ae`.`id` = `c_enfant`.`creer_par_acteur_id`))) where (isnull(`c`.`parent_id`) or (`c_enfant`.`id` is not null)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`projetrapide`@`%` SQL SECURITY DEFINER VIEW `vw_commentaires`  AS  select `c`.`id` AS `id`,`c`.`projet_id` AS `projet_id`,`c`.`tache_id` AS `tache_id`,`c`.`commentaire` AS `commentaire`,`c`.`created_at` AS `date_creation`,concat(`ae`.`prenom`,' ',`ae`.`nom`) AS `nom_employe`,`ae`.`photo` AS `photo` from (`commentaire` `c` join `acteur_employe` `ae` on((`ae`.`id` = `c`.`creer_par_acteur_id`))) ;
 
 -- --------------------------------------------------------
 

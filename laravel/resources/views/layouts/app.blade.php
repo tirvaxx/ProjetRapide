@@ -18,6 +18,7 @@
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('js/jquery.blockUI.js') }}"></script>
+         <script src="{{ asset('js/commentaire.js') }}"></script>
 
 
   <script>
@@ -832,18 +833,35 @@ $(document).ready(function() {
 
                 }); //$("body").delegate('a.btn','click', function()
 
+  
     $("body").delegate('a.c-comment','click',function(e) {
-        //$('[data-toggle="popover"]').popover();
+        /**********************************************************
+            C'est le click de l'icone commentaire sur les taches...
+            on load les commentaires associés a une taches
+        ***********************************************************/
         e.preventDefault();
+        
+        var tache_nom = $(this).parent().attr("id");
+        var tache_id = tache_nom.replace("li_tache_", "");
+        var obj_commentaire;
+        var json_commentaires = get_commentaire(g_selected_projet_id, tache_id);
+
+
+
+        if(json_commentaires != ""){
+
+            obj_commentaire = JSON.parse(json_commentaires);    
+        }
+        
+        afficher_commentaire(obj_commentaire, g_selected_projet_id, tache_id);
+
+
         $.blockUI({
             theme:false,
             message: $('#tache_commentaire'),
             css: { textAlign:'left',overflow:'auto',top:'10%',left:'10%',width:'80%',height:'90%', cursor: 'default' }
-            
-            
         });
-
-
+        
 
 
     }); //$("body").delegate('a.c-comment','click',function()
@@ -1001,23 +1019,7 @@ $(document).ready(function() {
 
                 var tabs = $( "#tabs" ).tabs();
 
-                // Modal dialog init: custom buttons and a "close" callback resetting the form inside
-                // var dialog = $( "#dialog" ).dialog({
-                //   autoOpen: false,
-                //   modal: true,
-                //   buttons: {
-                //     Add: function() {
-                //       sprint_add_tab();
-                //       $( this ).dialog( "close" );
-                //     },
-                //     Cancel: function() {
-                //       $( this ).dialog( "close" );
-                //     }
-                //   },
-                //   close: function() {
-                //     form[ 0 ].reset();
-                //   }
-                // });
+                
 
                 //AddTab form: calls addTab function on submit and closes the dialog
                 $('#btn_sprint_ajouter').click(function() {
