@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Http\Response;
 use Barryvdh\Debugbar\Facade as Debugbar;
+use Illuminate\Support\Facades\Auth;
 
 
 class SprintController extends Controller
@@ -47,7 +48,7 @@ class SprintController extends Controller
           $sprint = new Sprint;
           $sprint->numero = $request->no_sprint;
           $sprint->projet_id = $request->projet_id;
-          $sprint->creer_par_acteur_id = 2;
+          $sprint->creer_par_acteur_id = Auth::id();
           $sprint->date_debut = $request->input('date_debut');
           $sprint->date_fin = $request->input('date_fin');
           $data = array(
@@ -90,8 +91,8 @@ class SprintController extends Controller
         $sprint_activite->projet_id = $request->projet_id;
         $sprint_activite->sprint_id = $sprint->id;
         $sprint_activite->actif = 1;
-        $sprint_activite->creer_par_acteur_id = 2;
-        $sprint_activite->assigne_acteur_id = 2;
+        $sprint_activite->creer_par_acteur_id = Auth::id();
+        $sprint_activite->assigne_acteur_id = Auth::id();
         $sprint_activite->save();
 
         
