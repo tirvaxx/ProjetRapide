@@ -90,6 +90,18 @@ fieldset legend {
     font-size: 1.2em;
 }
 
+
+.commentaire{
+color:red;
+    top:10px!important;
+    left:10%!important;
+    width:50%!important;
+    position: absolute!important;
+    height:90%!important;
+    overflow:auto!important;
+    text-align: left;
+}
+
 /*
     Stylesheet for examples by DevHeart.
     http://devheart.org/
