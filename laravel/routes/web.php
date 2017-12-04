@@ -72,11 +72,11 @@ Route::resource('acteurEmployes', 'acteurEmployeController');
 Route::resource('taches', 'TacheController');
 Route::resource('listes', 'ListeController');
 Route::resource('sprintactivites', 'SprintActiviteController');
-<<<<<<< HEAD
+
 
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
-=======
+
 Route::resource('commentaires', 'CommentaireController');
->>>>>>> develop
+
