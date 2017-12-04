@@ -235,13 +235,8 @@
                 </div>
                 <div class="form-group" >
                     <label for="date_du_projet">Date dû :</label>
-                    <input type="text" class="form-control" name="date_du_projet" id="date_du_projet">
+                    <input type="text" class="form-control date" name="date_du_projet" id="date_du_projet">
                 </div>
-                <script type="text/javascript">
-                    $( function() {
-                        $( "#date_du_projet" ).datepicker({ dateFormat: 'yy-mm-dd' });
-                    } );
-                </script>
                 <div class="form-group">
                     <button type="button" id="btn_projet_ajouter" class="btn btn-primary" >Créer</button>
                     <button type="button" id="btn_projet_fermer" class="btn btn-primary" >Fermer</button>
@@ -273,16 +268,8 @@
                 </div>
                 <div class="form-group" >
                     <label for="date_complete_projet">Date complété :</label>
-                    <input type="text" class="form-control" name="modifier_date_complete_projet" id="modifier_date_complete_projet">
+                    <input type="text" class="form-control date" name="modifier_date_complete_projet" id="modifier_date_complete_projet">
                 </div>
-                <script type="text/javascript">
-                    $( function() {
-                        $( "#modifier_date_du_projet" ).datepicker({ dateFormat: 'yy-mm-dd' });
-                    } );
-                    $( function() {
-                        $( "#modifier_date_complete_projet" ).datepicker({ dateFormat: 'yy-mm-dd' });
-                    } );
-                </script>
                 <div class="form-group">
                     <button type="button" id="btn_projet_formmodifier" class="btn btn-primary" >Modifier</button>
                     <button type="button" id="btn_projet_formmodifier_annuler" class="btn btn-primary" >Annuler</button>
@@ -309,20 +296,12 @@
                 </div>
                 <div class="form-group" >
                     <label for="date_debut">Date Début :</label>
-                    <input type="text" class="form-control" name="date_debut" id="date_debut">
+                    <input type="text" class="form-control date" name="date_debut" id="date_debut">
                 </div>
                 <div class="form-group" >
                     <label for="date_fin">Date Fin :</label>
-                    <input type="text" class="form-control" name="date_fin" id="date_fin">
+                    <input type="text" class="form-control date" name="date_fin" id="date_fin">
                 </div>
-                <script type="text/javascript">
-                    $( function() {
-                        $( "#date_debut" ).datepicker({ dateFormat: 'yy-mm-dd' });
-                    } );
-                    $( function() {
-                        $( "#date_fin" ).datepicker({ dateFormat: 'yy-mm-dd' });
-                    } );
-                </script>
                 <div class="form-group">
                     <button type="button" id="btn_sprint_ajouter" class="btn btn-primary" >Ajouter</button>
                     <button type="button" id="btn_sprint_fermer" class="btn btn-primary" >Fermer</button>

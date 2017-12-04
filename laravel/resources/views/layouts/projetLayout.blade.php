@@ -17,6 +17,7 @@
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('js/jquery.blockUI.js') }}"></script>
+        <script src="{{ asset('js/commentaire.js') }}"></script>
 
   <script>
 
@@ -33,9 +34,11 @@
 
         <script type="text/javascript">
 
-            var g_selected_projet_id  = 1;
+            var g_selected_projet_id;
 
-            // var sprint_id  = 1;
+
+            $( ".date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+
 
          // sur double-click d'une tache
             $("body").delegate('li','dblclick',function() {
@@ -464,7 +467,7 @@ $(document).ready(function() {
 
                 $.ajax({
 
-                            url: "/" + p_id,
+                            url: "/home/" + p_id,
                             type: 'GET',
                             dataType: 'text',
 
@@ -878,6 +881,7 @@ $(document).ready(function() {
                 dataType: 'text',
                 // remind that 'data' is the response of the AjaxController
             success: function (result,status,xhr) {
+  alert(result);
                 var res =  JSON.parse(result)[0];
                 var t = "<span class='glyphicon glyphicon-remove pull-right' style='color:#BBB;'></span>";
                 t += "<table class='table table_info'>";
@@ -1100,6 +1104,7 @@ $(document).ready(function() {
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+
+    <!-- <script src="{{ asset('js/app.js') }}"></script> -->
 </body>
 </html>
