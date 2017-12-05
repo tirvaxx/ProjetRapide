@@ -97,7 +97,7 @@
           <ul>
   <!--           <li><a href="#tabs-1">Nunc tincidunt</a> <span class="ui-icon ui-icon-close" role="presentation">Remove Tab</span></li>    -->
           </ul>
-
+        </div>
 <!--
             <div id="tabs-1">
 

@@ -19,6 +19,10 @@
         <script src="{{ asset('js/jquery.blockUI.js') }}"></script>
         <script src="{{ asset('js/commentaire.js') }}"></script>
 
+
+ 
+
+
   <script>
 
     <?php ini_set('display_errors', 'On'); ?>
@@ -36,117 +40,7 @@
 
             var g_selected_projet_id;
 
-
-            $( ".date" ).datepicker({ dateFormat: 'yy-mm-dd' });
-
-
-         // sur double-click d'une tache
-            $("body").delegate('li','dblclick',function() {
-
-
-                var tache_id =  $(this).attr('id');
-                //on s'assure que le <li> cliqu� est une t�che sinon exit
-                //il faut que le id de <a> commence par btn_ajouter_tache_Liste + _ + le id de la liste dans la bd
-                if(!(typeof tache_id != 'undefined' && tache_id.indexOf("li_tache") >= 0)){
-                  return;
-                }
-                $tache_no = tache_id.replace("li_tache_", "");
-                $("body").data("modif_tache_no", $tache_no);
-
-
-                 $url = "taches/" + $tache_no + "/edit";
-                 $.ajax({ statusCode: {
-                    500: function(xhr) {
-                    alert(500);
-                    }},
-                    //the route pointing to the post function
-                    url: $url,
-                    type: 'GET',
-                    dataType: 'text',
-
-                success: function (result,status,xhr) {
-                    var la_tache = JSON.parse(result);
-                    $('#modifier_nom_tache').val(la_tache.tache_nom);
-                    $('#modifier_description_tache').val(la_tache.tache_description);
-                   // $('#tache_message_modifier').hide();
-
-                },error(xhr,status,error){
-                    alert("error 1 " + status);
-                    alert("error 2 " + error);
-                },
-
-                    complete: function (xhr,status) {
-                    // Handle the complete event
-                    //alert("complete " + status);
-                    }
-                });
-
-                // Partie ajax pour éditer le formulaire
-
-                $.blockUI({
-                     message: $('#tache_modifier_form'),
-                     css: { top:'20%'}
-                });
-            }); //  $("body").delegate('li','dblclick',function
-
-              // Modifier un tâche
-            $("body").delegate('#btn_tache_modifier_annuler','click',function(){
-             // $('#btn_tache_modifier_annuler').click(function() {
-                  //$('#form_modifier_tache')[0].reset();
-
-                  $.unblockUI();
-                  return false;
-            }); // $("body").delegate('#btn_tache_modifier_annuler','click',function
-
-
-
-            $("body").delegate('#btn_tache_modifier','click',function(){
-                $tache_no = $("body").data("modif_tache_no");
-                var input_name = "modifier_nom_tache";
-                var nom_tache = $("#form_modifier_tache :input[name='"+input_name+"']").val();
-
-                if(nom_tache == ""){
-                     //confirm("Attention, vous devez entrer une tâche!");
-
-                    nom_tache = "Non défini";
-                }
-                if(description_tache == ""){
-                    description_tache = "Non défini"
-                }
-
-                $url = "taches/" + $tache_no;
-
-                $.ajax({ statusCode: {
-                    500: function(xhr) {
-                    alert(500);
-                    }},
-                    //the route pointing to the post function
-                    url: $url,
-                    type: 'PUT',
-                    // send the csrf-token and the input to the controller
-                    data: $('#form_modifier_tache').serialize(),
-                    dataType: 'text',
-                    // remind that 'data' is the response of the AjaxController
-                success: function (result,status,xhr) {
-                    var tache_no = $("body").data("modif_tache_no");
-                    var spanAModifier = "tache_titre_" + $tache_no;
-                    $('#'+spanAModifier).text(nom_tache);
-                },error(xhr,status,error){
-                    alert("error 1 " + status);
-                    alert("error 2 " + error + " "+ xhr.responseText);
-                },
-
-                    complete: function (xhr,status) {
-                    // Handle the complete event
-                    //alert("complete PUT " + status);
-                    }
-                });
-                $.unblockUI();
-
-            });//#btn_tache_modifier
-            // Fin modifier une tâche
-
-            function ajouter_tache(liste_no){
+ function ajouter_tache(liste_no){
                 $.blockUI({
                      message: $('.div_tache_form'),
                      css: { top:'20%'}
@@ -330,18 +224,7 @@
               });
             }
 
-           // sur double-clique d'un div aller chercher la liste et l'afficher pour modification, sinon ne rien faire
-           $("body").delegate('div','dblclick',function(){return sur_double_clique_liste($(this).attr('id'))});
-
-            // Annuler la modification d'une liste
-            $("body").delegate('#btn_liste_formmodifier_annuler','click',function(){
-                //$('#form_modifier_liste')[0].reset();
-                $.unblockUI();
-                return false;
-            });
-
-            // Permet de valider les champs d'une liste Ne sert plus à rien car maintenant, on fait les validations en backend.
-            function valider_champs_liste(nom_liste, description_liste){
+          function valider_champs_liste(nom_liste, description_liste){
 
               if( nom_liste.replace(/\s/g, '') == ""){
                 $("#liste_message_modifier").html("Le nom de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
@@ -414,6 +297,151 @@
               });
             }
 
+
+            // Actual addTab function: adds new tab using the input from the form above
+                function sprint_add_tab(id, numero) {
+                  //var label = noSprint.val() || "Sprint " + tabCounter,
+
+                  var label = "Sprint " + numero;
+                 //   id = "tabs-" + tabCounter,
+                  //  id = "tabs-" + id,
+                  tabTemplate = "<li><a href='#{href}'>#{label}</a></li>";
+                  li = $( tabTemplate.replace( /#\{href\}/g, "#sprint_" + id ).replace( /#\{label\}/g, label ) );
+                  //  tabContentHtml = tabContent.val();
+
+                   $("#tabs > ul").append( li );
+                  //tabs.append( "<div id='" + id + "'><p></p></div>" );
+                   $("#tabs").append( "<div id='sprint_" + id + "'><p id=\"sprint_message\"></p><p></p></div>" );
+                   $("#tabs").tabs( "refresh" );
+                   $("#tabs").tabs({ active: 0 });
+                 // tabCounter++;
+                }
+$(document).ready(function() {
+
+            $( ".date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+            $( "#tabs" ).tabs();
+
+         // sur double-click d'une tache
+            $("body").delegate('li','dblclick',function() {
+
+
+                var tache_id =  $(this).attr('id');
+                //on s'assure que le <li> cliqu� est une t�che sinon exit
+                //il faut que le id de <a> commence par btn_ajouter_tache_Liste + _ + le id de la liste dans la bd
+                if(!(typeof tache_id != 'undefined' && tache_id.indexOf("li_tache") >= 0)){
+                  return;
+                }
+                $tache_no = tache_id.replace("li_tache_", "");
+                $("body").data("modif_tache_no", $tache_no);
+
+
+                 $url = "taches/" + $tache_no + "/edit";
+                 $.ajax({ statusCode: {
+                    500: function(xhr) {
+                    alert(500);
+                    }},
+                    //the route pointing to the post function
+                    url: $url,
+                    type: 'GET',
+                    dataType: 'text',
+
+                success: function (result,status,xhr) {
+                    var la_tache = JSON.parse(result);
+                    $('#modifier_nom_tache').val(la_tache.tache_nom);
+                    $('#modifier_description_tache').val(la_tache.tache_description);
+                   // $('#tache_message_modifier').hide();
+
+                },error(xhr,status,error){
+                    alert("error 1 " + status);
+                    alert("error 2 " + error);
+                },
+
+                    complete: function (xhr,status) {
+                    // Handle the complete event
+                    //alert("complete " + status);
+                    }
+                });
+
+                // Partie ajax pour éditer le formulaire
+
+                $.blockUI({
+                     message: $('#tache_modifier_form'),
+                     css: { top:'20%'}
+                });
+            }); //  $("body").delegate('li','dblclick',function
+
+              // Modifier un tâche
+            $("body").delegate('#btn_tache_modifier_annuler','click',function(){
+             // $('#btn_tache_modifier_annuler').click(function() {
+                  //$('#form_modifier_tache')[0].reset();
+
+                  $.unblockUI();
+                  return false;
+            }); // $("body").delegate('#btn_tache_modifier_annuler','click',function
+
+
+
+            $("body").delegate('#btn_tache_modifier','click',function(){
+                $tache_no = $("body").data("modif_tache_no");
+                var input_name = "modifier_nom_tache";
+                var nom_tache = $("#form_modifier_tache :input[name='"+input_name+"']").val();
+
+                if(nom_tache == ""){
+                     //confirm("Attention, vous devez entrer une tâche!");
+
+                    nom_tache = "Non défini";
+                }
+                if(description_tache == ""){
+                    description_tache = "Non défini"
+                }
+
+                $url = "taches/" + $tache_no;
+
+                $.ajax({ statusCode: {
+                    500: function(xhr) {
+                    alert(500);
+                    }},
+                    //the route pointing to the post function
+                    url: $url,
+                    type: 'PUT',
+                    // send the csrf-token and the input to the controller
+                    data: $('#form_modifier_tache').serialize(),
+                    dataType: 'text',
+                    // remind that 'data' is the response of the AjaxController
+                success: function (result,status,xhr) {
+                    var tache_no = $("body").data("modif_tache_no");
+                    var spanAModifier = "tache_titre_" + $tache_no;
+                    $('#'+spanAModifier).text(nom_tache);
+                },error(xhr,status,error){
+                    alert("error 1 " + status);
+                    alert("error 2 " + error + " "+ xhr.responseText);
+                },
+
+                    complete: function (xhr,status) {
+                    // Handle the complete event
+                    //alert("complete PUT " + status);
+                    }
+                });
+                $.unblockUI();
+
+            });//#btn_tache_modifier
+            // Fin modifier une tâche
+
+           
+
+           // sur double-clique d'un div aller chercher la liste et l'afficher pour modification, sinon ne rien faire
+           $("body").delegate('div','dblclick',function(){return sur_double_clique_liste($(this).attr('id'))});
+
+            // Annuler la modification d'une liste
+            $("body").delegate('#btn_liste_formmodifier_annuler','click',function(){
+                //$('#form_modifier_liste')[0].reset();
+                $.unblockUI();
+                return false;
+            });
+
+            // Permet de valider les champs d'une liste Ne sert plus à rien car maintenant, on fait les validations en backend.
+            
+
             // Sur appuie du bouton modifier de la liste
             $("body").delegate('#btn_liste_modifier','click',function(){
 
@@ -450,7 +478,6 @@
 
 */
 
-$(document).ready(function() {
 
 
             $("body").delegate('#btn_projet_charger','click', function() {
@@ -472,7 +499,7 @@ $(document).ready(function() {
                             dataType: 'text',
 
                         success: function (result,status,xhr) {
-
+alert(result);
                           //   alert(result);
                              var json_obj = JSON.parse(result);
                              var prev_sprint;
@@ -1015,12 +1042,32 @@ $(document).ready(function() {
                 var noSprint = $( "#no_sprint" ),
                   tabContent = $( "#tab_content" ),
                   //tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>",
-                  tabTemplate = "<li><a href='#{href}'>#{label}</a></li>",
+                  //tabTemplate = "<li><a href='#{href}'>#{label}</a></li>",
                   tabCounter = 2;
 
-                var tabs = $( "#tabs" ).tabs();
+                //var tabs = $( "#tabs" ).tabs();
 
-                
+                  // $( "#creer_item_sprint" ).button().on( "click", function() {
+                //     dialog.dialog( "open" );
+                //   });
+
+                // Close icon: removing the tab on click
+                 $("#tabs").on( "click", "span.ui-icon-close", function() {
+                  var tabs = $( "#tabs" ).tabs();
+                  var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
+                  $( "#" + panelId ).remove();
+                  tabs.tabs( "refresh" );
+                });
+
+                $("#tabs").on( "keyup", function( event ) {
+                  
+                  if ( event.altKey && event.keyCode === $.ui.keyCode.BACKSPACE ) {
+                    var panelId = tabs.find( ".ui-tabs-active" ).remove().attr( "aria-controls" );
+                    $( "#" + panelId ).remove();
+                     $("#tabs").tabs( "refresh" );
+                  }
+                });
+
 
                 //AddTab form: calls addTab function on submit and closes the dialog
                 $('#btn_sprint_ajouter').click(function() {
@@ -1049,43 +1096,10 @@ $(document).ready(function() {
                     });
                 }); // $('#btn_sprint_ajouter').click(function()
 
-                // Actual addTab function: adds new tab using the input from the form above
-                function sprint_add_tab(id, numero) {
-                  //var label = noSprint.val() || "Sprint " + tabCounter,
-                  var label = "Sprint " + numero;
-                 //   id = "tabs-" + tabCounter,
-                  //  id = "tabs-" + id,
-                    li = $( tabTemplate.replace( /#\{href\}/g, "#sprint_" + id ).replace( /#\{label\}/g, label ) ),
-                  //  tabContentHtml = tabContent.val();
-
-                  tabs.find( ".ui-tabs-nav" ).append( li );
-                  //tabs.append( "<div id='" + id + "'><p></p></div>" );
-                  tabs.append( "<div id='sprint_" + id + "'><p id=\"sprint_message\"></p><p></p></div>" );
-                  tabs.tabs( "refresh" );
-                  tabs.tabs({ active: 0 });
-                 // tabCounter++;
-                }
+                
 
 
-                // $( "#creer_item_sprint" ).button().on( "click", function() {
-                //     dialog.dialog( "open" );
-                //   });
-
-                // Close icon: removing the tab on click
-                tabs.on( "click", "span.ui-icon-close", function() {
-                  var panelId = $( this ).closest( "li" ).remove().attr( "aria-controls" );
-                  $( "#" + panelId ).remove();
-                  tabs.tabs( "refresh" );
-                });
-
-                tabs.on( "keyup", function( event ) {
-                  if ( event.altKey && event.keyCode === $.ui.keyCode.BACKSPACE ) {
-                    var panelId = tabs.find( ".ui-tabs-active" ).remove().attr( "aria-controls" );
-                    $( "#" + panelId ).remove();
-                    tabs.tabs( "refresh" );
-                  }
-                });
-
+              
 
 
 

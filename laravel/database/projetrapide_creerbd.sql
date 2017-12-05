@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 04, 2017 at 10:30 PM
+-- Generation Time: Dec 05, 2017 at 11:25 PM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -177,6 +177,26 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `commentaire`
+--
+
+INSERT INTO `commentaire` (`id`, `projet_id`, `tache_id`, `creer_par_acteur_id`, `commentaire`, `created_at`, `updated_at`) VALUES
+(1, 1, 350, 2, 'ff', '2017-12-01 11:40:45', '2017-12-01 11:40:45'),
+(2, 1, 350, 2, 'inner', '2017-12-01 11:41:29', '2017-12-01 11:41:29'),
+(3, 1, 350, 2, 'inner 2', '2017-12-01 11:41:29', '2017-12-01 11:41:29'),
+(4, 1, 350, 2, 'inner 3', '2017-12-01 11:41:29', '2017-12-01 11:41:29'),
+(5, 1, 350, 2, 'new', '2017-12-01 11:40:45', '2017-12-01 11:40:45'),
+(6, 2, 352, 2, 'aucun comment', '2017-12-01 22:36:34', '2017-12-01 22:36:34'),
+(7, 1, 350, 2, 'inner 33', '2017-12-02 14:53:29', '2017-12-02 14:53:29'),
+(8, 1, 350, 2, 'g55', '2017-12-03 17:08:10', '2017-12-03 17:08:10'),
+(9, 1, 350, 2, 'f', '2017-12-03 17:35:46', '2017-12-03 17:35:46'),
+(10, 1, 350, 2, 'dddd', '2017-12-03 17:48:34', '2017-12-03 17:48:34'),
+(11, 1, 350, 2, 'ddd33333', '2017-12-03 17:56:45', '2017-12-03 17:56:45'),
+(12, 1, 350, 2, 'dededdde', '2017-12-03 17:56:52', '2017-12-03 17:56:52'),
+(13, 1, 351, 2, 'ddededd', '2017-12-03 17:57:19', '2017-12-03 17:57:19'),
+(14, 1, 351, 2, 'eded', '2017-12-03 17:57:25', '2017-12-03 17:57:25'),
+(15, 1, 350, 2, 'lololo', '2017-12-03 17:58:28', '2017-12-03 17:58:28');
 
 -- --------------------------------------------------------
 
@@ -269,11 +289,31 @@ CREATE TABLE IF NOT EXISTS `liste` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=339 DEFAULT CHARSET=utf8;
-
+) ENGINE=MyISAM AUTO_INCREMENT=340 DEFAULT CHARSET=utf8;
 
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(7, '2014_10_12_000000_create_users_table', 1),
+(8, '2014_10_12_100000_create_password_resets_table', 1),
+(9, '2017_12_02_192317_create_admins_table', 1);
 
 -- --------------------------------------------------------
 
@@ -351,7 +391,8 @@ CREATE TABLE IF NOT EXISTS `sprint` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+
 
 
 -- --------------------------------------------------------
@@ -377,7 +418,6 @@ CREATE TABLE IF NOT EXISTS `sprint_activite` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-
 -- --------------------------------------------------------
 
 --
@@ -394,8 +434,6 @@ CREATE TABLE IF NOT EXISTS `tache` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=355 DEFAULT CHARSET=utf8;
-
-
 
 -- --------------------------------------------------------
 
@@ -454,28 +492,27 @@ CREATE TABLE IF NOT EXISTS `vw_sprint_activite_actif` (
 ,`projet_date_du` date
 ,`projet_date_complete` date
 ,`projet_cpa_id` int(10) unsigned
-,`projet_cpa_nom` double
+,`projet_cpa_nom` varchar(191)
 ,`activite_cpa_id` int(10) unsigned
-,`activite_cpa_nom` double
+,`activite_cpa_nom` varchar(191)
 ,`emp_assigne_id` int(10) unsigned
-,`emp_assigne_nom` double
-,`emp_assigne_courriel` varchar(100)
-,`emp_assigne_telephone` bigint(12)
+,`emp_assigne_nom` varchar(191)
+,`emp_assigne_courriel` varchar(50)
 ,`sprint_id` int(10) unsigned
 ,`sprint_numero` tinyint(3) unsigned
 ,`sprint_cpa_id` int(10) unsigned
-,`sprint_cpa_nom` double
+,`sprint_cpa_nom` varchar(191)
 ,`liste_id` int(10) unsigned
 ,`liste_nom` varchar(50)
 ,`liste_description` varchar(200)
 ,`liste_cpa_id` int(10) unsigned
-,`liste_cpa_nom` double
+,`liste_cpa_nom` varchar(191)
 ,`tache_id` int(10) unsigned
 ,`tache_nom` varchar(50)
 ,`tache_description` varchar(500)
 ,`tache_ordre` tinyint(4)
 ,`tache_cpa_id` int(10) unsigned
-,`tache_cpa_nom` double
+,`tache_cpa_nom` varchar(191)
 );
 
 -- --------------------------------------------------------
@@ -503,10 +540,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`projetrapide`@`%` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `vw_sprint_activite_actif`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`projetrapide`@`%` SQL SECURITY DEFINER VIEW `vw_sprint_activite_actif`  AS  select `projet`.`id` AS `projet_id`,`projet`.`nom` AS `projet_nom`,`projet`.`description` AS `projet_description`,`projet`.`date_du` AS `projet_date_du`,`projet`.`date_complete` AS `projet_date_complete`,`projet_ae`.`id` AS `projet_cpa_id`,((`projet_ae`.`prenom` + ' ') + `sa_ae`.`nom`) AS `projet_cpa_nom`,`sa_ae`.`id` AS `activite_cpa_id`,((`sa_ae`.`prenom` + ' ') + `sa_ae`.`nom`) AS `activite_cpa_nom`,`sa_assigne_ae`.`id` AS `emp_assigne_id`,((`sa_assigne_ae`.`prenom` + ' ') + `sa_assigne_ae`.`nom`) AS `emp_assigne_nom`,`sa_assigne_ae`.`courriel` AS `emp_assigne_courriel`,`sa_assigne_ae`.`telephone` AS `emp_assigne_telephone`,`sprint`.`id` AS `sprint_id`,`sprint`.`numero` AS `sprint_numero`,`sprint_ae`.`id` AS `sprint_cpa_id`,((`sprint_ae`.`prenom` + ' ') + `sprint_ae`.`nom`) AS `sprint_cpa_nom`,`liste`.`id` AS `liste_id`,`liste`.`nom` AS `liste_nom`,`liste`.`description` AS `liste_description`,`liste_ae`.`id` AS `liste_cpa_id`,((`liste_ae`.`prenom` + ' ') + `liste_ae`.`nom`) AS `liste_cpa_nom`,`tache`.`id` AS `tache_id`,`tache`.`nom` AS `tache_nom`,`tache`.`description` AS `tache_description`,`sa`.`ordre` AS `tache_ordre`,`tache_ae`.`id` AS `tache_cpa_id`,((`tache_ae`.`prenom` + ' ') + `tache_ae`.`nom`) AS `tache_cpa_nom` from ((((((((((`sprint_activite` `sa` join `projet` on((`sa`.`projet_id` = `projet`.`id`))) join `acteur_employe` `projet_ae` on((`sa`.`creer_par_acteur_id` = `projet_ae`.`id`))) join `acteur_employe` `sa_ae` on((`sa`.`creer_par_acteur_id` = `sa_ae`.`id`))) join `acteur_employe` `sa_assigne_ae` on((`sa`.`assigne_acteur_id` = `sa_assigne_ae`.`id`))) join `sprint` on(((`sprint`.`id` = `sa`.`sprint_id`) and (`sa`.`projet_id` = `sprint`.`projet_id`)))) join `acteur_employe` `sprint_ae` on(((`sprint`.`creer_par_acteur_id` = `sprint_ae`.`id`) and (`sprint`.`projet_id` = `sa`.`projet_id`)))) left join `liste` on((`liste`.`id` = `sa`.`liste_id`))) left join `acteur_employe` `liste_ae` on((`liste`.`creer_par_acteur_id` = `liste_ae`.`id`))) left join `tache` on((`tache`.`id` = `sa`.`tache_id`))) left join `acteur_employe` `tache_ae` on((`tache`.`creer_par_acteur_id` = `tache_ae`.`id`))) where (`sa`.`actif` = 1) ;
-
-
-
+CREATE ALGORITHM=UNDEFINED DEFINER=`projetrapide`@`%` SQL SECURITY DEFINER VIEW `vw_sprint_activite_actif`  AS  select `projet`.`id` AS `projet_id`,`projet`.`nom` AS `projet_nom`,`projet`.`description` AS `projet_description`,`projet`.`date_du` AS `projet_date_du`,`projet`.`date_complete` AS `projet_date_complete`,`projet_ae`.`id` AS `projet_cpa_id`,`projet_ae`.`name` AS `projet_cpa_nom`,`sa_ae`.`id` AS `activite_cpa_id`,`sa_ae`.`name` AS `activite_cpa_nom`,`sa_assigne_ae`.`id` AS `emp_assigne_id`,`sa_assigne_ae`.`name` AS `emp_assigne_nom`,`sa_assigne_ae`.`email` AS `emp_assigne_courriel`,`sprint`.`id` AS `sprint_id`,`sprint`.`numero` AS `sprint_numero`,`sprint_ae`.`id` AS `sprint_cpa_id`,`sprint_ae`.`name` AS `sprint_cpa_nom`,`liste`.`id` AS `liste_id`,`liste`.`nom` AS `liste_nom`,`liste`.`description` AS `liste_description`,`liste_ae`.`id` AS `liste_cpa_id`,`liste_ae`.`name` AS `liste_cpa_nom`,`tache`.`id` AS `tache_id`,`tache`.`nom` AS `tache_nom`,`tache`.`description` AS `tache_description`,`sa`.`ordre` AS `tache_ordre`,`tache_ae`.`id` AS `tache_cpa_id`,`tache_ae`.`name` AS `tache_cpa_nom` from ((((((((((`sprint_activite` `sa` join `projet` on((`sa`.`projet_id` = `projet`.`id`))) join `users` `projet_ae` on((`sa`.`creer_par_acteur_id` = `projet_ae`.`id`))) join `users` `sa_ae` on((`sa`.`creer_par_acteur_id` = `sa_ae`.`id`))) join `users` `sa_assigne_ae` on((`sa`.`assigne_acteur_id` = `sa_assigne_ae`.`id`))) join `sprint` on(((`sprint`.`id` = `sa`.`sprint_id`) and (`sa`.`projet_id` = `sprint`.`projet_id`)))) join `users` `sprint_ae` on(((`sprint`.`creer_par_acteur_id` = `sprint_ae`.`id`) and (`sprint`.`projet_id` = `sa`.`projet_id`)))) left join `liste` on((`liste`.`id` = `sa`.`liste_id`))) left join `users` `liste_ae` on((`liste`.`creer_par_acteur_id` = `liste_ae`.`id`))) left join `tache` on((`tache`.`id` = `sa`.`tache_id`))) left join `users` `tache_ae` on((`tache`.`creer_par_acteur_id` = `tache_ae`.`id`))) where (`sa`.`actif` = 1) ;
 
 
 
@@ -528,7 +562,6 @@ GRANT ALL PRIVILEGES ON `projet_rapide`.* TO 'projetrapide'@'localhost';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
 
 GRANT PROXY ON ''@'' TO 'root'@'localhost' WITH GRANT OPTION;
-
 
 
 COMMIT;
