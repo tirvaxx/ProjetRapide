@@ -41,7 +41,7 @@ class CommentaireController extends Controller
         $c = new Commentaire;
         $c->projet_id = $request->projet_id;
         $c->tache_id = $request->tache_id;
-        $c->creer_par_acteur_id = 2;
+        $c->creer_par_acteur_id = Auth::id();
         $c->commentaire = $request->commentaire;
         $c->save();
     }

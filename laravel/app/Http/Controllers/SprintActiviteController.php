@@ -5,15 +5,14 @@ use Log;
 use DB;
 use App\SprintActivite;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class SprintActiviteController extends Controller
 {
 
 
 
     protected function maj_bd($projet_id, $sprint_id, $json){
-LOG::info("debut  maj_bd");
-//DB::connection()->enableQueryLog();
+
         //on récupère toutes les valeurs existantes d'un projet/sprint et on les mets inactifs
         //dans le but de les réinsérés avec le bonne ordre au moment du drag and drop
        SprintActivite::where("projet_id", "=", $projet_id)
@@ -23,24 +22,9 @@ LOG::info("debut  maj_bd");
 
 
 
-  foreach($json as $liste => $json_tache){
-            //LOG::info("in foreach liste=" + $liste);
+        foreach($json as $liste => $json_tache){
 
 
-
-            
-
-           // LOG::info("tache[0]=" +  $tache[0] );
-            
-           
-           /* SprintActivite::where("projet_id", "=", request("projet_id"))
-                ->where("sprint_id","=", request("sprint_id"))
-                ->where("liste_id","=", $liste)
-                ->where("actif", "=", 1)
-                ->update(["ordre" => 0]);
-           */
-            
-           
             $compteur = 1;
             foreach ($json_tache as $key => $ordre_tache) {
                 if(!(is_null($ordre_tache) || empty($ordre_tache)) ){
@@ -53,18 +37,11 @@ LOG::info("debut  maj_bd");
                         $sprint_activite->tache_id = $tache;
                         $sprint_activite->actif = 1;
                         $sprint_activite->ordre = $compteur;
-                        $sprint_activite->creer_par_acteur_id = 2;
-                        $sprint_activite->assigne_acteur_id = 2;
+                        $sprint_activite->creer_par_acteur_id = Auth::id();
+                        $sprint_activite->assigne_acteur_id = Auth::id();
                         $sprint_activite->save(); 
 
-                        /*
-                       SprintActivite::where("projet_id", "=", request("projet_id"))
-                            ->where("sprint_id","=", request("sprint_id"))
-                            ->where("liste_id","=", $liste)
-                            ->where("tache_id", "=", $tache)
-                            ->update(["ordre" => $compteur]);
-
-                        */
+                      
                         $compteur++;
                     }
                 }else{
@@ -73,33 +50,14 @@ LOG::info("debut  maj_bd");
                     $sprint_activite->sprint_id = $sprint_id;
                     $sprint_activite->liste_id = $liste;
                     $sprint_activite->actif = 1;
-                    $sprint_activite->creer_par_acteur_id = 2;
-                    $sprint_activite->assigne_acteur_id = 2;
+                    $sprint_activite->creer_par_acteur_id = Auth::id();
+                    $sprint_activite->assigne_acteur_id = Auth::id();
                     $sprint_activite->save(); 
 
                 }
 
-
             }
-    }
-
-
-//LOG::info("*************Before insert");
-        //insere nouveau
-        
-
-
-       
-       // $json2 = json_decode(request("ordre_tache"));
-       // $json = request("ordre_tache");
-
-     // LOG::info(json_encode($json2));
-        
-      
-
-
-//$queries = DB::getQueryLog();
-//LOG::info($queries);
+        }
 
     }
 

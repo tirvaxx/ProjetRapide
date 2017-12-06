@@ -908,22 +908,24 @@ alert(result);
                 dataType: 'text',
                 // remind that 'data' is the response of the AjaxController
             success: function (result,status,xhr) {
-  alert(result);
-                var res =  JSON.parse(result)[0];
-                var t = "<span class='glyphicon glyphicon-remove pull-right' style='color:#BBB;'></span>";
-                t += "<table class='table table_info'>";
-                t += "<caption>" + res.tache_nom + "</caption>";
-                t += "<tr><td>Creer par</td><td>" + res.creer_par + "</td></tr>";
-                t += "<tr><td>Telephone</td><td>" + res.telephone + "</td></tr>";
-                t += "<tr><td>Courriel</td><td>" + res.courriel + "</td></tr>";
-                t += "<tr><td>Date Création</td><td>" + res.tache_creer_date + "</td></tr>";
-                t += "<tr><td>Date Modification</td><td>" + res.tache_maj_date + "</td></tr>";
-                t += "<tr><td>Description</td><td>" +  res.tache_description + "</td></tr>";
-                t += "</table>";
+                if(!$.isEmptyObject(result)){
+                  var res =  JSON.parse(result)[0];
+                  var t = "<span class='glyphicon glyphicon-remove pull-right' style='color:#BBB;'></span>";
+                  t += "<table class='table table_info'>";
+                  t += "<caption>" + res.tache_nom + "</caption>";
+                  t += "<tr><td>Creer par</td><td>" + res.creer_par + "</td></tr>";
+                  //t += "<tr><td>Telephone</td><td>" + res.telephone + "</td></tr>";
+                  t += "<tr><td>Courriel</td><td>" + res.courriel + "</td></tr>";
+                  t += "<tr><td>Date Création</td><td>" + res.tache_creer_date + "</td></tr>";
+                  t += "<tr><td>Date Modification</td><td>" + res.tache_maj_date + "</td></tr>";
+                  t += "<tr><td>Description</td><td>" +  res.tache_description + "</td></tr>";
+                  t += "</table>";
 
 
-                $('#tache_info').html(t);
-                
+                  $('#tache_info').html(t);
+                }else{
+                  $('#tache_info').html("<p>Aucune information</p>");
+                }
 
                  // alert( result);
             },

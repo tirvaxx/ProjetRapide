@@ -103,8 +103,8 @@ class TacheController extends Controller
        
 
         $tache = DB::table('tache')
-            ->join('acteur_employe', 'acteur_employe.id', '=', 'tache.creer_par_acteur_id')
-            ->select('tache.nom as tache_nom', 'tache.description as tache_description', DB::raw('CONCAT(acteur_employe.prenom , " ",  acteur_employe.nom) AS creer_par'), 'acteur_employe.telephone', 'acteur_employe.courriel', 'tache.created_at as tache_creer_date', 'tache.updated_at as tache_maj_date')
+            ->join('users', 'users.id', '=', 'tache.creer_par_acteur_id')
+            ->select('tache.nom as tache_nom', 'tache.description as tache_description', 'users.name AS creer_par',  'users.email as courriel', 'tache.created_at as tache_creer_date', 'tache.updated_at as tache_maj_date')
             ->where('tache.id', '=', $id)
             ->get();
             
