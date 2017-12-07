@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 //Route::get('/home', 'HomeController@index');
 
-
+Route::get('/users', 'HomeController@getUsers');
 
 Route::get('/admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
 Route::post('/admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');

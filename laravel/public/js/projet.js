@@ -241,5 +241,30 @@ $(document).ready(function(){
 
                 }); // $('#btn_projet_ajouter').click(function()
 
+             //****************SEARCHBAR*******************
+                //////////////////////////////////////////////
+
+
+                $('#search-bar').autocomplete({
+                    source : function(request, response){ // les deux arguments représentent les données nécessaires au plugin
+                        $.ajax({
+                            url : '/users',
+                            type : 'GET', // on appelle le script JSON
+                            dataType : 'json', // on spécifie bien que le type de données est en JSON
+                            
+                            success: function (data) {
+                                console.log(data);
+                                response($.map(data, function(item) {
+                                    return {
+                                        label : item.name
+                                    } 
+                                }));
+                            }
+                        });
+                    },
+                });
+                //****************END SEARCHBAR*******************
+                //////////////////////////////////////////////
+
 
 }); //$(document).ready(function
