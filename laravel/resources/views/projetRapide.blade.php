@@ -124,17 +124,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     </div>
     <div id="tache_info" class="btn_fermer_ui" style="display:none">
 

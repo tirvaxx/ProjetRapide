@@ -34,6 +34,7 @@ Route::post('/projets', 'ProjetController@store');
 Route::get('/projets/{id}/edit', array('projet'=> 'projets', 'uses' => 'ProjetController@edit'));
 Route::put('/projets/{id}', 'ProjetController@update');
 
+
 //Route::get('/taches', 'TacheController@index');
 // create ?
 Route::post('/taches', 'TacheController@store');

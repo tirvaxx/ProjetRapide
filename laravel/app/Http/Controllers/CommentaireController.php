@@ -6,7 +6,7 @@ use Log;
 use DB;
 use App\Commentaire;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class CommentaireController extends Controller
 {
     /**

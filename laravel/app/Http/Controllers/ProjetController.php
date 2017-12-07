@@ -21,6 +21,7 @@ class ProjetController extends Controller
                                             , "description as projet_description"
                                             , "date_du as projet_date_du")
         ->whereNull("date_complete")
+        ->orderby("id")
         ->get();
 
 
