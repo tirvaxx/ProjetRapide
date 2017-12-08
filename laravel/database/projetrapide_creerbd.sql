@@ -350,7 +350,6 @@ DROP TABLE IF EXISTS `projet_assignation`;
 CREATE TABLE IF NOT EXISTS `projet_assignation` (
   `projet_id` int(11) NOT NULL,
   `acteur_id` int(11) NOT NULL,
-  `date_assignation` int(11) NOT NULL,
   `actif` tinyint(1) NOT NULL DEFAULT '1',
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
