@@ -38,7 +38,6 @@ $(document).ready(function(){
 	                var id = JSON.parse(result).last_inserted_id;
 	                var numero = JSON.parse(result).numero;
 
-	                // creer_sprint($id, $numero);
 	                sprint_add_tab(id, numero);
 
 	        },

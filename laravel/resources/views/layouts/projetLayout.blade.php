@@ -24,8 +24,11 @@
 
 
         <script src="{{ asset('js/commentaire.js') }}"></script>
+
         <script src="{{ asset('js/projet.js') }}"></script>
+
         <script src="{{ asset('js/tabs.js') }}"></script>
+        <script src="{{ asset('js/projet.js') }}"></script>
         <script src="{{ asset('js/sprint.js') }}"></script>
         <script src="{{ asset('js/liste.js') }}"></script>
         <script src="{{ asset('js/tache.js') }}"></script>

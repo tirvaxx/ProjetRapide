@@ -55,6 +55,7 @@ class TacheController extends Controller
         $max_ordre = SprintActivite::where("projet_id", "=", request("projet_id"))
         ->where("sprint_id","=", request("sprint_id"))
         ->Where("liste_id", "=", request("liste_id"))
+        ->Where("actif", "=", 1)
         ->max(DB::raw('coalesce(ordre,0)'));
       
       
