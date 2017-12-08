@@ -142,7 +142,7 @@ class ProjetController extends Controller
       return $data;
     }
     public function assignation(Request $request) {
-        $logFile = 'laravel.log';
+        
 
         $projet_assignation = new ProjetAssignation;
         
