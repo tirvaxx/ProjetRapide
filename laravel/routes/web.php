@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 //Route::get('/home', 'HomeController@index');
 
-Route::get('/users', 'HomeController@getUsers');
+Route::post('/users', 'HomeController@getUsers');
 
 Route::post('/assignation', 'ProjetController@assignation');
 

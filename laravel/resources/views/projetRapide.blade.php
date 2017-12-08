@@ -76,7 +76,7 @@
                               <legend>Assigner un utilisateur au projet : </legend>
                                   <div class="form-group">
                                           <label for="nom_assignation">Nom de l'utilisateur</label>
-                                          <input id="search-bar" name="search-bar" type="text" class="form-control" placeholder="Rechercher" projet_id="{{$value->projet_id}}">
+                                          <input id="search-bar" name="search-bar" type="text" class="form-control" placeholder="Rechercher"/>
                                   </div>
                                   
                                   <div class="form-group">

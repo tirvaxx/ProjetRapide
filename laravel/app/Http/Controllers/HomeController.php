@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Response;
+use Log;
 
 
 class HomeController extends Controller
@@ -29,9 +30,14 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function getUsers() {
+    public function getUsers(Request $request) {
+        $logFile = 'laravel.log';
+        Log::info($request);
+        $users = User::where('name', 'like', $request->input('term') . '%')->get();
 
-        $users = User::all('name');
+
+        // $users = User::all('name');
+        // return Response::json($users);
         return Response::json($users);
 
     }

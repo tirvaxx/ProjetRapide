@@ -249,7 +249,8 @@ $(document).ready(function(){
                     source : function(request, response){ // les deux arguments représentent les données nécessaires au plugin
                         $.ajax({
                             url : '/users',
-                            type : 'GET', // on appelle le script JSON
+                            type : 'POST', // on appelle le script JSON
+                            data: {term: request.term},
                             dataType : 'json', // on spécifie bien que le type de données est en JSON
                             
                             success: function (data) {
@@ -262,7 +263,9 @@ $(document).ready(function(){
                             }
                         });
                     },
+                    
                 });
+                
                 //****************END SEARCHBAR*******************
                 //////////////////////////////////////////////
 
