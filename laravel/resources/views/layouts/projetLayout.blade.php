@@ -14,15 +14,31 @@
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
         <link rel="stylesheet" type="text/css" href={{ asset('css/projetrapide.css') }}>
+        <link rel="stylesheet" type="text/css" href={{ asset('toastr/build/toastr.css') }}>
+        
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('js/jquery.blockUI.js') }}"></script>
+        <script src="{{ asset('toastr/toastr.js') }}"></script>
+        <script src="{{ asset('toastr/build/toastr.min.js') }}"></script>
+
+
         <script src="{{ asset('js/commentaire.js') }}"></script>
+
+
+        <script src="{{ asset('js/projet.js') }}">
+            function toastMessageSuccess(nom) {
+            toastr.success('Utilisateur ajouté au projet', 'Miracle Max Says');
+        }   
+
+        </script>
+
         <script src="{{ asset('js/tabs.js') }}"></script>
         <script src="{{ asset('js/projet.js') }}"></script>
         <script src="{{ asset('js/sprint.js') }}"></script>
         <script src="{{ asset('js/liste.js') }}"></script>
         <script src="{{ asset('js/tache.js') }}"></script>
+        
        
  
   <script>
@@ -33,7 +49,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
     });
-
+ 
   </script>
 
   <script type="text/javascript">
@@ -41,6 +57,7 @@
       
     $(document).ready(function() {
 
+        
       $( ".date" ).datepicker({ dateFormat: 'yy-mm-dd' });
       $( "#tabs" ).tabs();
       //Permet d'afficher des tooltips de types Bootstrap
@@ -50,6 +67,8 @@
       $(".btn_fermer_ui").click(function(){
           $.unblockUI();
       });
+
+
 
 
     }); //$(document).ready(function()

@@ -67,6 +67,23 @@
                         <div class="panel-body">{{$value->projet_description}}</div>
                         <button id="btn_projet_charger" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Charger</button>
                         <button id="btn_projet_modifier" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Modifier</button>
+                        
+                        <form id="form_assignation" action="#" >
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <!-- securite contre les failles sur les requests -->
+
+                          <fieldset>
+                              <legend>Assigner un utilisateur au projet : </legend>
+                                  <div class="form-group">
+                                          <label for="nom_assignation">Nom de l'utilisateur</label>
+                                          <input id="search-bar" name="search-bar" type="text" class="form-control" placeholder="Rechercher"/>
+                                  </div>
+                                  
+                                  <div class="form-group">
+                                      <button type="button" id="btn_assignation" class="btn btn-primary" >Ajouter</button>
+                                  </div>
+                          </fieldset>
+                      </form>
                     </div>
                 </div>
             @endforeach

@@ -240,5 +240,59 @@ $(document).ready(function(){
 
     }); // $('#btn_projet_ajouter').click(function()
 
+             //****************SEARCHBAR*******************
+                //////////////////////////////////////////////
+
+
+                $('#search-bar').autocomplete({
+                    source : function(request, response){ // les deux arguments représentent les données nécessaires au plugin
+                        $.ajax({
+                            url : '/users',
+                            type : 'POST', // on appelle le script JSON
+                            data: {term: request.term},
+                            dataType : 'json', // on spécifie bien que le type de données est en JSON
+                            
+                            success: function (data) {
+                                console.log(data);
+                                response($.map(data, function(item) {
+                                    return {
+                                        label : item.name
+                                    } 
+                                }));
+                            }
+                        });
+                    },
+                    
+                });
+                
+                //****************END SEARCHBAR*******************
+                //////////////////////////////////////////////
+
+                $('#btn_assignation').click(function(e) {
+                    e.preventDefault();
+
+                    var nomProjet = $(this).parents().eq(3).attr("id");
+                    console.log(nomProjet);
+                    var idProjet = nomProjet.replace("collapse_", "");
+                    console.log(idProjet);
+                    var nomUser = document.getElementById("search-bar").value;
+                    var data = $('#form_assignation').serialize() + "&projet_id=" + idProjet; 
+                    $.ajax({
+                        url : '/assignation',
+                        type : 'POST',
+                        data : data,
+                        dataType : 'text',
+
+                        success: function(result, status, xhr) {
+                            toastr.success('Utilisateur ajouté au projet', 'SUCCESS!!');
+                            //toastMessageSuccess(document.getElementById("search-bar").value);
+                        },
+                        error: function(xhr,status,error) {
+                            alert("error 1 " + status);
+                            alert("error 2 " + error);
+                        }
+                    });
+                });
+
 
 }); //$(document).ready(function

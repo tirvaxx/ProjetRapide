@@ -20,7 +20,9 @@ Route::get('/', function () {
 
 //Route::get('/home', 'HomeController@index');
 
+Route::post('/users', 'HomeController@getUsers');
 
+Route::post('/assignation', 'ProjetController@assignation');
 
 Route::get('/admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
 Route::post('/admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');

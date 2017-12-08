@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Log;
 use App\Projet;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\ProjetAssignation;
 
 class ProjetController extends Controller
 {
@@ -137,5 +140,24 @@ class ProjetController extends Controller
           'message' => 'Le projet a été supprimé.'
       );
       return $data;
+    }
+    public function assignation(Request $request) {
+        $logFile = 'laravel.log';
+
+        $projet_assignation = new ProjetAssignation;
+        
+        $projet_assignation->projet_id = request("projet_id");
+        
+        $result = User::where('name', $request->input("search-bar"))->value('id');
+        
+
+        $projet_assignation->acteur_id = $result;
+        $projet_assignation->save();
+
+        $data = array(
+          'message' => 'Assignation réussie.'
+        );
+
+        return $data;
     }
 }
