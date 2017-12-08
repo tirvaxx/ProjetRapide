@@ -151,6 +151,7 @@ $(document).ready(function(){
 	       
 	        var spanAModifier = "tache_titre_" + $tache_no;
 	        $('#'+spanAModifier).text(nom_tache);
+            toastr.success('Tache Modifiée', 'SUCCESS!!');
 	    },error(xhr,status,error){
 	        alert("error 1 " + status);
 	        alert("error 2 " + error + " "+ xhr.responseText);
@@ -203,7 +204,10 @@ $(document).ready(function(){
             // remind that 'data' is the response of the AjaxController
         success: function (result,status,xhr) {
 
-             
+                toastr.success('Tache Ajoutée', 'SUCCESS!!');
+                var liste_no = $("body").data("ajout_liste_no");
+
+
                  creer_tache(liste_no, JSON.parse(result).last_inserted_id, JSON.parse(result).nom , JSON.parse(result).description);
                 /*
                 $("#ul_liste_" + liste_no).append( '<li id="li_tache_' + JSON.parse(result).last_inserted_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span id="tache_titre_'+ JSON.parse(result).last_inserted_id + '">' + JSON.parse(result).nom + '</span></li>' );
@@ -281,6 +285,7 @@ console.log(json_liste_tache);
 	        success: function (result,status,xhr) {
 
 	              $('#' + id).remove();
+                  toastr.success('Tache Supprimée', 'SUCCESS!!');
 
 	        },error(xhr,status,error){
 	            alert("error 1 " + status);
