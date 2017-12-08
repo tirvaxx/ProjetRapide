@@ -142,6 +142,8 @@
                 <div class="form-group">
                         <label for="nom_tache">Nom de la tâche</label>
                         <input type="text" class="form-control" id="nom_tache" name="nom_tache" placeholder="Nom" />
+                        <input type="hidden" id="ajouter_tache_id"></input>
+                        <input type="hidden" id="ajouter_tache_liste_id"></input>
                 </div>
                 <div class="form-group">
                          <label for="description_tache">Description de la tâche</label>
@@ -165,6 +167,7 @@
                 <div class="form-group">
                         <label for="nom_tache">Nom de la tâche</label>
                         <input type="text" class="form-control" id="modifier_nom_tache" name="modifier_nom_tache" placeholder="Nom" />
+                        <input type="hidden" id="modifier_tache_id" ></input>
                 </div>
                 <div class="form-group">
                          <label for="description_tache">Description de la tâche</label>
@@ -328,6 +331,7 @@
                 <div class="form-group">
                         <label for="nom_liste">Nom de la liste</label>
                         <input type="text" class="form-control" id="modifier_nom_liste" name="modifier_nom_liste" placeholder="Nom" />
+                        <input type="hidden" id="modifier_liste_id"></input>
                 </div>
                 <div class="form-group">
                          <label for="description_liste">Description de la liste</label>

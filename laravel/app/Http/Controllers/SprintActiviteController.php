@@ -17,6 +17,7 @@ class SprintActiviteController extends Controller
         //dans le but de les réinsérés avec le bonne ordre au moment du drag and drop
        SprintActivite::where("projet_id", "=", $projet_id)
         ->where("sprint_id","=", $sprint_id)
+        ->where("actif","=",1)
         ->update(["actif" => 0]);
 
 
