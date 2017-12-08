@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 08, 2017 at 06:37 AM
+-- Generation Time: Dec 08, 2017 at 06:46 AM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -178,32 +178,7 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `commentaire`
---
 
-INSERT INTO `commentaire` (`id`, `projet_id`, `tache_id`, `creer_par_acteur_id`, `commentaire`, `created_at`, `updated_at`) VALUES
-(1, 1, 350, 2, 'ff', '2017-12-01 11:40:45', '2017-12-01 11:40:45'),
-(2, 1, 350, 2, 'inner', '2017-12-01 11:41:29', '2017-12-01 11:41:29'),
-(3, 1, 350, 2, 'inner 2', '2017-12-01 11:41:29', '2017-12-01 11:41:29'),
-(4, 1, 350, 2, 'inner 3', '2017-12-01 11:41:29', '2017-12-01 11:41:29'),
-(5, 1, 350, 2, 'new', '2017-12-01 11:40:45', '2017-12-01 11:40:45'),
-(6, 2, 352, 2, 'aucun comment', '2017-12-01 22:36:34', '2017-12-01 22:36:34'),
-(7, 1, 350, 2, 'inner 33', '2017-12-02 14:53:29', '2017-12-02 14:53:29'),
-(8, 1, 350, 2, 'g55', '2017-12-03 17:08:10', '2017-12-03 17:08:10'),
-(9, 1, 350, 2, 'f', '2017-12-03 17:35:46', '2017-12-03 17:35:46'),
-(10, 1, 350, 2, 'dddd', '2017-12-03 17:48:34', '2017-12-03 17:48:34'),
-(11, 1, 350, 2, 'ddd33333', '2017-12-03 17:56:45', '2017-12-03 17:56:45'),
-(12, 1, 350, 2, 'dededdde', '2017-12-03 17:56:52', '2017-12-03 17:56:52'),
-(13, 1, 351, 2, 'ddededd', '2017-12-03 17:57:19', '2017-12-03 17:57:19'),
-(14, 1, 351, 2, 'eded', '2017-12-03 17:57:25', '2017-12-03 17:57:25'),
-(15, 1, 350, 2, 'lololo', '2017-12-03 17:58:28', '2017-12-03 17:58:28'),
-(16, 1, 355, 2, 'aaddd', '2017-12-06 01:34:22', '2017-12-06 01:34:22'),
-(17, 1, 355, 2, 'dfsdf', '2017-12-06 01:34:28', '2017-12-06 01:34:28'),
-(18, 1, 355, 2, 'dsasf', '2017-12-06 01:34:31', '2017-12-06 01:34:31'),
-(19, 1, 360, 2, 'ddd', '2017-12-06 23:22:01', '2017-12-06 23:22:01'),
-(20, 1, 357, 2, 'rrr', '2017-12-06 23:22:19', '2017-12-06 23:22:19'),
-(21, 1, 360, 2, 'ttt', '2017-12-06 23:23:15', '2017-12-06 23:23:15');
 
 -- --------------------------------------------------------
 
@@ -364,9 +339,6 @@ INSERT INTO `projet` (`id`, `nom`, `description`, `date_du`, `date_complete`, `c
 (3, 'troisieme projet', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2017-11-30', NULL, 2, '2017-11-27 16:54:13', '2017-11-27 16:54:13'),
 (4, 'quatrieme projet', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2017-11-30', NULL, 2, '2017-11-27 16:54:13', '2017-11-27 16:54:13'),
 (5, 'Cinquieme Projet', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2017-11-30', NULL, 2, '2017-11-27 16:54:13', '2017-11-27 16:54:13'),
-(13, 'aaa', 'aa', '2017-12-31', NULL, 2, '2017-12-06 22:15:08', '2017-12-06 22:15:08'),
-(12, 'ddd', 'dd', '2017-12-26', NULL, 2, '2017-12-06 22:14:51', '2017-12-06 22:14:51'),
-(11, 'ededed3', 'dedddd3ffff', '2017-12-06', NULL, 2, '2017-12-06 22:10:40', '2017-12-06 22:13:05');
 
 -- --------------------------------------------------------
 
@@ -379,7 +351,9 @@ CREATE TABLE IF NOT EXISTS `projet_assignation` (
   `projet_id` int(11) NOT NULL,
   `acteur_id` int(11) NOT NULL,
   `date_assignation` int(11) NOT NULL,
-  `actif` tinyint(1) NOT NULL DEFAULT '1'
+  `actif` tinyint(1) NOT NULL DEFAULT '1',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -399,7 +373,9 @@ CREATE TABLE IF NOT EXISTS `sprint` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+
+--
 
 -- --------------------------------------------------------
 
@@ -423,6 +399,9 @@ CREATE TABLE IF NOT EXISTS `sprint_activite` (
   KEY `fk_sprint_activite_tache_id` (`tache_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `sprint_activite`
+--
 -- --------------------------------------------------------
 
 --
@@ -549,7 +528,6 @@ DROP TABLE IF EXISTS `vw_sprint_activite_actif`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`projetrapide`@`%` SQL SECURITY DEFINER VIEW `vw_sprint_activite_actif`  AS  select `projet`.`id` AS `projet_id`,`projet`.`nom` AS `projet_nom`,`projet`.`description` AS `projet_description`,`projet`.`date_du` AS `projet_date_du`,`projet`.`date_complete` AS `projet_date_complete`,`projet_ae`.`id` AS `projet_cpa_id`,`projet_ae`.`name` AS `projet_cpa_nom`,`sa_ae`.`id` AS `activite_cpa_id`,`sa_ae`.`name` AS `activite_cpa_nom`,`sa_assigne_ae`.`id` AS `emp_assigne_id`,`sa_assigne_ae`.`name` AS `emp_assigne_nom`,`sa_assigne_ae`.`email` AS `emp_assigne_courriel`,`sprint`.`id` AS `sprint_id`,`sprint`.`numero` AS `sprint_numero`,`sprint_ae`.`id` AS `sprint_cpa_id`,`sprint_ae`.`name` AS `sprint_cpa_nom`,`liste`.`id` AS `liste_id`,`liste`.`nom` AS `liste_nom`,`liste`.`description` AS `liste_description`,`liste_ae`.`id` AS `liste_cpa_id`,`liste_ae`.`name` AS `liste_cpa_nom`,`tache`.`id` AS `tache_id`,`tache`.`nom` AS `tache_nom`,`tache`.`description` AS `tache_description`,`sa`.`ordre` AS `tache_ordre`,`tache_ae`.`id` AS `tache_cpa_id`,`tache_ae`.`name` AS `tache_cpa_nom` from ((((((((((`sprint_activite` `sa` join `projet` on((`sa`.`projet_id` = `projet`.`id`))) join `users` `projet_ae` on((`sa`.`creer_par_acteur_id` = `projet_ae`.`id`))) join `users` `sa_ae` on((`sa`.`creer_par_acteur_id` = `sa_ae`.`id`))) join `users` `sa_assigne_ae` on((`sa`.`assigne_acteur_id` = `sa_assigne_ae`.`id`))) join `sprint` on(((`sprint`.`id` = `sa`.`sprint_id`) and (`sa`.`projet_id` = `sprint`.`projet_id`)))) join `users` `sprint_ae` on(((`sprint`.`creer_par_acteur_id` = `sprint_ae`.`id`) and (`sprint`.`projet_id` = `sa`.`projet_id`)))) left join `liste` on((`liste`.`id` = `sa`.`liste_id`))) left join `users` `liste_ae` on((`liste`.`creer_par_acteur_id` = `liste_ae`.`id`))) left join `tache` on((`tache`.`id` = `sa`.`tache_id`))) left join `users` `tache_ae` on((`tache`.`creer_par_acteur_id` = `tache_ae`.`id`))) where (`sa`.`actif` = 1) ;
 
 
-
 # Privileges for `projetrapide`@`%`
 
 GRANT ALL PRIVILEGES ON *.* TO 'projetrapide'@'%' WITH GRANT OPTION;
@@ -567,7 +545,6 @@ GRANT ALL PRIVILEGES ON `projet_rapide`.* TO 'projetrapide'@'localhost';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
 
 GRANT PROXY ON ''@'' TO 'root'@'localhost' WITH GRANT OPTION;
-
 
 
 
