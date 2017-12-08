@@ -266,5 +266,31 @@ $(document).ready(function(){
                 //****************END SEARCHBAR*******************
                 //////////////////////////////////////////////
 
+                $('#btn_assignation').click(function(e) {
+                    e.preventDefault();
+
+                    var nomProjet = $(this).parents().eq(3).attr("id");
+                    console.log(nomProjet);
+                    var idProjet = nomProjet.replace("collapse_", "");
+                    console.log(idProjet);
+                    var nomUser = document.getElementById("search-bar").value;
+                    var data = $('#form_assignation').serialize() + "&projet_id=" + idProjet; 
+                    $.ajax({
+                        url : '/assignation',
+                        type : 'POST',
+                        data : data,
+                        dataType : 'text',
+
+                        success: function(result, status, xhr) {
+                            toastr.success('Utilisateur ajouté au projet', 'SUCCESS!!');
+                            //toastMessageSuccess(document.getElementById("search-bar").value);
+                        },
+                        error: function(xhr,status,error) {
+                            alert("error 1 " + status);
+                            alert("error 2 " + error);
+                        }
+                    });
+                });
+
 
 }); //$(document).ready(function
