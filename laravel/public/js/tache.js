@@ -138,6 +138,7 @@ $(document).ready(function(){
 	        var tache_no = $("body").data("modif_tache_no");
 	        var spanAModifier = "tache_titre_" + $tache_no;
 	        $('#'+spanAModifier).text(nom_tache);
+            toastr.success('Tache Modifiée', 'SUCCESS!!');
 	    },error(xhr,status,error){
 	        alert("error 1 " + status);
 	        alert("error 2 " + error + " "+ xhr.responseText);
@@ -190,7 +191,7 @@ $(document).ready(function(){
             dataType: 'text',
             // remind that 'data' is the response of the AjaxController
         success: function (result,status,xhr) {
-
+                toastr.success('Tache Ajoutée', 'SUCCESS!!');
                 var liste_no = $("body").data("ajout_liste_no");
 
                  creer_tache(liste_no, JSON.parse(result).last_inserted_id, JSON.parse(result).nom , JSON.parse(result).description);
@@ -267,6 +268,7 @@ console.log(json_liste_tache);
 	        success: function (result,status,xhr) {
 
 	              $('#' + id).remove();
+                  toastr.success('Tache Supprimée', 'SUCCESS!!');
 
 	        },error(xhr,status,error){
 	            alert("error 1 " + status);

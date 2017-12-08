@@ -108,7 +108,7 @@ div.form_commentaire{
 }
 #logout {
 
-    color: #636b6f;
+    color: white;
     padding: 0 25px;
     font-size: 14px;
     font-weight: 600;
@@ -206,7 +206,13 @@ div.form_commentaire{
 
 
 }
-
+.navbar{
+    background-color: #636b6f ;
+    
+}
+#brand a{
+    color : white;
+}
 /* Containment area */
 
 #containment {

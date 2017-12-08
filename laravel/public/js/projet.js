@@ -170,6 +170,7 @@ $(document).ready(function(){
                     dataType: 'text',
                     // remind that 'data' is the response of the AjaxController
                     success: function (result,status,xhr) {
+                        toastr.success('Projet Modifié', 'SUCCESS!!');
                       // on retourne au home pour voir les projets... en attendant todo a continuer
                       url = "/home";
                       $( location ).attr("href", url);
@@ -222,10 +223,11 @@ $(document).ready(function(){
                         dataType: 'text',
                         // remind that 'data' is the response of the AjaxController
                     success: function (result,status,xhr) {
-
+                            toastr.success('Projet Ajouté', 'SUCCESS!!');
                             // on retourne au home pour voir les projets... en attendant todo a continuer
                             url = "/home";
                             $( location ).attr("href", url);
+
                     },
                     error(xhr,status,error){
                         alert("error 1 " + status);
@@ -265,7 +267,7 @@ $(document).ready(function(){
                     },
                     
                 });
-                
+
                 //****************END SEARCHBAR*******************
                 //////////////////////////////////////////////
 
