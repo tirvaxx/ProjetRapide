@@ -106,6 +106,21 @@ div.form_commentaire{
     margin-left:0px;
     margin-top:20px;
 }
+#logout {
+
+    color: #636b6f;
+    padding: 0 25px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin-top: 15px;
+    float: right;
+
+}
+
+
 /*
     Stylesheet for examples by DevHeart.
     http://devheart.org/

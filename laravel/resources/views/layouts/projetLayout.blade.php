@@ -24,12 +24,7 @@
 
 
         <script src="{{ asset('js/commentaire.js') }}"></script>
-        <script src="{{ asset('js/projet.js') }}">
-            function toastMessageSuccess(nom) {
-            toastr.success('Utilisateur ajouté au projet', 'Miracle Max Says');
-        }   
-
-        </script>
+        <script src="{{ asset('js/projet.js') }}"></script>
         <script src="{{ asset('js/tabs.js') }}"></script>
         <script src="{{ asset('js/sprint.js') }}"></script>
         <script src="{{ asset('js/liste.js') }}"></script>
