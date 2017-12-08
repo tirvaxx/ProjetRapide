@@ -8,25 +8,22 @@
         <title>Projet Rapide</title>
 
         <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
-
-
-
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
-        <link rel="stylesheet" type="text/css" href={{ asset('css/projetrapide.css') }}>
+       
         <link rel="stylesheet" type="text/css" href={{ asset('toastr/build/toastr.css') }}>
-        
+        <link rel="stylesheet" type="text/css" href={{ asset('css/projetrapide.css') }}> 
+
+
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/jquery-ui/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('js/jquery.blockUI.js') }}"></script>
+        
         <script src="{{ asset('toastr/toastr.js') }}"></script>
         <script src="{{ asset('toastr/build/toastr.min.js') }}"></script>
 
-
         <script src="{{ asset('js/commentaire.js') }}"></script>
-
         <script src="{{ asset('js/projet.js') }}"></script>
-
         <script src="{{ asset('js/tabs.js') }}"></script>
         <script src="{{ asset('js/projet.js') }}"></script>
         <script src="{{ asset('js/sprint.js') }}"></script>

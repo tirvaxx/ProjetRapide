@@ -6,7 +6,7 @@
 
 
 
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-inverse">
             <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -34,7 +34,7 @@
               </ul>
               
             </div><!-- /.navbar-collapse -->
-            <a id="logout" href="{{ route('logout') }}"
+            <a id="logout" href="{{ route('logout') }}" class="navbar-brand logout"
                   onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">
                   Logout
@@ -69,9 +69,10 @@
                     </div>
                     <div id="collapse_{{$value->projet_id}}" class="panel-collapse collapse">
                         <div class="panel-body">{{$value->projet_description}}</div>
+                       
                         <button id="btn_projet_charger" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Charger</button>
                         <button id="btn_projet_modifier" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Modifier</button>
-                        
+                       
                         <form id="form_assignation" action="#" >
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
                           <!-- securite contre les failles sur les requests -->

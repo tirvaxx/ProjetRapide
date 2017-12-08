@@ -23,7 +23,7 @@ $(document).ready(function(){
 	}); //$(document).on("click", "#creer_item_sprint", function() {
 
 
- //AddTab form: calls addTab function on submit and closes the dialog
+ 
 	$('#btn_sprint_ajouter').click(function() {
 
 	    $.ajax({

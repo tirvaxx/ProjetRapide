@@ -12,8 +12,10 @@ $(document).ready(function(){
     }); // $(document).on("click", "#creer_item_projet", function()
 
 
-    $("body").delegate('#btn_projet_charger','click', function() {
+    $("body").delegate('#btn_projet_charger','click', function(e) {
 
+        e.preventDefault();
+        e.stopImmediatePropagation();
 
         var p_id = $(this).attr("projet_id");
         g_selected_projet_id = p_id;
@@ -32,7 +34,7 @@ $(document).ready(function(){
 
             success: function (result,status,xhr) {
 
-              //   alert(result);
+
                  var json_obj = JSON.parse(result);
                  var prev_sprint;
                  var prev_liste;
