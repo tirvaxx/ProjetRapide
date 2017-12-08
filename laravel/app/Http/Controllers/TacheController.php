@@ -8,7 +8,7 @@ use Log;
 use App\Tache;
 use App\SprintActivite;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 //use App\Http\Controllers\Controller;
 //use App\Http\Requests;
 
@@ -44,6 +44,7 @@ class TacheController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info(Auth::user()->id);
         $tache = new Tache;      
         $tache->nom = request('nom_tache');
         $tache->description = request('description_tache');
@@ -67,8 +68,8 @@ class TacheController extends Controller
         $sprint_activite->tache_id = $tache->id;
         $sprint_activite->ordre = $max_ordre + 1;
         $sprint_activite->actif = 1;
-        $sprint_activite->creer_par_acteur_id = Auth::id();
-        $sprint_activite->assigne_acteur_id = Auth::id();
+        $sprint_activite->creer_par_acteur_id = Auth::user()->id;
+        $sprint_activite->assigne_acteur_id = Auth::user()->id;
         $sprint_activite->save();
 
 

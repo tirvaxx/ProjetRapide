@@ -69,6 +69,8 @@ $(document).ready(function(){
                 alert("error 2 " + error);
             }
 
+
+
         });
 
 
@@ -264,7 +266,7 @@ $(document).ready(function(){
                     },
                     
                 });
-                
+
                 //****************END SEARCHBAR*******************
                 //////////////////////////////////////////////
 

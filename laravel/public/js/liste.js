@@ -177,7 +177,7 @@ function modifier_liste_bd(id_liste, nom_liste, description_liste){
 	  dataType: 'text',
 	  // remind that 'data' is the response of the AjaxController
 	success: function (result,status,xhr) {
-
+		toastr.success('Liste Modifiée', 'SUCCESS!!');
 	  //alert("result, status, xhr"+ result + ','+status+','+xhr);
 	   //xhr{"success":"false","errors":"Controller : Les valeurs entr\u00e9es ne sont pas conformes aux valeurs attentues."},success,[object Object]
 	  var json_rep = JSON.parse(xhr.responseText);
@@ -282,7 +282,7 @@ $(document).ready(function(){
 		    dataType: 'text',
 		    // remind that 'data' is the response of the AjaxController
 		success: function (result,status,xhr) {
-
+				toastr.success('Liste Ajoutée', 'SUCCESS!!');
 		        var id = JSON.parse(result).last_inserted_id;
 		        var nom = JSON.parse(result).nom;
 		        var description = JSON.parse(result).description;
