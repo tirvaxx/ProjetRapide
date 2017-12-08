@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 08, 2017 at 06:46 AM
+-- Generation Time: Dec 08, 2017 at 09:31 PM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -26,16 +26,16 @@ USE `projet_rapide`;
 -- --------------------------------------------------------
 
 --
--- Stand-in structure for view `acteurs`
--- (See below for the actual view)
+-- Table structure for table `acteurs`
 --
-DROP VIEW IF EXISTS `acteurs`;
+
+DROP TABLE IF EXISTS `acteurs`;
 CREATE TABLE IF NOT EXISTS `acteurs` (
-`key` varchar(18)
-,`type` varchar(7)
-,`id` int(11) unsigned
-,`nom` varchar(101)
-);
+  `key` varchar(18) DEFAULT NULL,
+  `type` varchar(7) DEFAULT NULL,
+  `id` int(11) UNSIGNED DEFAULT NULL,
+  `nom` varchar(101) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -177,8 +177,6 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
-
-
 
 -- --------------------------------------------------------
 
@@ -329,17 +327,6 @@ CREATE TABLE IF NOT EXISTS `projet` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `projet`
---
-
-INSERT INTO `projet` (`id`, `nom`, `description`, `date_du`, `date_complete`, `creer_par_acteur_id`, `created_at`, `updated_at`) VALUES
-(1, 'premier projet', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2017-11-30', NULL, 2, '2017-11-27 16:54:13', '2017-12-06 01:58:31'),
-(2, 'deuxieme projet', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2017-11-30', NULL, 2, '2017-11-27 16:54:13', '2017-12-06 01:59:14'),
-(3, 'troisieme projet', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2017-11-30', NULL, 2, '2017-11-27 16:54:13', '2017-11-27 16:54:13'),
-(4, 'quatrieme projet', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2017-11-30', NULL, 2, '2017-11-27 16:54:13', '2017-11-27 16:54:13'),
-(5, 'Cinquieme Projet', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2017-11-30', NULL, 2, '2017-11-27 16:54:13', '2017-11-27 16:54:13'),
-
 -- --------------------------------------------------------
 
 --
@@ -374,8 +361,6 @@ CREATE TABLE IF NOT EXISTS `sprint` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=MyISAM AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
 
---
-
 -- --------------------------------------------------------
 
 --
@@ -398,9 +383,6 @@ CREATE TABLE IF NOT EXISTS `sprint_activite` (
   KEY `fk_sprint_activite_tache_id` (`tache_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `sprint_activite`
---
 -- --------------------------------------------------------
 
 --
@@ -416,7 +398,7 @@ CREATE TABLE IF NOT EXISTS `tache` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=397 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=403 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -443,7 +425,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `telephone`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 'alain', 'alain@a.com', NULL, '$2y$10$fL3Shv0l.8JGnGrayNGHouoJaamRaGUf72y0Qc47yL.J.SiR9f7iG', NULL, '2017-12-06 21:58:04', '2017-12-06 21:58:04');
+(2, 'alain', 'alain@a.com', NULL, '$2y$10$fL3Shv0l.8JGnGrayNGHouoJaamRaGUf72y0Qc47yL.J.SiR9f7iG', 'w9X5jJFc8dXuWxsxLStVRx0umKMioxK16A0bnCYyF7Vcv5tfcdSmPlDcX5rL', '2017-12-06 21:58:04', '2017-12-06 21:58:04');
 
 -- --------------------------------------------------------
 
@@ -475,38 +457,16 @@ CREATE TABLE IF NOT EXISTS `vw_sprint_activite_actif` (
 ,`projet_description` varchar(500)
 ,`projet_date_du` date
 ,`projet_date_complete` date
-,`projet_cpa_id` int(10) unsigned
-,`projet_cpa_nom` varchar(191)
-,`activite_cpa_id` int(10) unsigned
-,`activite_cpa_nom` varchar(191)
-,`emp_assigne_id` int(10) unsigned
-,`emp_assigne_nom` varchar(191)
-,`emp_assigne_courriel` varchar(50)
 ,`sprint_id` int(10) unsigned
 ,`sprint_numero` tinyint(3) unsigned
-,`sprint_cpa_id` int(10) unsigned
-,`sprint_cpa_nom` varchar(191)
 ,`liste_id` int(10) unsigned
 ,`liste_nom` varchar(50)
 ,`liste_description` varchar(200)
-,`liste_cpa_id` int(10) unsigned
-,`liste_cpa_nom` varchar(191)
 ,`tache_id` int(10) unsigned
 ,`tache_nom` varchar(50)
 ,`tache_description` varchar(500)
 ,`tache_ordre` tinyint(4)
-,`tache_cpa_id` int(10) unsigned
-,`tache_cpa_nom` varchar(191)
 );
-
--- --------------------------------------------------------
-
---
--- Structure for view `acteurs`
---
-DROP TABLE IF EXISTS `acteurs`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`projetrapide`@`localhost` SQL SECURITY DEFINER VIEW `acteurs`  AS  select concat('employe','_',`acteur_employe`.`id`) AS `key`,'employe' AS `type`,`acteur_employe`.`id` AS `id`,concat(`acteur_employe`.`prenom`,' ',`acteur_employe`.`nom`) AS `nom` from `acteur_employe` union select concat('client','_',`acteur_client`.`id`) AS `key`,'client' AS `type`,`acteur_client`.`id` AS `id`,`acteur_client`.`nom` AS `nom` from `acteur_client` ;
 
 -- --------------------------------------------------------
 
@@ -524,7 +484,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`projetrapide`@`%` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `vw_sprint_activite_actif`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`projetrapide`@`%` SQL SECURITY DEFINER VIEW `vw_sprint_activite_actif`  AS  select `projet`.`id` AS `projet_id`,`projet`.`nom` AS `projet_nom`,`projet`.`description` AS `projet_description`,`projet`.`date_du` AS `projet_date_du`,`projet`.`date_complete` AS `projet_date_complete`,`projet_ae`.`id` AS `projet_cpa_id`,`projet_ae`.`name` AS `projet_cpa_nom`,`sa_ae`.`id` AS `activite_cpa_id`,`sa_ae`.`name` AS `activite_cpa_nom`,`sa_assigne_ae`.`id` AS `emp_assigne_id`,`sa_assigne_ae`.`name` AS `emp_assigne_nom`,`sa_assigne_ae`.`email` AS `emp_assigne_courriel`,`sprint`.`id` AS `sprint_id`,`sprint`.`numero` AS `sprint_numero`,`sprint_ae`.`id` AS `sprint_cpa_id`,`sprint_ae`.`name` AS `sprint_cpa_nom`,`liste`.`id` AS `liste_id`,`liste`.`nom` AS `liste_nom`,`liste`.`description` AS `liste_description`,`liste_ae`.`id` AS `liste_cpa_id`,`liste_ae`.`name` AS `liste_cpa_nom`,`tache`.`id` AS `tache_id`,`tache`.`nom` AS `tache_nom`,`tache`.`description` AS `tache_description`,`sa`.`ordre` AS `tache_ordre`,`tache_ae`.`id` AS `tache_cpa_id`,`tache_ae`.`name` AS `tache_cpa_nom` from ((((((((((`sprint_activite` `sa` join `projet` on((`sa`.`projet_id` = `projet`.`id`))) join `users` `projet_ae` on((`sa`.`creer_par_acteur_id` = `projet_ae`.`id`))) join `users` `sa_ae` on((`sa`.`creer_par_acteur_id` = `sa_ae`.`id`))) join `users` `sa_assigne_ae` on((`sa`.`assigne_acteur_id` = `sa_assigne_ae`.`id`))) join `sprint` on(((`sprint`.`id` = `sa`.`sprint_id`) and (`sa`.`projet_id` = `sprint`.`projet_id`)))) join `users` `sprint_ae` on(((`sprint`.`creer_par_acteur_id` = `sprint_ae`.`id`) and (`sprint`.`projet_id` = `sa`.`projet_id`)))) left join `liste` on((`liste`.`id` = `sa`.`liste_id`))) left join `users` `liste_ae` on((`liste`.`creer_par_acteur_id` = `liste_ae`.`id`))) left join `tache` on((`tache`.`id` = `sa`.`tache_id`))) left join `users` `tache_ae` on((`tache`.`creer_par_acteur_id` = `tache_ae`.`id`))) where (`sa`.`actif` = 1) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`projetrapide`@`%` SQL SECURITY DEFINER VIEW `vw_sprint_activite_actif`  AS  select `projet`.`id` AS `projet_id`,`projet`.`nom` AS `projet_nom`,`projet`.`description` AS `projet_description`,`projet`.`date_du` AS `projet_date_du`,`projet`.`date_complete` AS `projet_date_complete`,`sprint`.`id` AS `sprint_id`,`sprint`.`numero` AS `sprint_numero`,`liste`.`id` AS `liste_id`,`liste`.`nom` AS `liste_nom`,`liste`.`description` AS `liste_description`,`tache`.`id` AS `tache_id`,`tache`.`nom` AS `tache_nom`,`tache`.`description` AS `tache_description`,`sa`.`ordre` AS `tache_ordre` from ((((`sprint_activite` `sa` join `projet` on((`sa`.`projet_id` = `projet`.`id`))) join `sprint` on(((`sprint`.`id` = `sa`.`sprint_id`) and (`sa`.`projet_id` = `sprint`.`projet_id`)))) left join `liste` on((`liste`.`id` = `sa`.`liste_id`))) left join `tache` on((`tache`.`id` = `sa`.`tache_id`))) where (`sa`.`actif` = 1) ;
 
 
 # Privileges for `projetrapide`@`%`
@@ -544,9 +504,6 @@ GRANT ALL PRIVILEGES ON `projet_rapide`.* TO 'projetrapide'@'localhost';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
 
 GRANT PROXY ON ''@'' TO 'root'@'localhost' WITH GRANT OPTION;
-
-
-
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
