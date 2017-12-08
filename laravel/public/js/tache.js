@@ -1,5 +1,5 @@
 
-function ajouter_tache(liste_no){
+function ajouter_tache(){
     $.blockUI({
          message: $('.div_tache_form'),
          css: { top:'20%'}
@@ -7,14 +7,24 @@ function ajouter_tache(liste_no){
 } //ajouter_tache
 
 
-function get_all_liste_tache(){
+
+function get_all_liste_tache(sprint_id){
     var json;
     var json_ordre_tache;
     var ordre_tache;
     json_ordre_tache = '{'
-    $( '.container-list .sortable-list' ).each(function(){
 
+
+
+
+    $( "#" + sprint_id + "> .container-list .sortable-list" ).each(function(){
+
+var i;
+console.log( i++);
         ordre_tache = String($(this).sortable("toArray"));
+console.log( $(this).attr("id"));
+console.log(ordre_tache);
+
         json_ordre_tache += '"' + $(this).attr("id") + '":';
         //if(ordre_tache != ""){
 
@@ -30,6 +40,8 @@ function get_all_liste_tache(){
    // alert(json_ordre_tache);
     //var sortedIDs = $( '.container-list .sortable-list' ).sortable( "toArray" );
     //alert(sortedIDs);
+
+console.log(json_ordre_tache);
     return json_ordre_tache;
 
 }
@@ -58,7 +70,6 @@ $(document).ready(function(){
           return;
         }
         $tache_no = tache_id.replace("li_tache_", "");
-        $("body").data("modif_tache_no", $tache_no);
 
 
          $url = "taches/" + $tache_no + "/edit";
@@ -75,6 +86,7 @@ $(document).ready(function(){
             var la_tache = JSON.parse(result);
             $('#modifier_nom_tache').val(la_tache.tache_nom);
             $('#modifier_description_tache').val(la_tache.tache_description);
+            $("#modifier_tache_id").val($tache_no);
            // $('#tache_message_modifier').hide();
 
         },error(xhr,status,error){
@@ -108,7 +120,8 @@ $(document).ready(function(){
 
 
 	$("body").delegate('#btn_tache_modifier','click',function(){
-	    $tache_no = $("body").data("modif_tache_no");
+	  
+        $tache_no = $("#modifier_tache_id").val();
 	    var input_name = "modifier_nom_tache";
 	    var nom_tache = $("#form_modifier_tache :input[name='"+input_name+"']").val();
 
@@ -135,7 +148,7 @@ $(document).ready(function(){
 	        dataType: 'text',
 	        // remind that 'data' is the response of the AjaxController
 	    success: function (result,status,xhr) {
-	        var tache_no = $("body").data("modif_tache_no");
+	       
 	        var spanAModifier = "tache_titre_" + $tache_no;
 	        $('#'+spanAModifier).text(nom_tache);
             toastr.success('Tache Modifiée', 'SUCCESS!!');
@@ -157,7 +170,6 @@ $(document).ready(function(){
 
 
     $('#btn_tache_fermer').click(function() {
-        $("body").removeData("ajout_liste_no");
         //permet d'effacer les valeurs du form et recommencer à neuf
         $('#form_tache')[0].reset();
         $.unblockUI();
@@ -166,7 +178,7 @@ $(document).ready(function(){
 
    $('#btn_tache_ajouter').click(function() {
 
-        var liste_no = $("body").data("ajout_liste_no");
+        var liste_no = $("#ajouter_tache_liste_id").val();
         var nom_tache = $("#nom_tache").val();
 
         var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
@@ -191,13 +203,16 @@ $(document).ready(function(){
             dataType: 'text',
             // remind that 'data' is the response of the AjaxController
         success: function (result,status,xhr) {
+
                 toastr.success('Tache Ajoutée', 'SUCCESS!!');
                 var liste_no = $("body").data("ajout_liste_no");
+
 
                  creer_tache(liste_no, JSON.parse(result).last_inserted_id, JSON.parse(result).nom , JSON.parse(result).description);
                 /*
                 $("#ul_liste_" + liste_no).append( '<li id="li_tache_' + JSON.parse(result).last_inserted_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><span id="tache_titre_'+ JSON.parse(result).last_inserted_id + '">' + JSON.parse(result).nom + '</span></li>' );
                 */
+
 
         },error(xhr,status,error){
             alert("error 1 " + status);
@@ -218,6 +233,7 @@ $(document).ready(function(){
         var list_id_from_a =  $(this).attr('id');
 
 
+
         //on s'assure que le <a> cliquer est un bouton pour ajouter une tache sinon exit
         //il faut que le id de <a> commence par btn_ajouter_tache_Liste + _ + le id de la liste dans la bd
         if(!(typeof list_id_from_a != 'undefined' && list_id_from_a.indexOf("btn_ajouter_tache_Liste") >= 0)){
@@ -226,8 +242,9 @@ $(document).ready(function(){
         }
 
         var liste_no = list_id_from_a.replace("btn_ajouter_tache_Liste_", "");
-        $("body").data("ajout_liste_no", liste_no);
-        ajouter_tache(liste_no );
+       
+        $("#ajouter_tache_liste_id").val(liste_no);
+        ajouter_tache();
         //permet d'effacer les valeurs du form et recommencer à neuf
         $('#form_tache')[0].reset();
 
@@ -252,7 +269,7 @@ $(document).ready(function(){
 	            var sprint_id = sprint_id_name.replace("sprint_", "");
 
 	            var id_no = id.replace("li_tache_","");
-	            var json_liste_tache = get_all_liste_tache();
+	            var json_liste_tache = get_all_liste_tache(sprint_id_name);
 	          //  var url = "sprintactivite/rendreInactif/" + g_selected_projet_id+ "/"+ sprint_id + "/" + json_liste_tache;
 console.log(json_liste_tache);
 	            var url = "sprintactivite/rendreInactif";

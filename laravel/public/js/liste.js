@@ -34,28 +34,17 @@ function creer_liste(sprint_id_name,id, nom, description){
 
 
 
-	$('.container-list .sortable-list').sortable({
-	    connectWith: '.container-list .sortable-list',
-	    placeholder: 'placeholder',
-
-
+	$('.container-list .sortable-list').sortable({connectWith: '.container-list .sortable-list', placeholder: 'placeholder',
 	    stop: function( event, ui ){
+ 			
 
-	        var json_liste_tache = get_all_liste_tache();
-
-
-
-
-	    /*    //on récupere le numéro de la liste
-	        var liste_id_name = $(this).attr("id");
-	        var liste_no = liste_id_name.replace("ul_liste_", "");
-
-	        var tache_id_name = $(ui.item).attr("id");
-	        var tache_no = tache_id_name.replace("li_tache_", "");
-	      */
-
-	        //var sprint_id_name = $("#tabs .ui-tabs-panel:visible").attr("id");
+ 			var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
 	        var sprint_id = sprint_id_name.replace("sprint_", "");
+
+	        var json_liste_tache = get_all_liste_tache(sprint_id_name);
+
+console.log(json_liste_tache);
+
 
 	        var data =  "projet_id=" + g_selected_projet_id+ "&sprint_id=" + sprint_id + "&liste_tache=" + json_liste_tache;
 
@@ -108,8 +97,8 @@ function sur_double_clique_liste(liste_id){
               return;
       }
       var liste_no = liste_id.replace("liste_panel_", "");
-      $("body").data("modif_liste_no", liste_no);
-
+      
+      $("#modifier_liste_id").val(liste_no);
       $url = "listes/" + liste_no + "/edit";
 
       $.ajax({ statusCode: {
@@ -146,30 +135,30 @@ function sur_double_clique_liste(liste_id){
 
 
 
-          function valider_champs_liste(nom_liste, description_liste){
+function valider_champs_liste(nom_liste, description_liste){
 
-              if( nom_liste.replace(/\s/g, '') == ""){
-                $("#liste_message_modifier").html("Le nom de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
-                return false;
-              }
+	if( nom_liste.replace(/\s/g, '') == ""){
+	$("#liste_message_modifier").html("Le nom de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
+	return false;
+	}
 
-              if( description_liste.replace(/\s/g, '') == ""){
-                $("#liste_message_modifier").html("La description de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
-                return false;
-              }
-              return true;
+	if( description_liste.replace(/\s/g, '') == ""){
+	$("#liste_message_modifier").html("La description de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
+	return false;
+	}
+	return true;
 
-            }// valider_champs_liste
+}// valider_champs_liste
 
-            // Permet d'afficher la modification du nom de la liste
-            function afficher_liste_modifiee(id_liste, nom_liste, description_liste){
+// Permet d'afficher la modification du nom de la liste
+function afficher_liste_modifiee(id_liste, nom_liste, description_liste){
 
-              var tagAModifier = "liste_titre_"+id_liste;
-              $('#'+tagAModifier).text(nom_liste);
+	var tagAModifier = "liste_titre_"+id_liste;
+	$('#'+tagAModifier).text(nom_liste);
 
-              tagAModifier = "liste_panel_"+id_liste;
-              $('#'+tagAModifier).attr('title', description_liste);
-            }
+	tagAModifier = "liste_panel_"+id_liste;
+	$('#'+tagAModifier).attr('title', description_liste);
+}
 
 // Permet de modifier la liste dans la bd
 function modifier_liste_bd(id_liste, nom_liste, description_liste){
@@ -240,7 +229,8 @@ $(document).ready(function(){
  // Sur appuie du bouton modifier de la liste
 	$("body").delegate('#btn_liste_modifier','click',function(){
 
-	    var id_liste = $("body").data("modif_liste_no");
+	   
+	    var id_liste = $("#modifier_liste_id").val();
 	    var input_name = "modifier_nom_liste";
 	    var nom_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val();
 	    var input_name = "modifier_description_liste";
