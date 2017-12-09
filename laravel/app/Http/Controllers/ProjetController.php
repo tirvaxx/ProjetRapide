@@ -22,7 +22,8 @@ class ProjetController extends Controller
 
         $projet = DB::table('projet')->select("id as projet_id", "nom as projet_nom"
                                             , "description as projet_description"
-                                            , "date_du as projet_date_du")
+                                            , "date_du as projet_date_du"
+                            ,  DB::raw("(case when datediff(date_du, Date(now())) < 0 then 'true' else 'false' end) as projet_retard"))
         ->whereNull("date_complete")
         ->orderby("id")
         ->get();

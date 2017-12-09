@@ -81,11 +81,19 @@
                     <div class="panel-heading">
                       <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse_{{$value->projet_id}}">
-                        {{ $value->projet_nom }}</a>
+                        {{ $value->projet_nom }} 
+                        @if( $value->projet_retard == "true")
+                            &nbsp;
+                            <span rel="tooltip" title="Projet en retard" class="glyphicon glyphicon-flag" style="color:red"></span>
+                        @endif
+                        </a>  
                       </h4>
                     </div>
                     <div id="collapse_{{$value->projet_id}}" class="panel-collapse collapse">
-                        <div class="panel-body">{{$value->projet_description}}</div>
+                        <div class="panel-body">
+                             <p>{{$value->projet_description}}</p>
+                             <small>Date dû : {{$value->projet_date_du}}</small>
+                        </div>
                        
                         <button id="btn_projet_charger" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Charger</button>
                         <button id="btn_projet_modifier" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Modifier</button>

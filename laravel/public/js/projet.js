@@ -13,7 +13,7 @@ function ajouter_bouton_commentaire(){
 
 
 $(document).ready(function(){
-    
+
 
 	$(document).on("click", "#creer_item_projet", function() {
 	      //permet d'effacer les valeurs du form et recommencer à neuf
@@ -60,6 +60,8 @@ $(document).ready(function(){
             {
 
                 if(prev_sprint != json_obj[i].sprint_id){
+
+
                     sprint_add_tab(json_obj[i].sprint_id, json_obj[i].sprint_numero);
 
                     $( "#tabs" ).tabs({ active: i });
