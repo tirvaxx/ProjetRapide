@@ -82,7 +82,7 @@ $(document).ready(function(){
 
 		var res_test_no_sprint = no_sprint.match(ExpNoSprint);
 		if(!res_test_no_sprint){
-			$(tag_msg).html("Le numéro de sprint ne doit pas être vide ou 0.").removeClass().addClass("alert alert-warning").show();
+			$(tag_msg).html("Le numéro de sprint doit être entre 1 et 999.").removeClass().addClass("alert alert-warning").show();
 			return false;
 		}
 
