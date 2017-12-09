@@ -16,7 +16,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="http://localhost:8000">Projet Rapide</a>
+              <a class="navbar-brand" href="/home">Projet Rapide</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -32,7 +32,7 @@
                   </ul>
                 </li>
               </ul>
-              
+
             </div><!-- /.navbar-collapse -->
 
 
@@ -42,7 +42,7 @@
                   <span class="glyphicon glyphicon-log-out"></span>
               </a>
 
- 
+
 
                <div id="div_menu_commentaire_projet" class="navbar-brand  pull right" style="display:none;" >
                 <a href="#" id="btn_menu_commentaire_projet" data-toggle="modal" data-target="#projet_commentaire" rel="tooltip" title="Commentaires"  style="color:white;"><span class="glyphicon glyphicon-comment"></span>
@@ -90,14 +90,19 @@
                       </h4>
                     </div>
                     <div id="collapse_{{$value->projet_id}}" class="panel-collapse collapse">
+
                         <div class="panel-body">
                              <p>{{$value->projet_description}}</p>
                              <small>Date dû : {{$value->projet_date_du}}</small>
                         </div>
                        
+
+                        <div class="panel-body">{{$value->projet_description}}</div>
+
+
                         <button id="btn_projet_charger" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Charger</button>
                         <button id="btn_projet_modifier" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Modifier</button>
-                       
+
                         <form id="form_assignation" action="#" >
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
                           <!-- securite contre les failles sur les requests -->
@@ -108,7 +113,7 @@
                                           <label for="nom_assignation">Nom de l'utilisateur</label>
                                           <input id="search-bar" name="search-bar" type="text" class="form-control" placeholder="Rechercher"/>
                                   </div>
-                                  
+
                                   <div class="form-group">
                                       <button type="button" id="btn_assignation" class="btn btn-primary" >Ajouter</button>
                                   </div>
@@ -165,7 +170,7 @@
         <a href="#"><span class='glyphicon glyphicon-remove btn_fermer_ui pull-right' style='color:#BBB;'></span></a>
 
         <div class="container">
-          
+
 
         </div>
     </div>
@@ -552,14 +557,14 @@
                 </div>
 
                 <div class="modal-body" id="commentaire_projet">
-                    
+
                 </div>
 
             </div><!-- modal-content -->
         </div><!-- modal-dialog -->
     </div><!-- modal -->
-    
-    
+
+
 </div><!-- container -->
 
 

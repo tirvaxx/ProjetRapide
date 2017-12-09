@@ -36,7 +36,7 @@ function creer_liste(sprint_id_name,id, nom, description){
 
 	$('.container-list .sortable-list').sortable({connectWith: '.container-list .sortable-list', placeholder: 'placeholder',
 	    stop: function( event, ui ){
- 			
+
  	var tache_id_nom = ui.item.attr("id");
 
 
@@ -68,7 +68,7 @@ setTimeout(function(){
 
 */
 
- 			var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
+ 					var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
 	        var sprint_id = sprint_id_name.replace("sprint_", "");
 
 	        var json_liste_tache = get_all_liste_tache(sprint_id_name);
@@ -80,7 +80,7 @@ setTimeout(function(){
 
 
 
-	        $.ajax({ statusCode: {
+					$.ajax({ statusCode: {
 	            500: function(xhr) {
 	             alert(500);
 	            }},
@@ -93,22 +93,16 @@ setTimeout(function(){
 
 	        success: function (result,status,xhr) {
 				toastr.success('Déplacement enregistré', 'SUCCES!');
-			//$("#" + tache_id_nom).stop().css("background-color", "#defede").animate({ backgroundColor: "#FFFFFF"}, 1500);
-	               //alert("drag drop successs");
+
        		},error(xhr,status,error){
 				toastr.error('Déplacement non enregistré', 'Erreur!');
-	          
+
 	        },
 	            complete: function (xhr,status) {
 	                // Handle the complete event
 	             //alert("complete " + status);
 	            }
 	        });  //ajax
-
-
-
-
-
 
 	    } // stop function
 
@@ -126,7 +120,7 @@ function sur_double_clique_liste(liste_id){
               return;
       }
       var liste_no = liste_id.replace("liste_panel_", "");
-      
+
       $("#modifier_liste_id").val(liste_no);
       $url = "listes/" + liste_no + "/edit";
 
@@ -146,8 +140,8 @@ function sur_double_clique_liste(liste_id){
           $('#liste_message_modifier').hide();
 
           },error(xhr,status,error){
-              alert("error 1 " + status);
-              alert("error 2 " + error);
+              //alert("error 1 " + status);
+              //alert("error 2 " + error);
           },
 
           complete: function (xhr,status) {
@@ -175,6 +169,24 @@ function valider_champs_liste(nom_liste, description_liste){
 	$("#liste_message_modifier").html("La description de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
 	return false;
 	}
+
+	var ExpNom = /^[0-9a-zA-Z\s\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿç  Ç_\']{2,50}$/;
+	var ExpDesc = /^[^;]{2,200}$/;
+
+	var res_test_nom = nom_liste.match(ExpNom);
+	var res_test_desc = description_liste.match(ExpDesc);
+
+	if(!res_test_nom){
+		$("#liste_message_modifier").html("Le nom de la liste contient un caractère non accepté.").removeClass().addClass("alert alert-warning").show();
+		return false;
+	}
+	if(!res_test_desc){
+		$("#liste_message_modifier").html("La description de la liste contient un caractère non accepté ou ne respecte pas la longueur définie : 2 à 200 caractères.").removeClass().addClass("alert alert-warning").show();
+		return false;
+	}
+
+
+
 	return true;
 
 }// valider_champs_liste
@@ -196,30 +208,30 @@ function modifier_liste_bd(id_liste, nom_liste, description_liste){
 	$.ajax({ statusCode: {
 	  500: function(xhr) {
 	  alert(500);
-	  //TODO : mettre un log ici faire ajax dans une table de logs créer table de log, creer ajax.. Faire une fonction
 	}},
 	  //the route pointing to the post function
 	  url: $url,
-	  type: 'PUT',
+	  type: 'PUT', //UPDATE
 	  // send the csrf-token and the input to the controller
 	  data: $('#form_modifier_liste').serialize(),
 	  dataType: 'text',
 	  // remind that 'data' is the response of the AjaxController
 	success: function (result,status,xhr) {
-		toastr.success('Liste Modifiée', 'SUCCES!');
+
 	  //alert("result, status, xhr"+ result + ','+status+','+xhr);
 	   //xhr{"success":"false","errors":"Controller : Les valeurs entr\u00e9es ne sont pas conformes aux valeurs attentues."},success,[object Object]
 	  var json_rep = JSON.parse(xhr.responseText);
 
-	  if(json_rep.success != null && json_rep.success == "false"){
-	    $erreur = json_rep.errors == null? "Une valeur entrée n'est pas conforme." : json_rep.errors;
+	  if(json_rep.status != null && json_rep.status == "error"){
+	    $erreur = json_rep.message == null? "Une valeur entrée n'est pas conforme." : json_rep.message;
 	    $("#liste_message_modifier").html($erreur).removeClass().addClass("alert alert-warning").show();
 	    return false;
 	  }
 	  else {
 	    afficher_liste_modifiee(id_liste, nom_liste, description_liste);
 	    $("#liste_message_modifier").hide();
-	    $("#sprint_message").html("Modification de la liste réussie avec succès.").removeClass().addClass("alert alert-success").show().fadeOut(8000);
+			toastr.success('Liste Modifiée', 'SUCCES!');
+		  //$("#sprint_message").html("Modification de la liste réussie avec succès.").removeClass().addClass("alert alert-success").show().fadeOut(8000);
 	  }
 
 	  $.unblockUI();
@@ -258,7 +270,7 @@ $(document).ready(function(){
  // Sur appuie du bouton modifier de la liste
 	$("body").delegate('#btn_liste_modifier','click',function(){
 
-	   
+
 	    var id_liste = $("#modifier_liste_id").val();
 	    var input_name = "modifier_nom_liste";
 	    var nom_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val();
@@ -311,16 +323,33 @@ $(document).ready(function(){
 		    dataType: 'text',
 		    // remind that 'data' is the response of the AjaxController
 		success: function (result,status,xhr) {
-				toastr.success('Liste Ajoutée', 'SUCCESS!!');
-		        var id = JSON.parse(result).last_inserted_id;
-		        var nom = JSON.parse(result).nom;
-		        var description = JSON.parse(result).description;
-		        creer_liste(sprint_id_name, id, nom, description);
+
+			var json_rep = JSON.parse(xhr.responseText);
+
+			// Si erreur, on affiche l'erreur
+			if(json_rep.status != null && json_rep.status == "error"){
+				$erreur = json_rep.message == null? "Une valeur entrée n'est pas conforme." : json_rep.message;
+				$("#liste_message_ajouter").html($erreur).removeClass().addClass("alert alert-warning").show();
+				return false;
+			}
+			else { // Tout s'est bien passé, on crée la liste
+				$("#liste_message_ajouter").hide();
+				toastr.success('Liste Ajoutée', 'SUCCÈS!');
+
+				var id = JSON.parse(result).last_inserted_id;
+				var nom = JSON.parse(result).nom;
+				var description = JSON.parse(result).description;
+				creer_liste(sprint_id_name, id, nom, description);
+			}
+
+			$.unblockUI();
+			return true;
 
 		},
 		error(xhr,status,error){
-		    alert("error 1 " + status);
-		    alert("error 2 " + error);
+		    $("#liste_messag_ajouter").html("Une erreur est survenue lors de l'ajout de la liste.").removeClass().addClass("alert alert-danger").show().fadeOut(8000);
+		    return true;
+		    //$.unblockUI();
 		},
 		complete: function (xhr,status) {
 		        // Handle the complete event
@@ -335,6 +364,7 @@ $(document).ready(function(){
 	$(document).on("click", "#creer_item_liste", function() {
 		//permet d'effacer les valeurs du form et recommencer à neuf
 		$('#form_liste')[0].reset();
+		$('#liste_message_ajouter').hide();
 		$.blockUI({
 		    message: $('.div_liste_form'),
 		    css: { top:'20%'}

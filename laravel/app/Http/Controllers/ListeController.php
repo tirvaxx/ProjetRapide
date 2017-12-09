@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\SprintActivite;
 use App\Liste;
 use Illuminate\Http\Request;
@@ -40,27 +41,34 @@ class ListeController extends Controller
     {
 
       try{
-        $liste = new Liste;
-        $liste->nom = request('nom_liste');
-        $liste->description = request('description_liste');
-        $liste->creer_par_acteur_id = Auth::id();
+          $liste = new Liste;
+          $liste->nom = request('nom_liste');
+          $liste->description = request('description_liste');
+          $liste->creer_par_acteur_id = Auth::id();
 
-        $data = array(
-             'nom' => $request->nom_liste,
-             'description' => $request->description_liste
-        );
+          $data = array(
+               'nom' => $request->nom_liste,
+               'description' => $request->description_liste
+          );
 
-        if ($liste->validate($data))
-          $liste->save();
+          if ($liste->validate($data))
+            $liste->save();
+            else {
+              return response()->json([
+              	'status' => 'error',
+              	'message' => "Les valeurs entrées ne sont pas conformes aux valeurs attentues ou dépassent les limites permises.<br/>Nom (2 à 50 caractères)<br/>Description (2 à 200 caractères)"
+              ]);
+            }
         }
         catch(\Exception $e)
         {
-          return response()->json([
-                  'success' => 'false',
-                  'errors'  => "Les valeurs entrées ne sont pas conformes aux valeurs attentues ou dépassent les limites permises.<br/>Nom (2 à 50 caractères)<br/>Description (2 à 200 caractères)",
-              ], 200);
+          echo $e->getMessage();
+            //return new JsonResponse($errors, 400);
+            return response()->json([
+            	'status' => 'error',
+            	'message' => "Une erreur de serveur est survenue"
+            ]);
         }
-
         //on met inactif l'enregistrement où il n'y a pas de liste dans le sprint
         SprintActivite::where("projet_id", "=", request("projet_id"))
         ->where("sprint_id","=", request("sprint_id"))
@@ -106,6 +114,7 @@ class ListeController extends Controller
      */
     public function edit($id)
     {
+
         $liste = Liste::find($id);
         $data = array(
              'liste_id' => $liste->id,
@@ -137,15 +146,22 @@ class ListeController extends Controller
         // attempt validation
         if ($liste->validate($data))
           $liste->update();
+        else {
+          return response()->json([
+            	'status' => 'error',
+            	'message' => "Les valeurs entrées ne sont pas conformes aux valeurs attentues ou dépassent les limites permises.<br/>Nom (2 à 50 caractères)<br/>Description (2 à 200 caractères)"
+            ]);
+        }
       }
       catch(\Exception $e)
       {
+          //return new JsonResponse($errors, 400);
         return response()->json([
-                'success' => 'false',
-                'errors'  => "Les valeurs entrées ne sont pas conformes aux valeurs attentues ou dépassent les limites permises.<br/>Nom (2 à 50 caractères)<br/>Description (2 à 200 caractères)",
-            ], 200);
+          	'status' => 'error',
+          	'message' => "Une erreur de serveur est survenue"
+          ]);
       }
-        return $data;
+      return $data;
     }
 
     /**

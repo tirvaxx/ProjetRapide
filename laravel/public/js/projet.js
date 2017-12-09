@@ -1,4 +1,4 @@
-var g_selected_projet_id;             
+var g_selected_projet_id;
 
 
 function ajouter_bouton_commentaire(){
@@ -40,7 +40,7 @@ $(document).ready(function(){
 
 
         $("#div_menu_commentaire_projet").show();
-        
+
 
 
         $.ajax({
@@ -99,13 +99,11 @@ $(document).ready(function(){
 
     $("body").delegate('#btn_projet_modifier','click', function() {
 
+        var p_id = $(this).attr("projet_id");
+        g_selected_projet_id = p_id;
 
         var titre = $(this).attr("projet_nom");
-        //$("#titre_projet").html(titre);
-        //$("#projet_wrapper").hide();
-        //$("#center-wrapper").show();
 
-      
         $url = "projets/" + g_selected_projet_id + "/edit";
 
         $.ajax({ statusCode: {
@@ -146,7 +144,7 @@ $(document).ready(function(){
 
     $("body").delegate('#btn_projet_formmodifier','click',function(){
 
-        
+
         $projet_no = g_selected_projet_id;
 
         var input_name = "modifier_nom_projet";
@@ -209,7 +207,7 @@ $(document).ready(function(){
 
     });//#btn_projet_formmodifier click
 
-           
+
     // Modifier un projet
     $("body").delegate('#btn_projet_formmodifier_annuler','click',function(){
         //alert("annuler");
@@ -274,18 +272,18 @@ $(document).ready(function(){
                             type : 'POST', // on appelle le script JSON
                             data: {term: request.term},
                             dataType : 'json', // on spécifie bien que le type de données est en JSON
-                            
+
                             success: function (data) {
                                 console.log(data);
                                 response($.map(data, function(item) {
                                     return {
                                         label : item.name
-                                    } 
+                                    }
                                 }));
                             }
                         });
                     },
-                    
+
                 });
 
                 //****************END SEARCHBAR*******************
@@ -299,7 +297,7 @@ $(document).ready(function(){
                     var idProjet = nomProjet.replace("collapse_", "");
                     console.log(idProjet);
                     var nomUser = document.getElementById("search-bar").value;
-                    var data = $('#form_assignation').serialize() + "&projet_id=" + idProjet; 
+                    var data = $('#form_assignation').serialize() + "&projet_id=" + idProjet;
                     $.ajax({
                         url : '/assignation',
                         type : 'POST',
