@@ -68,7 +68,7 @@ setTimeout(function(){
 
 */
 
- 			var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
+ 					var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
 	        var sprint_id = sprint_id_name.replace("sprint_", "");
 
 	        var json_liste_tache = get_all_liste_tache(sprint_id_name);
@@ -80,7 +80,7 @@ setTimeout(function(){
 
 
 
-	        $.ajax({ statusCode: {
+					$.ajax({ statusCode: {
 	            500: function(xhr) {
 	             alert(500);
 	            }},
@@ -93,8 +93,7 @@ setTimeout(function(){
 
 	        success: function (result,status,xhr) {
 				toastr.success('Déplacement enregistré', 'SUCCES!');
-			//$("#" + tache_id_nom).stop().css("background-color", "#defede").animate({ backgroundColor: "#FFFFFF"}, 1500);
-	               //alert("drag drop successs");
+
        		},error(xhr,status,error){
 				toastr.error('Déplacement non enregistré', 'Erreur!');
 
@@ -104,11 +103,6 @@ setTimeout(function(){
 	             //alert("complete " + status);
 	            }
 	        });  //ajax
-
-
-
-
-
 
 	    } // stop function
 
@@ -175,23 +169,23 @@ function valider_champs_liste(nom_liste, description_liste){
 	$("#liste_message_modifier").html("La description de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
 	return false;
 	}
-/*
-	var ExpNom = /^[0-9a-zA-Z\s\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿç  Ç_]{2,50}$/;
-	//var ExpDesc = /^[0-9a-zA-Z\s\r\n\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_]{2,200}$/;
+
+	var ExpNom = /^[0-9a-zA-Z\s\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿç  Ç_\']{2,50}$/;
 	var ExpDesc = /^[^;]{2,200}$/;
 
 	var res_test_nom = nom_liste.match(ExpNom);
 	var res_test_desc = description_liste.match(ExpDesc);
 
-	if( nom_projet.replace(/\s/g, '') == "" ||
-			description_projet.replace(/\s/g, '') == "" || !res_test_nom || !res_test_desc){
+	if(!res_test_nom){
+		$("#liste_message_modifier").html("Le nom de la liste contient un caractère non accepté.").removeClass().addClass("alert alert-warning").show();
+		return false;
+	}
+	if(!res_test_desc){
+		$("#liste_message_modifier").html("La description de la liste contient un caractère non accepté ou ne respecte pas la longueur définie : 2 à 200 caractères.").removeClass().addClass("alert alert-warning").show();
+		return false;
+	}
 
-			$('#'+lblMessageListeModifier).html("<tr><td width=\"20%\" style=\"vertical-align : middle; font-size: 35px;text-align:center;\"><span>&#9888</span></td><td width=\"80%\" style=\"vertical-align : middle;\">" +
-			"<span><strong>Nom de la liste :</strong><br/>(2 à 40 caractères maximum acceptant les caratères : 0 à 9, a à z, A à Z, espace, point, àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_)<br/><strong>Description de la liste :</strong><br/>(2 à 150 caractères).</span></td></tr>");
-			$('#'+lblMessageListeModifier).show();
-			message: $('#liste_modifier_form')
-			return;
-	}*/
+
 
 	return true;
 
@@ -214,10 +208,6 @@ function modifier_liste_bd(id_liste, nom_liste, description_liste){
 	$.ajax({ statusCode: {
 	  500: function(xhr) {
 	  alert(500);
-	},
-		400: function(xhr) {
-	  alert(400);
-	  //TODO : mettre un log ici faire ajax dans une table de logs créer table de log, creer ajax.. Faire une fonction
 	}},
 	  //the route pointing to the post function
 	  url: $url,
@@ -228,11 +218,10 @@ function modifier_liste_bd(id_liste, nom_liste, description_liste){
 	  // remind that 'data' is the response of the AjaxController
 	success: function (result,status,xhr) {
 
-	  alert("result, status, xhr"+ result + ','+status+','+xhr);
+	  //alert("result, status, xhr"+ result + ','+status+','+xhr);
 	   //xhr{"success":"false","errors":"Controller : Les valeurs entr\u00e9es ne sont pas conformes aux valeurs attentues."},success,[object Object]
 	  var json_rep = JSON.parse(xhr.responseText);
-		alert('json_responseText:' + xhr.responseText);
-		alert("json_rep.status"+ json_rep.status);
+
 	  if(json_rep.status != null && json_rep.status == "error"){
 	    $erreur = json_rep.message == null? "Une valeur entrée n'est pas conforme." : json_rep.message;
 	    $("#liste_message_modifier").html($erreur).removeClass().addClass("alert alert-warning").show();
@@ -334,16 +323,33 @@ $(document).ready(function(){
 		    dataType: 'text',
 		    // remind that 'data' is the response of the AjaxController
 		success: function (result,status,xhr) {
-				toastr.success('Liste Ajoutée', 'SUCCESS!!');
-		        var id = JSON.parse(result).last_inserted_id;
-		        var nom = JSON.parse(result).nom;
-		        var description = JSON.parse(result).description;
-		        creer_liste(sprint_id_name, id, nom, description);
+
+			var json_rep = JSON.parse(xhr.responseText);
+
+			// Si erreur, on affiche l'erreur
+			if(json_rep.status != null && json_rep.status == "error"){
+				$erreur = json_rep.message == null? "Une valeur entrée n'est pas conforme." : json_rep.message;
+				$("#liste_message_ajouter").html($erreur).removeClass().addClass("alert alert-warning").show();
+				return false;
+			}
+			else { // Tout s'est bien passé, on crée la liste
+				$("#liste_message_ajouter").hide();
+				toastr.success('Liste Ajoutée', 'SUCCÈS!');
+
+				var id = JSON.parse(result).last_inserted_id;
+				var nom = JSON.parse(result).nom;
+				var description = JSON.parse(result).description;
+				creer_liste(sprint_id_name, id, nom, description);
+			}
+
+			$.unblockUI();
+			return true;
 
 		},
 		error(xhr,status,error){
-		    alert("error 1 " + status);
-		    alert("error 2 " + error);
+		    $("#liste_messag_ajouter").html("Une erreur est survenue lors de l'ajout de la liste.").removeClass().addClass("alert alert-danger").show().fadeOut(8000);
+		    return true;
+		    //$.unblockUI();
 		},
 		complete: function (xhr,status) {
 		        // Handle the complete event
@@ -358,6 +364,7 @@ $(document).ready(function(){
 	$(document).on("click", "#creer_item_liste", function() {
 		//permet d'effacer les valeurs du form et recommencer à neuf
 		$('#form_liste')[0].reset();
+		$('#liste_message_ajouter').hide();
 		$.blockUI({
 		    message: $('.div_liste_form'),
 		    css: { top:'20%'}
