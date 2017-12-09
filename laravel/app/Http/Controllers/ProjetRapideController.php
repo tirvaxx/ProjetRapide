@@ -15,7 +15,7 @@ class ProjetRapideController extends Controller
      */
     public function projetInit($id)
     { 
-\DB::enableQueryLog();
+
 
         //non complete
         //a la selection d'un projet... appeler ce controller
@@ -25,9 +25,6 @@ class ProjetRapideController extends Controller
             ->orderby("liste_id", "asc")
             ->orderby("tache_ordre", "asc")
             ->get();
-
-$queries = \DB::getQueryLog();
-\LOG::info($queries);
 
             return  $projet;
     }

@@ -96,10 +96,6 @@
                              <small>Date dû : {{$value->projet_date_du}}</small>
                         </div>
                        
-
-                        <div class="panel-body">{{$value->projet_description}}</div>
-
-
                         <button id="btn_projet_charger" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Charger</button>
                         <button id="btn_projet_modifier" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Modifier</button>
 
