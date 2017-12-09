@@ -60,6 +60,8 @@ $(document).ready(function(){
             {
 
                 if(prev_sprint != json_obj[i].sprint_id){
+
+
                     sprint_add_tab(json_obj[i].sprint_id, json_obj[i].sprint_numero);
 
                     $( "#tabs" ).tabs({ active: i });
@@ -71,7 +73,7 @@ $(document).ready(function(){
                 }
 
                 if(json_obj[i].tache_nom != null){
-                    creer_tache( json_obj[i].liste_id,  json_obj[i].tache_id,  json_obj[i].tache_nom,  json_obj[i].tache_description);
+                    creer_tache( json_obj[i].liste_id,  json_obj[i].tache_id,  json_obj[i].tache_nom,  json_obj[i].tache_description,  json_obj[i].tache_retard);
                 }
                 prev_liste = json_obj[i].liste_id
                 prev_sprint = json_obj[i].sprint_id;
