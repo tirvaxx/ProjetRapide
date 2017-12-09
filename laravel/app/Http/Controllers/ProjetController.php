@@ -50,30 +50,29 @@ class ProjetController extends Controller
      */
     public function store(Request $request)
     {
-        $projet = new Projet;
+        try{
+             if(Auth::check() && Auth::user()->isAdmin()) {
+                $projet = new Projet;
 
-        $projet->creer_par_acteur_id = Auth::id();
-        $projet->nom = request('nom_projet');
-        $projet->description = request('description_projet');
-        $projet->date_du = $request->input('date_du_projet');
-        //$projet->date_complete = $request->input('date_complete');
-        $projet->save();
+                $projet->creer_par_acteur_id = Auth::id();
+                $projet->nom = request('nom_projet');
+                $projet->description = request('description_projet');
+                $projet->date_du = $request->input('date_du_projet');
+                $projet->save();
 
-/*
-        $sprint_activite = new SprintActivite;
-        $sprint_activite->projet_id = request("projet_id");
-        $sprint_activite->sprint_id = NULL;
-        $sprint_activite->actif = 1;
-        $sprint_activite->creer_par_acteur_id = 2;
-        $sprint_activite->assigne_acteur_id = 2;
-        $sprint_activite->save();*/
 
-        $data = array(
-          /*'last_inserted_id' => $projet->id,
-          'nom' => request('nom_projet'),
-          'description' => request('description_projet')*/
-        );
-        return $data;
+                $data = array(
+                );
+                return $data;
+            }
+        // try code
+        } catch(\Exception $e){
+        $data = "error";
+            return $data;
+        }
+        
+       
+        
     }
 
     /**

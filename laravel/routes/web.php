@@ -24,7 +24,7 @@ Route::post('/users', 'HomeController@getUsers');
 
 Route::post('/assignation', 'ProjetController@assignation');
 
-Route::get('/admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+Route::get('/adminLogin', [ 'as' => 'admin.login', 'uses' => 'Auth\AdminLoginController@showLoginForm']);
 Route::post('/admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
 Route::get('/admin', 'AdminController@index');
 

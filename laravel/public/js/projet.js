@@ -242,10 +242,14 @@ $(document).ready(function(){
             dataType: 'text',
             // remind that 'data' is the response of the AjaxController
         success: function (result,status,xhr) {
-
+                if (result == 'error') {
+                    toastr.warning("Vous n'etes pas administrateur", 'Erreur!');
+                } else {
+                    url = "/home";
+                    $( location ).attr("href", url);
+                }
                 // on retourne au home pour voir les projets... en attendant todo a continuer
-                url = "/home";
-                $( location ).attr("href", url);
+                
         },
         error(xhr,status,error){
             alert("error 1 " + status);
