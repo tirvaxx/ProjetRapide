@@ -146,8 +146,8 @@ function sur_double_clique_liste(liste_id){
           $('#liste_message_modifier').hide();
 
           },error(xhr,status,error){
-              alert("error 1 " + status);
-              alert("error 2 " + error);
+              //alert("error 1 " + status);
+              //alert("error 2 " + error);
           },
 
           complete: function (xhr,status) {
@@ -175,6 +175,24 @@ function valider_champs_liste(nom_liste, description_liste){
 	$("#liste_message_modifier").html("La description de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
 	return false;
 	}
+/*
+	var ExpNom = /^[0-9a-zA-Z\s\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿç  Ç_]{2,50}$/;
+	//var ExpDesc = /^[0-9a-zA-Z\s\r\n\.àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_]{2,200}$/;
+	var ExpDesc = /^[^;]{2,200}$/;
+
+	var res_test_nom = nom_liste.match(ExpNom);
+	var res_test_desc = description_liste.match(ExpDesc);
+
+	if( nom_projet.replace(/\s/g, '') == "" ||
+			description_projet.replace(/\s/g, '') == "" || !res_test_nom || !res_test_desc){
+
+			$('#'+lblMessageListeModifier).html("<tr><td width=\"20%\" style=\"vertical-align : middle; font-size: 35px;text-align:center;\"><span>&#9888</span></td><td width=\"80%\" style=\"vertical-align : middle;\">" +
+			"<span><strong>Nom de la liste :</strong><br/>(2 à 40 caractères maximum acceptant les caratères : 0 à 9, a à z, A à Z, espace, point, àÀâÂîÎïÏéÉèÈêÊëËôÔöÖÙùÛûÜüŸÿçÇ_)<br/><strong>Description de la liste :</strong><br/>(2 à 150 caractères).</span></td></tr>");
+			$('#'+lblMessageListeModifier).show();
+			message: $('#liste_modifier_form')
+			return;
+	}*/
+
 	return true;
 
 }// valider_champs_liste
@@ -196,31 +214,35 @@ function modifier_liste_bd(id_liste, nom_liste, description_liste){
 	$.ajax({ statusCode: {
 	  500: function(xhr) {
 	  alert(500);
+	},
+		400: function(xhr) {
+	  alert(400);
 	  //TODO : mettre un log ici faire ajax dans une table de logs créer table de log, creer ajax.. Faire une fonction
 	}},
 	  //the route pointing to the post function
 	  url: $url,
-	  type: 'PUT',
+	  type: 'PUT', //UPDATE
 	  // send the csrf-token and the input to the controller
 	  data: $('#form_modifier_liste').serialize(),
 	  dataType: 'text',
 	  // remind that 'data' is the response of the AjaxController
 	success: function (result,status,xhr) {
-		//toastr.success('Liste Modifiée', 'SUCCES!');
-	  //alert("result, status, xhr"+ result + ','+status+','+xhr);
+
+	  alert("result, status, xhr"+ result + ','+status+','+xhr);
 	   //xhr{"success":"false","errors":"Controller : Les valeurs entr\u00e9es ne sont pas conformes aux valeurs attentues."},success,[object Object]
 	  var json_rep = JSON.parse(xhr.responseText);
-
-		//alert("json_rep.success"+ json_rep.success);
-	  if(json_rep.success != null && json_rep.success == "false"){
-	    $erreur = json_rep.errors == null? "Une valeur entrée n'est pas conforme." : json_rep.errors;
+		alert('json_responseText:' + xhr.responseText);
+		alert("json_rep.status"+ json_rep.status);
+	  if(json_rep.status != null && json_rep.status == "error"){
+	    $erreur = json_rep.message == null? "Une valeur entrée n'est pas conforme." : json_rep.message;
 	    $("#liste_message_modifier").html($erreur).removeClass().addClass("alert alert-warning").show();
 	    return false;
 	  }
 	  else {
 	    afficher_liste_modifiee(id_liste, nom_liste, description_liste);
 	    $("#liste_message_modifier").hide();
-	    $("#sprint_message").html("Modification de la liste réussie avec succès.").removeClass().addClass("alert alert-success").show().fadeOut(8000);
+			toastr.success('Liste Modifiée', 'SUCCES!');
+		  //$("#sprint_message").html("Modification de la liste réussie avec succès.").removeClass().addClass("alert alert-success").show().fadeOut(8000);
 	  }
 
 	  $.unblockUI();

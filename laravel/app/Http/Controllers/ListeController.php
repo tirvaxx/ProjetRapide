@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\SprintActivite;
 use App\Liste;
 use Illuminate\Http\Request;
@@ -138,15 +139,22 @@ class ListeController extends Controller
         // attempt validation
         if ($liste->validate($data))
           $liste->update();
+        else {
+          return response()->json([
+            	'status' => 'error',
+            	'message' => "Les valeurs entrées ne sont pas conformes aux valeurs attentues ou dépassent les limites permises.<br/>Nom (2 à 50 caractères)<br/>Description (2 à 200 caractères)"
+            ]);
+        }
       }
       catch(\Exception $e)
       {
+          //return new JsonResponse($errors, 400);
         return response()->json([
-                'success' => 'false',
-                'errors'  => "Les valeurs entrées ne sont pas conformes aux valeurs attentues ou dépassent les limites permises.<br/>Nom (2 à 50 caractères)<br/>Description (2 à 200 caractères)",
-            ], 200);
+          	'status' => 'error',
+          	'message' => "Une erreur de serveur est survenue";
+          ]);
       }
-        return $data;
+      return $data;
     }
 
     /**
