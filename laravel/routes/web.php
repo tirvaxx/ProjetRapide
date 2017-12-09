@@ -65,6 +65,10 @@ Route::put('/sprintactivite/rendreInactif', array( 'uses' => 'SprintActiviteCont
 Route::get("/commentaires/{projet_id}/{tache_id}", array('uses' => 'CommentaireController@show'));
 Route::post("/commentaires", array('uses' => 'CommentaireController@store'));
 
+Route::get("/commentaires_projet/{projet_id}", array('uses' => 'CommentaireProjetController@show'));
+Route::post("/commentaires_projet", array('uses' => 'CommentaireProjetController@store'));
+
+
 
 Route::resource('projets', 'ProjetController');
 Route::resource('admins', 'AdminController');
@@ -74,11 +78,12 @@ Route::resource('acteurEmployes', 'acteurEmployeController');
 Route::resource('taches', 'TacheController');
 Route::resource('listes', 'ListeController');
 Route::resource('sprintactivites', 'SprintActiviteController');
-
+Route::resource('commentaires', 'CommentaireController');
+Route::resource('commentaires_projet', 'CommentaireProjetController');
 
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('commentaires', 'CommentaireController');
+
 

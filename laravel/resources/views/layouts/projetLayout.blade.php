@@ -7,12 +7,15 @@
         <meta name="csrf-token" content="{{ Session::token() }}">
         <title>Projet Rapide</title>
 
+
+ 
         <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
-       
-        <link rel="stylesheet" type="text/css" href={{ asset('toastr/build/toastr.css') }}>
+        <link rel="stylesheet" type="text/css" href={{ asset('css/projetrapide_sidebar.css') }}> 
+        <link rel="stylesheet" type="text/css" href={{ asset('toastr/build/toastr.css') }}> 
         <link rel="stylesheet" type="text/css" href={{ asset('css/projetrapide.css') }}> 
+        
 
 
         <script src="{{ asset('js/jquery.min.js') }}"></script>
@@ -21,9 +24,11 @@
         
         <script src="{{ asset('toastr/toastr.js') }}"></script>
         <script src="{{ asset('toastr/build/toastr.min.js') }}"></script>
-
-        <script src="{{ asset('js/commentaire.js') }}"></script>
+        
         <script src="{{ asset('js/projet.js') }}"></script>
+        <script src="{{ asset('js/commentaire.js') }}"></script>
+        <script src="{{ asset('js/commentaire_projet.js') }}"></script>
+  
         <script src="{{ asset('js/tabs.js') }}"></script>
         <script src="{{ asset('js/projet.js') }}"></script>
         <script src="{{ asset('js/sprint.js') }}"></script>
@@ -52,7 +57,7 @@
       $( ".date" ).datepicker({ dateFormat: 'yy-mm-dd' });
       $( "#tabs" ).tabs();
       //Permet d'afficher des tooltips de types Bootstrap
-      $("[rel=tooltip]").tooltip({ placement: 'top'});
+      $("[rel=tooltip]").tooltip({ placement: 'auto'});
 
 
       $(".btn_fermer_ui").click(function(){

@@ -37,17 +37,46 @@ function creer_liste(sprint_id_name,id, nom, description){
 	$('.container-list .sortable-list').sortable({connectWith: '.container-list .sortable-list', placeholder: 'placeholder',
 	    stop: function( event, ui ){
  			
+ 	var tache_id_nom = ui.item.attr("id");
+
+
+
+
+
+
+/*
+	$("#" + tache_id_nom).animate({
+	   borderLeftColor: "green",
+	   borderTopColor: "green",
+	   borderRightColor: "green",
+	   borderBottomColor: "green",
+	}, 0);
+
+
+setTimeout(function(){
+
+    var div = $("#" + tache_id_nom);
+    $({alpha:1}).animate({alpha:0}, {
+        duration: 1000,
+        step: function(){
+            div.css('border','thick solid rgba(0,255,0,'+this.alpha+')');
+        }
+    });
+
+}, 0);
+
+
+*/
 
  			var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
 	        var sprint_id = sprint_id_name.replace("sprint_", "");
 
 	        var json_liste_tache = get_all_liste_tache(sprint_id_name);
 
-console.log(json_liste_tache);
+//console.log(json_liste_tache);
 
 
 	        var data =  "projet_id=" + g_selected_projet_id+ "&sprint_id=" + sprint_id + "&liste_tache=" + json_liste_tache;
-
 
 
 
@@ -63,12 +92,12 @@ console.log(json_liste_tache);
 	            dataType: 'text',
 
 	        success: function (result,status,xhr) {
-
+				toastr.success('Déplacement enregistré', 'SUCCES!');
+			//$("#" + tache_id_nom).stop().css("background-color", "#defede").animate({ backgroundColor: "#FFFFFF"}, 1500);
 	               //alert("drag drop successs");
-
-	        },error(xhr,status,error){
-	            alert("error 1 " + status);
-	            alert("error 2 " + error);
+       		},error(xhr,status,error){
+				toastr.error('Déplacement non enregistré', 'Erreur!');
+	          
 	        },
 	            complete: function (xhr,status) {
 	                // Handle the complete event
@@ -177,7 +206,7 @@ function modifier_liste_bd(id_liste, nom_liste, description_liste){
 	  dataType: 'text',
 	  // remind that 'data' is the response of the AjaxController
 	success: function (result,status,xhr) {
-		toastr.success('Liste Modifiée', 'SUCCESS!!');
+		toastr.success('Liste Modifiée', 'SUCCES!');
 	  //alert("result, status, xhr"+ result + ','+status+','+xhr);
 	   //xhr{"success":"false","errors":"Controller : Les valeurs entr\u00e9es ne sont pas conformes aux valeurs attentues."},success,[object Object]
 	  var json_rep = JSON.parse(xhr.responseText);

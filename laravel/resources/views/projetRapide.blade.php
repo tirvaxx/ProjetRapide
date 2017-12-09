@@ -34,15 +34,21 @@
               </ul>
               
             </div><!-- /.navbar-collapse -->
-            <a id="logout" href="{{ route('logout') }}" class="navbar-brand logout"
+
+
+             <a id="logout" href="{{ route('logout') }}" rel="tooltip" title="Logout" class="navbar-brand logout pull right"
                   onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">
-                  Logout
+                  <span class="glyphicon glyphicon-log-out"></span>
               </a>
 
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                  {{ csrf_field() }}
-              </form>
+ 
+
+               <div id="div_menu_commentaire_projet" class="navbar-brand  pull right" style="display:none;" >
+                <a href="#" id="btn_menu_commentaire_projet" data-toggle="modal" data-target="#projet_commentaire" rel="tooltip" title="Commentaires"  style="color:white;"><span class="glyphicon glyphicon-comment"></span>
+                </a>
+            </div>
+
             </div><!-- /.container-fluid -->
         </nav>
 
@@ -52,6 +58,17 @@
 
 
 
+
+
+
+
+
+
+
+
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+  {{ csrf_field() }}
+</form>
 
 
 @if(isset($dataProjet))
@@ -98,6 +115,8 @@
 @elseif(!isset($dataProjetRapide))
     <p>Aucun projet</p>
 @endif
+
+
 
 
 <h1 id="titre_projet"></h1>
@@ -506,6 +525,34 @@
     </form>
 
 </div>
+
+<div class="container projetrapide_sidebar" >
+    <!-- Modal -->
+    <div class="modal right fade" id="projet_commentaire" tabindex="-1" role="dialog" aria-labelledby="label_commentaire">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="label_commentaire">Commentaires</h4>
+                    <div  class="div_commentaire_projet form-group col-lg-8">
+                        <form id="form_commentaire_projet">
+                            <textarea  class="form-control input-group-lg" placeholder="Commentaire"></textarea>
+                            <button id="btn_commentaire_projet" class="btn btn-default">Envoyer</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="modal-body" id="commentaire_projet">
+                    
+                </div>
+
+            </div><!-- modal-content -->
+        </div><!-- modal-dialog -->
+    </div><!-- modal -->
+    
+    
+</div><!-- container -->
 
 
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>

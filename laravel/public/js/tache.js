@@ -19,11 +19,8 @@ function get_all_liste_tache(sprint_id){
 
     $( "#" + sprint_id + "> .container-list .sortable-list" ).each(function(){
 
-var i;
-console.log( i++);
+
         ordre_tache = String($(this).sortable("toArray"));
-console.log( $(this).attr("id"));
-console.log(ordre_tache);
 
         json_ordre_tache += '"' + $(this).attr("id") + '":';
         //if(ordre_tache != ""){
@@ -41,7 +38,7 @@ console.log(ordre_tache);
     //var sortedIDs = $( '.container-list .sortable-list' ).sortable( "toArray" );
     //alert(sortedIDs);
 
-console.log(json_ordre_tache);
+//console.log(json_ordre_tache);
     return json_ordre_tache;
 
 }
@@ -190,7 +187,7 @@ $(document).ready(function(){
         }
 
         var data =  $('#form_tache').serialize() + "&projet_id=" + g_selected_projet_id+ "&sprint_id=" + sprint_id + "&liste_id=" + liste_no;
-
+//console.log(data);
         $.ajax({ statusCode: {
             500: function(xhr) {
              alert(500);
@@ -204,9 +201,8 @@ $(document).ready(function(){
             // remind that 'data' is the response of the AjaxController
         success: function (result,status,xhr) {
 
-                toastr.success('Tache Ajoutée', 'SUCCESS!!');
-                var liste_no = $("body").data("ajout_liste_no");
-
+                toastr.success('Tache Ajoutée', 'SUCCES!!');
+             
 
                  creer_tache(liste_no, JSON.parse(result).last_inserted_id, JSON.parse(result).nom , JSON.parse(result).description);
                 /*
@@ -271,7 +267,7 @@ $(document).ready(function(){
 	            var id_no = id.replace("li_tache_","");
 	            var json_liste_tache = get_all_liste_tache(sprint_id_name);
 	          //  var url = "sprintactivite/rendreInactif/" + g_selected_projet_id+ "/"+ sprint_id + "/" + json_liste_tache;
-console.log(json_liste_tache);
+//console.log(json_liste_tache);
 	            var url = "sprintactivite/rendreInactif";
 	            $.ajax({ statusCode: {
 	            500: function(xhr) {

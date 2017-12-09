@@ -14,17 +14,18 @@ class ProjetRapideController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function projetInit($id)
-    {
+    { 
 
 
         //non complete
         //a la selection d'un projet... appeler ce controller
-            $projet = DB::table('vw_sprint_activite_actif')->select("projet_id", "projet_nom", "projet_description", "projet_date_du", "projet_date_complete", "sprint_id", "sprint_numero", "liste_id", "liste_nom", "liste_description", "tache_id", "tache_nom", "tache_description")
+           $projet = DB::table('vw_sprint_activite_actif')->select("projet_id", "projet_nom", "projet_description", "projet_date_du", "projet_date_complete", "sprint_id", "sprint_numero", "liste_id", "liste_nom", "liste_description", "tache_id", "tache_nom", "tache_description")
             ->where("projet_id", "=", $id)
             ->orderby("sprint_id", "asc")
             ->orderby("liste_id", "asc")
             ->orderby("tache_ordre", "asc")
             ->get();
+
 
             return  $projet;
     }

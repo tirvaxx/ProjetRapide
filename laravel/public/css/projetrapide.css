@@ -122,6 +122,22 @@ div.form_commentaire{
 }
 
 
+border_fade_success{
+
+
+    border:3px #0F0 solid;
+    /* Firefox */
+    -moz-transition: all 1s ease-in;
+    /* WebKit */
+    -webkit-transition: all 1s ease-in;
+    /* Opera */
+    -o-transition: all 1s ease-in;
+    /* Standard */
+    transition: all 1s ease-in;
+
+
+}
+
 /*
     Stylesheet for examples by DevHeart.
     http://devheart.org/

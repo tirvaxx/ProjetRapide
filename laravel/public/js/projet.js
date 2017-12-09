@@ -1,5 +1,19 @@
 var g_selected_projet_id;             
+
+
+function ajouter_bouton_commentaire(){
+    var c = '<div class="navbar-brand  pull right" >';
+    c +=    '     <a href="#" data-toggle="modal" data-target="#projet_commentaire" style="color:white;"><span class="glyphicon glyphicon-comment"></span></a>';
+    c +=    '</div>';
+
+    $("nav.container-fluid").append(c);
+
+
+}
+
+
 $(document).ready(function(){
+    
 
 	$(document).on("click", "#creer_item_projet", function() {
 	      //permet d'effacer les valeurs du form et recommencer à neuf
@@ -24,6 +38,9 @@ $(document).ready(function(){
         $("#projet_wrapper").hide();
         $("#center-wrapper").show();
 
+
+        $("#div_menu_commentaire_projet").show();
+        
 
 
         $.ajax({
