@@ -60,31 +60,18 @@ class SprintController extends Controller
           else {
             return response()->json([
                 'success' => 'false',
-                'errors'  => "Valeur inattendue : le Numéro de sprint doit être entre 1 et 999.",
+                'errors'  => "Valeur inattendue : le NumÃ©ro de sprint doit Ãªtre entre 1 et 999.",
             ], 200);
           }
         }
         catch(\Exception $e)
         {
-            // TODO : faire quelque chose d'autre pour les erreurs innatendues, ça ne fonctionne pas vraiment ici je pense à tester encore
-            if(isset($e->statusCode) && $e->statusCode != 200){
-              return response()->json([
-                  'success' => 'false',
-                  'errors'  => "Valeurs innatendues." + $e->getMessage(),
-              ], app('Illuminate\Http\Response')->status());
-               //return response()->json('Exception ' . $e->getMessage());
-             }
-             else {
-              if($e->success = true){
-                return response()->json('Exception ' . $e->getMessage());
-              }
-              else{
-                return response()->json([
-                    'success' => 'false',
-                    'errors'  => "Valeurs innatendues.",
-                ], 200);
-              }
-            }
+          echo $e->getMessage();
+            //return new JsonResponse($errors, 400);
+            return response()->json([
+              'status' => 'error',
+              'message' => "Une erreur de serveur est survenue"
+            ]);
         }
 
         $sprint_activite = new SprintActivite;
@@ -95,8 +82,8 @@ class SprintController extends Controller
         $sprint_activite->assigne_acteur_id = Auth::id();
         $sprint_activite->save();
 
-        
-        $data = array( 
+
+        $data = array(
              'last_inserted_id' => $sprint->id,
              'numero' => request('no_sprint')
         );
