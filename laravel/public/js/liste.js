@@ -158,15 +158,15 @@ function sur_double_clique_liste(liste_id){
 
 
 
-function valider_champs_liste(nom_liste, description_liste){
+function valider_champs_liste(nom_liste, description_liste, tag_msg){
 
 	if( nom_liste.replace(/\s/g, '') == ""){
-	$("#liste_message_modifier").html("Le nom de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
+	$(tag_msg).html("Le nom de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
 	return false;
 	}
 
 	if( description_liste.replace(/\s/g, '') == ""){
-	$("#liste_message_modifier").html("La description de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
+	$(tag_msg).html("La description de la liste ne doit pas être vide ou contenir seulement des espaces.").removeClass().addClass("alert alert-warning").show();
 	return false;
 	}
 
@@ -177,11 +177,11 @@ function valider_champs_liste(nom_liste, description_liste){
 	var res_test_desc = description_liste.match(ExpDesc);
 
 	if(!res_test_nom){
-		$("#liste_message_modifier").html("Le nom de la liste contient un caractère non accepté.").removeClass().addClass("alert alert-warning").show();
+		$(tag_msg).html("Le nom de la liste contient un caractère non accepté.").removeClass().addClass("alert alert-warning").show();
 		return false;
 	}
 	if(!res_test_desc){
-		$("#liste_message_modifier").html("La description de la liste contient un caractère non accepté ou ne respecte pas la longueur définie : 2 à 200 caractères.").removeClass().addClass("alert alert-warning").show();
+		$(tag_msg).html("La description de la liste contient un caractère non accepté ou ne respecte pas la longueur définie : 2 à 200 caractères.").removeClass().addClass("alert alert-warning").show();
 		return false;
 	}
 
@@ -277,7 +277,7 @@ $(document).ready(function(){
 	    var input_name = "modifier_description_liste";
 	    var description_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val();
 
-	    var champs_valides = valider_champs_liste(nom_liste, description_liste);
+	    var champs_valides = valider_champs_liste(nom_liste, description_liste, "#liste_message_modifier");
 	    // Si les champs ne sont pas valides, on ne continue pas le processus de modification.
 	    if(!champs_valides)
 	      return;
@@ -302,11 +302,20 @@ $(document).ready(function(){
 
 	 $('#btn_liste_ajouter').click(function() {
 
-
-
 		var sprint_id_name = $('#tabs .ui-state-active').attr('aria-controls');
 
 		var sprint_id = sprint_id_name.replace("sprint_", "");
+
+    var input_name = "nom_liste";
+    var nom_liste = $("#form_liste :input[name='"+input_name+"']").val();
+    var input_name = "description_liste";
+    var description_liste = $("#form_liste :input[name='"+input_name+"']").val();
+
+    var champs_valides = valider_champs_liste(nom_liste, description_liste, "#liste_message_ajouter");
+    // Si les champs ne sont pas valides, on ne continue pas le processus de modification.
+    if(!champs_valides)
+      return;
+
 		// alert(sprint_id);
 
 		var data =  $('#form_liste').serialize() + "&projet_id=" + g_selected_projet_id+ "&sprint_id=" + sprint_id

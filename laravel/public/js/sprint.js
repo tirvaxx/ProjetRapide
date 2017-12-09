@@ -33,7 +33,7 @@ $(document).ready(function(){
 		var date_fin = $("#form_sprint :input[name='"+input_name+"']").val();
 
 		var champs_valides = valider_champs_sprint(no_sprint, date_debut, date_fin, "#sprint_message_ajouter");
-		alert('valide:'+champs_valides);
+		//alert('valide:'+champs_valides);
 		// Si les champs ne sont pas valides, on ne continue pas le processus d'ajout'.
 		if(!champs_valides)
 			return false;
@@ -67,33 +67,33 @@ $(document).ready(function(){
 	}); // $('#btn_sprint_ajouter').click(function()
 
 	// Permet de valider les champs d'un sprint
-	function valider_champs_sprint(no_sprint, date_debut, date_fin, tag){
-		$("#sprint_message_ajouter").html("").hide();
+	function valider_champs_sprint(no_sprint, date_debut, date_fin, tag_msg){
+		$(tag_msg).html("").hide();
 
 		if(no_sprint.trim() == '' ||
 		no_sprint.trim() == '0' ||
 		no_sprint.trim() == '00' ||
 		no_sprint.trim() == '000'){
-			$(tag).html("Le numéro de sprint ne doit pas être vide ou 0.").removeClass().addClass("alert alert-warning").show();
+			$(tag_msg).html("Le numéro de sprint ne doit pas être vide ou 0.").removeClass().addClass("alert alert-warning").show();
 			return false;
 		}
 
 		var ExpNoSprint = /^[0-9]{1,3}$/;
 
-		var res_test_no_sprint = nom_liste.match(ExpNoSprint);
+		var res_test_no_sprint = no_sprint.match(ExpNoSprint);
 		if(!res_test_no_sprint){
-			$("#sprint_message_ajouter").html("Le numéro de sprint ne doit pas être vide ou 0.").removeClass().addClass("alert alert-warning").show();
+			$(tag_msg).html("Le numéro de sprint ne doit pas être vide ou 0.").removeClass().addClass("alert alert-warning").show();
 			return false;
 		}
 
 		var date_deb = Date.parse(date_debut, "yy-MM-dd");
 		if(!date_deb){
-			$("#sprint_message_ajouter").html("La date de début n'est pas conforme selon une date.").removeClass().addClass("alert alert-warning").show();
+			$(tag_msg).html("La date de début n'est pas conforme selon une date.").removeClass().addClass("alert alert-warning").show();
 			return false;
 		}
 		var date_f = Date.parse(date_fin, "yy-MM-dd");
 		if(!date_f){
-			$("#sprint_message_ajouter").html("La date de fin n'est pas conforme selon une date.").removeClass().addClass("alert alert-warning").show();
+			$(tag_msg).html("La date de fin n'est pas conforme selon une date.").removeClass().addClass("alert alert-warning").show();
 			return false;
 		}
 
