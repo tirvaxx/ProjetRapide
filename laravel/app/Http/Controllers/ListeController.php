@@ -106,6 +106,7 @@ class ListeController extends Controller
      */
     public function edit($id)
     {
+
         $liste = Liste::find($id);
         $data = array(
              'liste_id' => $liste->id,

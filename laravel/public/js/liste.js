@@ -36,7 +36,7 @@ function creer_liste(sprint_id_name,id, nom, description){
 
 	$('.container-list .sortable-list').sortable({connectWith: '.container-list .sortable-list', placeholder: 'placeholder',
 	    stop: function( event, ui ){
- 			
+
  	var tache_id_nom = ui.item.attr("id");
 
 
@@ -97,7 +97,7 @@ setTimeout(function(){
 	               //alert("drag drop successs");
        		},error(xhr,status,error){
 				toastr.error('Déplacement non enregistré', 'Erreur!');
-	          
+
 	        },
 	            complete: function (xhr,status) {
 	                // Handle the complete event
@@ -126,7 +126,7 @@ function sur_double_clique_liste(liste_id){
               return;
       }
       var liste_no = liste_id.replace("liste_panel_", "");
-      
+
       $("#modifier_liste_id").val(liste_no);
       $url = "listes/" + liste_no + "/edit";
 
@@ -206,11 +206,12 @@ function modifier_liste_bd(id_liste, nom_liste, description_liste){
 	  dataType: 'text',
 	  // remind that 'data' is the response of the AjaxController
 	success: function (result,status,xhr) {
-		toastr.success('Liste Modifiée', 'SUCCES!');
+		//toastr.success('Liste Modifiée', 'SUCCES!');
 	  //alert("result, status, xhr"+ result + ','+status+','+xhr);
 	   //xhr{"success":"false","errors":"Controller : Les valeurs entr\u00e9es ne sont pas conformes aux valeurs attentues."},success,[object Object]
 	  var json_rep = JSON.parse(xhr.responseText);
 
+		//alert("json_rep.success"+ json_rep.success);
 	  if(json_rep.success != null && json_rep.success == "false"){
 	    $erreur = json_rep.errors == null? "Une valeur entrée n'est pas conforme." : json_rep.errors;
 	    $("#liste_message_modifier").html($erreur).removeClass().addClass("alert alert-warning").show();
@@ -258,7 +259,7 @@ $(document).ready(function(){
  // Sur appuie du bouton modifier de la liste
 	$("body").delegate('#btn_liste_modifier','click',function(){
 
-	   
+
 	    var id_liste = $("#modifier_liste_id").val();
 	    var input_name = "modifier_nom_liste";
 	    var nom_liste = $("#form_modifier_liste :input[name='"+input_name+"']").val();
