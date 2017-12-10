@@ -238,7 +238,8 @@ function modifier_liste_bd(id_liste, nom_liste, description_liste){
 	  return true;
 
 	},error(xhr,status,error){
-	    $("#sprint_message").html("Une erreur est survenue lors de la modification de la liste.").removeClass().addClass("alert alert-danger").show().fadeOut(8000);
+			toastr.error('Une erreur est survenue lors de la modification de la liste.', 'ERREUR!');
+	    //$("#sprint_message").html("Une erreur est survenue lors de la modification de la liste.").removeClass().addClass("alert alert-danger").show().fadeOut(8000);
 	    return true;
 	    //$.unblockUI();
 	},
