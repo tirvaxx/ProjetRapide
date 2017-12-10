@@ -366,11 +366,11 @@
                 </div>
                 <div class="form-group" >
                     <label for="date_debut">Date Début :</label>
-                    <input type="text" class="form-control date" name="sprint_modifier_date_debut" id="sprint_modifier_date_debut">
+                    <input type="text" class="form-control date"  readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" name="sprint_modifier_date_debut" id="sprint_modifier_date_debut">
                 </div>
                 <div class="form-group" >
                     <label for="date_fin">Date Fin :</label>
-                    <input type="text" class="form-control date" name="sprint_modifier_date_fin" id="sprint_modifier_date_fin">
+                    <input type="text" class="form-control date"  readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" name="sprint_modifier_date_fin" id="sprint_modifier_date_fin">
                 </div>
                 <div class="form-group">
                     <button type="button" id="btn_sprint_modifier" class="btn btn-primary" >Modifier</button>

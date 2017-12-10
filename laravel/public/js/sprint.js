@@ -125,6 +125,28 @@ $(document).ready(function(){
 				toastr.success('Sprint Modifié', 'SUCCÈS!');
 			  //$("#sprint_message").html("Modification de la liste réussie avec succès.").removeClass().addClass("alert alert-success").show().fadeOut(8000);
 		  }
+   
+            var sprint_date_fin = json_rep.sprint_date_fin;
+            var aujourdhui = new Date();
+            var dt = new Date( sprint_date_fin );
+
+            //si c'est une valeur autre qu'une date, on ignore
+            //sinon on modifie le drapeau retard de la tache
+
+           if (aujourdhui > dt ){
+
+                $("[aria-controls=sprint_"+id_sprint+"]").children(".r-retard").first().show();
+
+            }else if(aujourdhui <= dt ){
+
+                $("[aria-controls=sprint_"+id_sprint+"]").children(".r-retard").first().hide();
+            }
+            else{
+
+
+            }
+
+
 
 		  $.unblockUI();
 		  return true;

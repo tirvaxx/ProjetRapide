@@ -92,7 +92,7 @@ function creer_tache(liste_id, tache_id, tache_nom, tache_description, tache_ret
 
         tache_retard_icone = '<a href="#"  rel="tooltip" title="Tache en retard de livraison" class="r-retard"><span class="glyphicon glyphicon-flag"  pull right style="color:red;' + ( tache_retard == true || tache_retard == "true" ?  "display:inline; " : "display:none; " ) + '"></span></a>';
     
-console.log(tache_retard_icone);
+//console.log(tache_retard_icone);
      $("#ul_liste_" + liste_id).append( '<li id="li_tache_' + tache_id + '" class="sortable-item"><a href="#" class="x-remove"><span class="glyphicon glyphicon-remove pull-right"></span></a><a href="#"  class="c-comment"><span class="glyphicon glyphicon-comment pull-left"></span></a><a href="#" class="i-info"><span class="glyphicon glyphicon-info-sign pull-left"></a><span id="tache_titre_'+ tache_id + '">' + tache_nom + '</span>' + tache_retard_icone + '</li>' );
     
 

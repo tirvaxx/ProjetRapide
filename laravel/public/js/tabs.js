@@ -6,7 +6,7 @@ function sprint_add_tab(id, numero, sprint_retard) {
 	//   id = "tabs-" + tabCounter,
 	//  id = "tabs-" + id,
 
-	tabTemplate = '<li><a href="#{href}" sprint_unique_name_id="sprint_'+id+'" >#{label}</a><span class="glyphicon glyphicon-flag" rel="tooltip" title="Sprint est en retard." style="color:red;' + ( sprint_retard == true || sprint_retard == "true" ?  "display:inline; " : "display:none; " ) + '"></span>   </li>';
+	tabTemplate = '<li><a href="#{href}" sprint_unique_name_id="sprint_'+id+'" >#{label}</a><span class="glyphicon glyphicon-flag r-retard" rel="tooltip" title="Sprint est en retard." style="color:red;' + ( sprint_retard == true || sprint_retard == "true" ?  "display:inline; " : "display:none; " ) + '"></span>   </li>';
 
 	li = $( tabTemplate.replace( /#\{href\}/g, "#sprint_" + id ).replace( /#\{label\}/g, label ) );
 	//  tabContentHtml = tabContent.val();

@@ -148,6 +148,8 @@ class SprintController extends Controller
          $sprint->date_fin = $request->sprint_modifier_date_fin;
          $data = array(
               'numero' => $request->modifier_no_sprint,
+              'sprint_date_debut' =>  $request->sprint_modifier_date_debut,
+              'sprint_date_fin' =>  $request->sprint_modifier_date_fin,
          );
          // attempt validation
          if ($sprint->validate($data))
