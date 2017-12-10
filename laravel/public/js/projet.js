@@ -278,7 +278,7 @@ $(document).ready(function(){
                             dataType : 'json', // on spécifie bien que le type de données est en JSON
 
                             success: function (data) {
-                                console.log(data);
+                             //   console.log(data);
                                 response($.map(data, function(item) {
                                     return {
                                         label : item.name

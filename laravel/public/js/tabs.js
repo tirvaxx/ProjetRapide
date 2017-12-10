@@ -24,6 +24,8 @@ function sprint_modifier_tab(id, numero) {
 	var label = "Sprint " + numero;
 	$("[sprint_unique_name_id=sprint_"+id+"]").text(label);
 
+
+
 }
 
 // TODO : à faire et vérifier qu'il n'y a pas de tâches et de listes à l'intérieur
@@ -47,8 +49,6 @@ function sprint_delete_tab(id, numero) {
 }
 
 $(document).ready(function(){
-
-
 
 
   // Close icon: removing the tab on click
