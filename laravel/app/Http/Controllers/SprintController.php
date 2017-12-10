@@ -113,10 +113,17 @@ class SprintController extends Controller
      * @param  \App\Sprint  $sprint
      * @return \Illuminate\Http\Response
      */
-    public function edit(Sprint $sprint)
-    {
-        //
-    }
+     public function edit($id)
+     {
+         $sprint = Sprint::find($id);
+         $data = array(
+              'sprint_id' => $sprint->id,
+              'no_sprint' => $sprint->numero,
+              'date_debut' => $sprint->date_debut,
+              'date_fin' => $sprint->date_fin
+         );
+         return $data;
+     }
 
     /**
      * Update the specified resource in storage.
@@ -125,10 +132,43 @@ class SprintController extends Controller
      * @param  \App\Sprint  $sprint
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sprint $sprint)
-    {
-        //
-    }
+     public function update(Request $request, $id)
+     {
+       try{
+
+         /*$data = array(
+              'sprint_id' => $id,
+              'no_sprint' => $request->no_sprint,
+              'date_debut' => $request->date_debut,
+              'date_fin' => $request->date_fin,
+         );*/
+         $sprint = Sprint::find($id);
+         $sprint->numero = $request->modifier_no_sprint;
+         $sprint->date_debut = $request->sprint_modifier_date_debut;
+         $sprint->date_fin = $request->sprint_modifier_date_fin;
+         $data = array(
+              'numero' => $request->modifier_no_sprint,
+         );
+         // attempt validation
+         if ($sprint->validate($data))
+           $sprint->update();
+         else {
+           return response()->json([
+               'status' => 'error',
+               'message' => "Les valeurs entrées ne sont pas conformes aux valeurs attentues.BACK_END"
+             ]);
+         }
+       }
+       catch(\Exception $e)
+       {
+           //return new JsonResponse($errors, 400);
+         return response()->json([
+             'status' => 'error',
+             'message' => "Une erreur de serveur est survenue"
+           ]);
+       }
+       return $data;
+     }
 
     /**
      * Remove the specified resource from storage.

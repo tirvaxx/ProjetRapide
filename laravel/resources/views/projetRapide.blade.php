@@ -81,12 +81,12 @@
                     <div class="panel-heading">
                       <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse_{{$value->projet_id}}">
-                        {{ $value->projet_nom }} 
+                        {{ $value->projet_nom }}
                         @if( $value->projet_retard == "true")
                             &nbsp;
                             <span rel="tooltip" title="Projet en retard" class="glyphicon glyphicon-flag" style="color:red"></span>
                         @endif
-                        </a>  
+                        </a>
                       </h4>
                     </div>
                     <div id="collapse_{{$value->projet_id}}" class="panel-collapse collapse">
@@ -95,11 +95,11 @@
                              <p>{{$value->projet_description}}</p>
                              <small>Date dû : {{$value->projet_date_du}}</small>
                         </div>
-                       
+
                         <button id="btn_projet_charger" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Charger</button>
                         <button id="btn_projet_modifier" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Modifier</button>
 
-                        
+
                     </div>
                 </div>
             @endforeach
@@ -343,6 +343,38 @@
                 <div class="form-group">
                     <button type="button" id="btn_sprint_ajouter" class="btn btn-primary" >Ajouter</button>
                     <button type="button" id="btn_sprint_fermer" class="btn btn-primary" >Fermer</button>
+                </div>
+        </fieldset>
+
+    </form>
+
+</div>
+
+<div id="sprint_modifier_form" style="display:none">
+    <form id="form_modifier_sprint" action="#">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <fieldset>
+            <legend>Modifier un sprint</legend>
+                <div class="form-group">
+                  <div id="sprint_message_modifier" class="alert alert-warning">{{ Session::get('sprint_message_modifier') }}</div>
+                </div>
+                <div class="form-group">
+                        <label for="no_sprint">Numéro du sprint</label>
+                        <input type="text" class="form-control" id="modifier_no_sprint" name="modifier_no_sprint" placeholder="Sprint" />
+                        <input type="hidden" id="modifier_sprint_id"></input>
+                        <input type="hidden" id="modifier_ancien_sprint_no"></input>
+                </div>
+                <div class="form-group" >
+                    <label for="date_debut">Date Début :</label>
+                    <input type="text" class="form-control date" name="sprint_modifier_date_debut" id="sprint_modifier_date_debut">
+                </div>
+                <div class="form-group" >
+                    <label for="date_fin">Date Fin :</label>
+                    <input type="text" class="form-control date" name="sprint_modifier_date_fin" id="sprint_modifier_date_fin">
+                </div>
+                <div class="form-group">
+                    <button type="button" id="btn_sprint_modifier" class="btn btn-primary" >Modifier</button>
+                    <button type="button" id="btn_sprint_formmodifier_annuler" class="btn btn-primary" >Annuler</button>
                 </div>
         </fieldset>
 

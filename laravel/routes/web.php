@@ -48,6 +48,8 @@ Route::get('/taches/{id}', 'TacheController@show');
 
 
 Route::post('/sprints', 'SprintController@store');
+Route::get('/sprints/{id}/edit', array('sprint'=> 'sprints', 'uses' => 'SprintController@edit'));
+Route::put('/sprints/{id}', 'SprintController@update');
 
 Route::get('/acteurs',  array('as'=> 'acteurs', 'uses' => 'acteurs@index'));
 Route::get('/acteurEmployes',  array('as'=> 'acteurEmployes', 'uses' => 'acteurEmployeController@index'));
@@ -85,6 +87,3 @@ Route::resource('commentaires_projet', 'CommentaireProjetController');
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
-
-
-
