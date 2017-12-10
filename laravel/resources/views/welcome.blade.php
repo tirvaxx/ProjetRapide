@@ -128,7 +128,7 @@
                             {{ csrf_field() }}
                         </form>
                     @else
-                        <a href="{{ url('admin.login') }}">Login Gestionnaire</a>
+                        <a href="{{ url('adminForm') }}">Login Gestionnaire</a>
                         <a href="{{ url('/login') }}">Login</a>
                         <a href="{{ url('/register') }}">Register</a>
                     @endif

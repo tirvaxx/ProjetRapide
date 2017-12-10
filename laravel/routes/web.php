@@ -24,8 +24,9 @@ Route::post('/users', 'HomeController@getUsers');
 
 Route::post('/assignation', 'ProjetController@assignation');
 
-Route::get('/admin/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
-Route::post('/admin/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+Route::get('/adminForm', 'Auth\AdminLoginController@showLoginForm')->name('adminForm');
+
+Route::post('/adminForm', 'Auth\AdminLoginController@login')->name('adminForm');
 Route::get('/admin', 'AdminController@index');
 
 Route::get('/home/{id}',  array('uses' => 'ProjetRapideController@projetInit'));
