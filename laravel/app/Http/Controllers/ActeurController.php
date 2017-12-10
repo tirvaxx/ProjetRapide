@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use View;
-use App\Acteur;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
+//use View;
+use App\Acteur;
+
 
 class ActeurController extends Controller
 {
@@ -16,7 +19,8 @@ class ActeurController extends Controller
      */
     public function index()
     {
-        return View::make('acteurs.index')->with('title', 'Les Acteurs')->with('acteurs',Acteur::all());
+        //return View::make('acteurs.index')->with('title', 'Les Acteurs')->with('acteurs',Acteur::all());
+        return DB::table('acteurs')->where('nom', $nom)->first();
     }
 
     /**
@@ -26,7 +30,7 @@ class ActeurController extends Controller
      */
     public function create()
     {
-        return View::make('acteurs.create')->with('title', 'Insérer un acteur');   
+        //return View::make('acteurs.create')->with('title', 'Insérer un acteur');
     }
 
     /**
@@ -37,7 +41,7 @@ class ActeurController extends Controller
      */
     public function store(Request $request)
     {
-       
+
     }
 
     /**
