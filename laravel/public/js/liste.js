@@ -177,7 +177,7 @@ function valider_champs_liste(nom_liste, description_liste, tag_msg){
 	var res_test_desc = description_liste.match(ExpDesc);
 
 	if(!res_test_nom){
-		$(tag_msg).html("Le nom de la liste contient un caractère non accepté.").removeClass().addClass("alert alert-warning").show();
+		$(tag_msg).html("Le nom de la liste contient un caractère non accepté ou ne respecte pas la longueur définie : 2 à 50 caractères.").removeClass().addClass("alert alert-warning").show();
 		return false;
 	}
 	if(!res_test_desc){
