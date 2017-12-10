@@ -62,7 +62,7 @@ $(document).ready(function(){
                 if(prev_sprint != json_obj[i].sprint_id){
 
 
-                    sprint_add_tab(json_obj[i].sprint_id, json_obj[i].sprint_numero);
+                    sprint_add_tab(json_obj[i].sprint_id, json_obj[i].sprint_numero, json_obj[i].sprint_retard);
 
                     $( "#tabs" ).tabs({ active: i });
                     $( "#tabs" ).tabs( "refresh" );
@@ -309,7 +309,7 @@ $(document).ready(function(){
                         dataType : 'text',
 
                         success: function(result, status, xhr) {
-                            toastr.success('Utilisateur ajouté au projet', 'SUCCESS!!');
+                            toastr.success('Utilisateur ajouté au projet', 'SUCCÈS!!');
                             //toastMessageSuccess(document.getElementById("search-bar").value);
                         },
                         error: function(xhr,status,error) {

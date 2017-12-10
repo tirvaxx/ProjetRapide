@@ -175,13 +175,18 @@
         <fieldset>
             <legend>Ajouter une tâche</legend>
                 <div class="form-group">
+                    <div id="tache_message_ajouter" class="alert alert-warning" style="display:none">{{ Session::get('tache_message_ajouter') }}</div>
+                </div>
+                <div class="form-group">
                         <label for="nom_tache">Nom de la tâche</label>
                         <input type="text" class="form-control" id="nom_tache" name="nom_tache" placeholder="Nom" />
                         <input type="hidden" id="ajouter_tache_id"></input>
                         <input type="hidden" id="ajouter_tache_liste_id"></input>
                 </div>
                 <div class="form-group">
-                         <label for="description_tache">Description de la tâche</label>
+                        <label for="tache_date_du">Date dû</label>
+                        <input type="text" class="form-control date" id="tache_date_du" name="tache_date_du" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" placeholder="Date dû" />
+                        <label for="description_tache">Description de la tâche</label>
                         <textarea class="form-control" id="description_tache" name="description_tache" placeholder="Description"></textarea>
                 </div>
                 <div class="form-group">
@@ -200,12 +205,18 @@
         <fieldset>
             <legend>Modifier une tâche</legend>
                 <div class="form-group">
+                    <div id="tache_message_modifier" class="alert alert-warning" style="display:none" >{{ Session::get('tache_message_modifier') }}</div>
+                </div>
+                <div class="form-group">
+                    
                         <label for="nom_tache">Nom de la tâche</label>
                         <input type="text" class="form-control" id="modifier_nom_tache" name="modifier_nom_tache" placeholder="Nom" />
                         <input type="hidden" id="modifier_tache_id" ></input>
                 </div>
                 <div class="form-group">
-                         <label for="description_tache">Description de la tâche</label>
+                        <label for="modifier_tache_date_du">Date dû</label>
+                        <input type="text" class="form-control date" id="modifier_tache_date_du" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF"  name="modifier_tache_date_du" placeholder="Date dû" />
+                         <label for="modifier_description_tache">Description de la tâche</label>
                         <textarea class="form-control" id="modifier_description_tache" name="modifier_description_tache" placeholder="Description"></textarea>
                 </div>
                 <div class="form-group">
@@ -226,7 +237,7 @@
         <fieldset>
             <legend>Ajouter une liste</legend>
               <div class="form-group">
-                <div id="liste_message_ajouter" class="alert alert-warning">{{ Session::get('liste_message_ajouter') }}</div>
+                <div id="liste_message_ajouter" class="alert alert-warning" style="display:none">{{ Session::get('liste_message_ajouter') }}</div>
               </div>
                 <div class="form-group">
                         <label for="nom_liste">Nom de la liste</label>
@@ -256,13 +267,13 @@
                         <label for="nom_projet">Nom du projet</label>
                         <input type="text" class="form-control" id="nom_projet" name="nom_projet" placeholder="Nom" />
                 </div>
+                <div class="form-group" >
+                    <label for="date_du_projet">Date dû :</label>
+                    <input type="text" class="form-control date"  readonly="readonly" style="cursor:pointer; background-color: #FFFFFF"   name="date_du_projet" id="date_du_projet">
+                </div>
                 <div class="form-group">
                          <label for="description_projet">Description du projet</label>
                         <textarea class="form-control" id="description_projet" name="description_projet" placeholder="Description"></textarea>
-                </div>
-                <div class="form-group" >
-                    <label for="date_du_projet">Date dû :</label>
-                    <input type="text" class="form-control date" name="date_du_projet" id="date_du_projet">
                 </div>
                 <div class="form-group">
                     <button type="button" id="btn_projet_ajouter" class="btn btn-primary" >Créer</button>
@@ -291,11 +302,11 @@
                 </div>
                 <div class="form-group" >
                     <label for="date_du_projet">Date dû :</label>
-                    <input type="text" class="form-control" name="modifier_date_du_projet" id="modifier_date_du_projet">
+                    <input type="text" class="form-control date"  readonly="readonly" style="cursor:pointer; background-color: #FFFFFF"   name="modifier_date_du_projet" id="modifier_date_du_projet">
                 </div>
                 <div class="form-group" >
                     <label for="date_complete_projet">Date complété :</label>
-                    <input type="text" class="form-control date" name="modifier_date_complete_projet" id="modifier_date_complete_projet">
+                    <input type="text" class="form-control date"  readonly="readonly" style="cursor:pointer; background-color: #FFFFFF"   name="modifier_date_complete_projet" id="modifier_date_complete_projet">
                 </div>
                 <div class="form-group">
                     <button type="button" id="btn_projet_formmodifier" class="btn btn-primary" >Modifier</button>
@@ -315,7 +326,7 @@
         <fieldset>
             <legend>Ajouter un sprint</legend>
                 <div class="form-group">
-                        <div id="sprint_message_ajouter" class="alert alert-warning">{{ Session::get('sprint_message_ajouter') }}</div>
+                        <div id="sprint_message_ajouter" class="alert alert-warning" style="display:none">{{ Session::get('sprint_message_ajouter') }}</div>
                 </div>
                 <div class="form-group">
                         <label for="no_sprint">Numero du sprint</label>
@@ -323,11 +334,11 @@
                 </div>
                 <div class="form-group" >
                     <label for="date_debut">Date Début :</label>
-                    <input type="text" class="form-control date" name="date_debut" id="date_debut">
+                    <input type="text" class="form-control date"  readonly="readonly" style="cursor:pointer; background-color: #FFFFFF"   name="date_debut" id="date_debut">
                 </div>
                 <div class="form-group" >
                     <label for="date_fin">Date Fin :</label>
-                    <input type="text" class="form-control date" name="date_fin" id="date_fin">
+                    <input type="text" class="form-control date"  readonly="readonly" style="cursor:pointer; background-color: #FFFFFF"   name="date_fin" id="date_fin">
                 </div>
                 <div class="form-group">
                     <button type="button" id="btn_sprint_ajouter" class="btn btn-primary" >Ajouter</button>
@@ -361,7 +372,7 @@
         <fieldset>
             <legend>Modifier une liste</legend>
                 <div class="form-group">
-                  <div id="liste_message_modifier" class="alert alert-warning">{{ Session::get('liste_message_modifier') }}</div>
+                  <div id="liste_message_modifier" class="alert alert-warning" style="display:none">{{ Session::get('liste_message_modifier') }}</div>
                 </div>
                 <div class="form-group">
                         <label for="nom_liste">Nom de la liste</label>
@@ -392,7 +403,7 @@
             <legend>Ajouter un utilisateur</legend>
 
                 <div class="form-group">
-                  <div id="utilisateur_message_ajouter" class="alert alert-warning">{{ Session::get('utilisateur_message_ajouter') }}</div>
+                  <div id="utilisateur_message_ajouter" class="alert alert-warning" style="display:none">{{ Session::get('utilisateur_message_ajouter') }}</div>
                 </div>
 
                 <div class="form_groupe">
@@ -459,7 +470,7 @@
         <fieldset>
             <legend>Modifier un utilisateur</legend>
                 <div class="form-group">
-                  <div id="utilisateur_message_modifier" class="alert alert-warning">{{ Session::get('utilisateur_message_modifier') }}</div>
+                  <div id="utilisateur_message_modifier" class="alert alert-warning" style="display:none">{{ Session::get('utilisateur_message_modifier') }}</div>
                 </div>
 
                 <div id="modifier_utilisateur_type_1_et_type_2" style="display:none">

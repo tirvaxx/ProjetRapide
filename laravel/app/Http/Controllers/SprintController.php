@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
 use App\Sprint;
 use App\SprintActivite;
 use Illuminate\Http\Request;
@@ -60,7 +61,7 @@ class SprintController extends Controller
           else {
             return response()->json([
                 'success' => 'false',
-                'errors'  => "Valeur inattendue : le Numéro de sprint doit être entre 1 et 999.",
+                'errors'  => "Erreur, valeur inattendue : le Numéro de sprint doit être entre 1 et 999.",
             ], 200);
           }
         }
@@ -83,9 +84,14 @@ class SprintController extends Controller
         $sprint_activite->save();
 
 
+
+        $date_now = new DateTime("now");
+        $date_date_fin = new DateTime($request->input("date_fin"));
+ 
         $data = array(
              'last_inserted_id' => $sprint->id,
-             'numero' => request('no_sprint')
+             'numero' => request('no_sprint'),
+             'sprint_retard' => ($date_now > $date_date_fin)
         );
         return $data;
     }

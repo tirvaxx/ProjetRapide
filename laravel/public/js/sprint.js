@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 
 
@@ -47,23 +48,29 @@ $(document).ready(function(){
 
 	        success: function (result,status,xhr) {
 
-									var json_rep = JSON.parse(xhr.responseText);
+				if(!(xhr.responseText.indexOf("erreur") > 0 || xhr.responseText.indexOf("Erreur") > 0)){
+					var json_rep = JSON.parse(xhr.responseText);
 
-								  if(json_rep.status != null && json_rep.status == "error"){
-								    $erreur = json_rep.message == null? "Une valeur entrée n'est pas conforme." : json_rep.message;
-								    $("#sprint_message_ajouter").html($erreur).removeClass().addClass("alert alert-warning").show();
-								    return false;
-								  }
-								  else {
-										var id = JSON.parse(result).last_inserted_id;
-		                var numero = JSON.parse(result).numero;
+					if(json_rep.status != null && json_rep.status == "error"){
+						$erreur = json_rep.message == null? "Une valeur entrée n'est pas conforme." : json_rep.message;
+						$("#sprint_message_ajouter").html($erreur).removeClass().addClass("alert alert-warning").show();
+						return false;
+					}
+					else {
+						var id = JSON.parse(result).last_inserted_id;
+						var numero = JSON.parse(result).numero;
+						var sprint_retard = JSON.parse(result).sprint_retard;
+						sprint_add_tab(id, numero, sprint_retard);
+						$("#sprint_message_ajouter").hide();
+						toastr.success('Sprint Ajouté', 'SUCCÈS!');
+					}
 
-		                sprint_add_tab(id, numero);
-								    $("#sprint_message_ajouter").hide();
-										toastr.success('Sprint Ajouté', 'SUCCÈS!');
-								  }
-						}
-	    });
+				}else{
+					toastr.error("Une erreur est survenue.", "Erreur!");
+				}	
+			} //success
+	    }); //ajax
+
 	}); // $('#btn_sprint_ajouter').click(function()
 
 	// Permet de valider les champs d'un sprint

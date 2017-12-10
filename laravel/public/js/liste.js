@@ -37,7 +37,7 @@ function creer_liste(sprint_id_name,id, nom, description){
 	$('.container-list .sortable-list').sortable({connectWith: '.container-list .sortable-list', placeholder: 'placeholder',
 	    stop: function( event, ui ){
 
- 	var tache_id_nom = ui.item.attr("id");
+ 			var tache_id_nom = ui.item.attr("id");
 
 
 
@@ -68,7 +68,7 @@ setTimeout(function(){
 
 */
 
- 					var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
+ 			var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
 	        var sprint_id = sprint_id_name.replace("sprint_", "");
 
 	        var json_liste_tache = get_all_liste_tache(sprint_id_name);
@@ -80,7 +80,7 @@ setTimeout(function(){
 
 
 
-					$.ajax({ statusCode: {
+			$.ajax({ statusCode: {
 	            500: function(xhr) {
 	             alert(500);
 	            }},
@@ -92,10 +92,10 @@ setTimeout(function(){
 	            dataType: 'text',
 
 	        success: function (result,status,xhr) {
-				toastr.success('Déplacement enregistré', 'SUCCES!');
+				toastr.success('Déplacement enregistré', 'SUCCÈS!');
 
        		},error(xhr,status,error){
-				toastr.error('Déplacement non enregistré', 'Erreur!');
+				toastr.error('Déplacement non enregistré', 'ERREUR!');
 
 	        },
 	            complete: function (xhr,status) {
@@ -230,7 +230,7 @@ function modifier_liste_bd(id_liste, nom_liste, description_liste){
 	  else {
 	    afficher_liste_modifiee(id_liste, nom_liste, description_liste);
 	    $("#liste_message_modifier").hide();
-			toastr.success('Liste Modifiée', 'SUCCES!');
+			toastr.success('Liste Modifiée', 'SUCCÈS!');
 		  //$("#sprint_message").html("Modification de la liste réussie avec succès.").removeClass().addClass("alert alert-success").show().fadeOut(8000);
 	  }
 
@@ -333,26 +333,32 @@ $(document).ready(function(){
 		    // remind that 'data' is the response of the AjaxController
 		success: function (result,status,xhr) {
 
-			var json_rep = JSON.parse(xhr.responseText);
 
-			// Si erreur, on affiche l'erreur
-			if(json_rep.status != null && json_rep.status == "error"){
-				$erreur = json_rep.message == null? "Une valeur entrée n'est pas conforme." : json_rep.message;
-				$("#liste_message_ajouter").html($erreur).removeClass().addClass("alert alert-warning").show();
-				return false;
+			if(!(xhr.responseText.indexOf("erreur") > 0 || xhr.responseText.indexOf("Erreur") > 0)){
+				var json_rep = JSON.parse(xhr.responseText);
+
+				// Si erreur, on affiche l'erreur
+				if(json_rep.status != null && json_rep.status == "error"){
+					$erreur = json_rep.message == null? "Une valeur entrée n'est pas conforme." : json_rep.message;
+					$("#liste_message_ajouter").html($erreur).removeClass().addClass("alert alert-warning").show();
+					return false;
+				}
+				else { // Tout s'est bien passé, on crée la liste
+					$("#liste_message_ajouter").hide();
+					toastr.success('Liste Ajoutée', 'SUCCÈS!');
+
+					var id = JSON.parse(result).last_inserted_id;
+					var nom = JSON.parse(result).nom;
+					var description = JSON.parse(result).description;
+					creer_liste(sprint_id_name, id, nom, description);
+				}
+				$.unblockUI();
+				return true;
+			}else{
+				toastr.error("Erreur est survenue", "Erreur!");
 			}
-			else { // Tout s'est bien passé, on crée la liste
-				$("#liste_message_ajouter").hide();
-				toastr.success('Liste Ajoutée', 'SUCCÈS!');
 
-				var id = JSON.parse(result).last_inserted_id;
-				var nom = JSON.parse(result).nom;
-				var description = JSON.parse(result).description;
-				creer_liste(sprint_id_name, id, nom, description);
-			}
-
-			$.unblockUI();
-			return true;
+			
 
 		},
 		error(xhr,status,error){

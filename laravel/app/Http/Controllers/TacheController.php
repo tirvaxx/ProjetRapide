@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 //use View;
 
 use DB;
+use DateTime;
 use Log;
 use App\Tache;
 use App\SprintActivite;
@@ -44,9 +45,30 @@ class TacheController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info(Auth::user()->id);
+
+        $this->validate($request, [
+            'nom_tache' => 'required|min:2|max:50',
+            'description_tache' => 'required|min:2|max:200',
+            'tache_date_du' => 'required|date',
+            
+        ],
+        [
+                'nom_tache.required' => 'Le nom est obligatoire.',
+                'nom_tache.min' => 'Le nom doit contenir minimum 2 caracteres.',
+                'nom_tache.max' => 'Le nom doit contenir max 50 caracteres.',
+                'description_tache.required' => 'La description est obligatoire.',
+                'description_tache.min' => 'La description doit contenir minimum 2 caracteres.',
+                'description_tache.max' => 'La description doit contenir max 200 caracteres.',
+                'tache_date_du.required' => 'La date est obligatoire.',
+                'tache_date_du.date' => 'La date est invalide.',
+        ]);
+
+
+
+        //Log::info(Auth::user()->id);
         $tache = new Tache;      
         $tache->nom = request('nom_tache');
+        $tache->date_du = request('tache_date_du');
         $tache->description = request('description_tache');
         $tache->creer_par_acteur_id = Auth::id();
         $tache->save();
@@ -81,14 +103,19 @@ class TacheController extends Controller
         ->WhereNull("tache_id")
         ->update(["actif" => 0]);
 
-  
+
+        $date_now = new DateTime("now");
+        $date_date_du = new DateTime(request("tache_date_du"));
+ 
         $data = array(
              'last_inserted_id' => $tache->id,
              'nom' => request('nom_tache'),
-             'description' => request('description_tache')
-     );
+             'description' => request('description_tache'),
+             'tache_date_du' => request('tache_date_du'),
+             'tache_retard' => ($date_now > $date_date_du)
+        );
 
-
+ 
         return $data;
 
 
@@ -106,7 +133,7 @@ class TacheController extends Controller
 
         $tache = DB::table('tache')
             ->join('users', 'users.id', '=', 'tache.creer_par_acteur_id')
-            ->select('tache.nom as tache_nom', 'tache.description as tache_description', 'users.name AS creer_par',  'users.email as courriel', 'tache.created_at as tache_creer_date', 'tache.updated_at as tache_maj_date')
+            ->select('tache.nom as tache_nom', 'tache.description as tache_description','tache.date_du as tache_date_du', 'users.telephone as telephone','users.name AS creer_par',  'users.email as courriel', 'tache.created_at as tache_creer_date', 'tache.updated_at as tache_maj_date')
             ->where('tache.id', '=', $id)
             ->get();
             
@@ -128,6 +155,7 @@ class TacheController extends Controller
         $data = array(
             'tache_id' => $tache->id,
             'tache_nom' => $tache->nom,
+            'tache_date_du' => $tache->date_du,
             'tache_description' => $tache->description
        );
        return $data;
@@ -142,8 +170,27 @@ class TacheController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $this->validate($request, [
+            'modifier_nom_tache' => 'required|min:2|max:50',
+            'modifier_description_tache' => 'required|min:2|max:200',
+            'modifier_tache_date_du' => 'required|date',
+            
+        ],
+        [
+                'modifier_nom_tache.required' => 'Le nom est obligatoire.',
+                'modifier_nom_tache.min' => 'Le nom doit contenir minimum 2 caracteres.',
+                'modifier_nom_tache.max' => 'Le nom doit contenir max 50 caracteres.',
+                'modifier_description_tache.required' => 'La description est obligatoire.',
+                'modifier_description_tache.min' => 'La description doit contenir minimum 2 caracteres.',
+                'modifier_description_tache.max' => 'La description doit contenir max 200 caracteres.',
+                'modifier_tache_date_du.required' => 'La date est obligatoire.',
+                'modifier_tache_date_du.date' => 'La date est invalide.',
+        ]);
+
         $tache = Tache::find($id);
         $tache->nom = $request->modifier_nom_tache;
+        $tache->date_du = $request->modifier_tache_date_du;
         $tache->description = $request->modifier_description_tache;
         $tache->update();
 

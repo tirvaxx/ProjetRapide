@@ -1,11 +1,11 @@
  // Actual addTab function: adds new tab using the input from the form above
-function sprint_add_tab(id, numero) {
+function sprint_add_tab(id, numero, sprint_retard) {
 	//var label = noSprint.val() || "Sprint " + tabCounter,
 
 	var label = "Sprint " + numero;
 	//   id = "tabs-" + tabCounter,
 	//  id = "tabs-" + id,
-	tabTemplate = "<li><a href='#{href}'>#{label}</a></li>";
+	tabTemplate = '<li><a href="#{href}">#{label}</a><span class="glyphicon glyphicon-flag" rel="tooltip" title="Sprint est en retard." style="color:red;' + ( sprint_retard == true || sprint_retard == "true" ?  "display:inline; " : "display:none; " ) + '"></span>   </li>';
 	li = $( tabTemplate.replace( /#\{href\}/g, "#sprint_" + id ).replace( /#\{label\}/g, label ) );
 	//  tabContentHtml = tabContent.val();
 
@@ -20,21 +20,6 @@ function sprint_add_tab(id, numero) {
 $(document).ready(function(){
 
 
-
-
-                               
-           //     $( function() {
-            //    var noSprint = $( "#no_sprint" );
-            //    var  tabContent = $( "#tab_content" );
-                  //tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Remove Tab</span></li>",
-                  //tabTemplate = "<li><a href='#{href}'>#{label}</a></li>",
-              
-
-                //var tabs = $( "#tabs" ).tabs();
-
-                  // $( "#creer_item_sprint" ).button().on( "click", function() {
-                //     dialog.dialog( "open" );
-                //   });
 
               
   // Close icon: removing the tab on click
