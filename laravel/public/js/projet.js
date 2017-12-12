@@ -241,7 +241,7 @@ $(document).ready(function(){
             data: data,
             dataType: 'text',
             // remind that 'data' is the response of the AjaxController
-        success: function (result,status,xhr) {
+            success: function (result,status,xhr) {
                 if (result == 'error') {
                     toastr.warning("Vous n'etes pas administrateur", 'Erreur!');
                 } else {
@@ -250,17 +250,12 @@ $(document).ready(function(){
                 }
                 // on retourne au home pour voir les projets... en attendant todo a continuer
                 
-        },
-        error(xhr,status,error){
-            alert("error 1 " + status);
-            alert("error 2 " + error);
-        },
-        complete: function (xhr,status) {
-                // Handle the complete event
-
-            //alert("complete " + status);
-
-        }
+            },
+            error(xhr,status,error){
+                alert("error 1 " + status);
+                alert("error 2 " + error);
+            }
+        
         });
 
     }); // $('#btn_projet_ajouter').click(function()

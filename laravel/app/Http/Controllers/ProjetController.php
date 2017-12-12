@@ -53,29 +53,21 @@ class ProjetController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-             if(Auth::check() && Auth::user()->isAdmin()) {
-                $projet = new Projet;
-
-                $projet->creer_par_acteur_id = Auth::id();
-                $projet->nom = request('nom_projet');
-                $projet->description = request('description_projet');
-                $projet->date_du = $request->input('date_du_projet');
-                $projet->save();
-
-
-                $data = array(
-                );
-                return $data;
-            }
-        // try code
-        } catch(\Exception $e){
-        $data = "error";
-            return $data;
-        }
         
-       
-        
+           
+        $projet = new Projet;
+
+        $projet->creer_par_acteur_id = 1;
+        $projet->nom = request('nom_projet');
+        $projet->description = request('description_projet');
+        $projet->date_du = $request->input('date_du_projet');
+        $projet->save();
+
+
+        $data = array(
+        );
+        return $data;
+            
     }
 
     /**
