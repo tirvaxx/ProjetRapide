@@ -224,8 +224,9 @@ $(document).ready(function(){
     }); //$('#btn_projet_fermer').click(function()
 
 
-    $('#btn_projet_ajouter').click(function() {
-
+    $('#btn_projet_ajouter').click(function(e) {
+        
+        e.stopImmediatePropagation();
         var nom_projet = $("#nom_projet").val();
         var description_projet = $("#description_projet").val();
         var data =  $('#form_projet').serialize();
@@ -242,6 +243,7 @@ $(document).ready(function(){
             dataType: 'text',
             // remind that 'data' is the response of the AjaxController
             success: function (result,status,xhr) {
+                $('#btn_projet_ajouter').hide();
                 if (result == 'error') {
                     toastr.warning("Vous n'etes pas administrateur", 'Erreur!');
                 } else {
@@ -252,6 +254,7 @@ $(document).ready(function(){
                 
             },
             error(xhr,status,error){
+                self.submitting = false;
                 alert("error 1 " + status);
                 alert("error 2 " + error);
             }
