@@ -1,5 +1,5 @@
 
- @extends('layouts.projetLayout')
+ @extends('layouts.adminProjetLayout')
 
 @section('content')
 
@@ -16,7 +16,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="/home">Projet Rapide</a>
+              <a class="navbar-brand" href="/admin">Projet Rapide</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

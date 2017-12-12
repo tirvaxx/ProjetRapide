@@ -27,7 +27,9 @@ Route::post('/assignation', 'ProjetController@assignation');
 Route::get('/adminForm', 'Auth\AdminLoginController@showLoginForm')->name('adminForm');
 
 Route::post('/adminForm', 'Auth\AdminLoginController@login')->name('adminForm');
-Route::get('/admin', 'AdminController@index');
+Route::get('/admin', array('uses' => 'AdminController@index'));
+
+
 
 Route::get('/home/{id}',  array('uses' => 'ProjetRapideController@projetInit'));
 

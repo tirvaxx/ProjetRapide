@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use DB;
 use Log;
+use Auth;
 use App\Projet;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+//use Illuminate\Support\Facades\Auth;
 use App\ProjetAssignation;
 
 class ProjetController extends Controller
@@ -20,8 +21,7 @@ class ProjetController extends Controller
     public function index()
     {
 
-        try{
-             if(Auth::check()) {
+        
                 $projet = DB::table('projet')->select("id as projet_id", "nom as projet_nom"
                                                     , "description as projet_description"
                                                     , "date_du as projet_date_du"
@@ -32,11 +32,7 @@ class ProjetController extends Controller
 
 
             return view("projetRapide")->with("dataProjet", $projet->toArray());
-            }
-        } catch(\Exception $e){
-            $data = "error";
-            return $data;
-        }
+            
     }
 
     /**
