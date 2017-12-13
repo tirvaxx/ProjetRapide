@@ -21,7 +21,7 @@ class CreateAdminsTable extends Migration
             $table->timestamps();
 
         });
-
+       
        // DB::update("ALTER TABLE admins AUTO_INCREMENT = 1000000000;");
     }
 

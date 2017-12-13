@@ -101,7 +101,7 @@ function creer_tache(liste_id, tache_id, tache_nom, tache_description, tache_ret
 
 function get_users(node,projet_id,tache_id,get_user_assigner){
         var url = "/taches_assignation/" + projet_id + "/" + tache_id + "/" + get_user_assigner;
-
+        $("#" + node).html("");
         $.ajax({ statusCode: {
             500: function(xhr) {
                 toastr.error("Une erreur serveur est survenue.", "ERREUR!");
@@ -115,7 +115,7 @@ function get_users(node,projet_id,tache_id,get_user_assigner){
 
 
             var res = JSON.parse(result);
-            $("#" + node).html("");
+            
             $.each(res ,function(k,v){
                 var li = '<li rel="tooltip" title="' + v.courriel + '" id="li_' + v.id + '"  class="ui-state-default"><img src="/images/' + v.photo + '" width="45" height="45" ></li>';
                 $("#" + node).append(li);
@@ -176,6 +176,7 @@ $(document).ready(function(){
  // sur double-click d'une tache
     $("body").delegate('li','dblclick',function() {
 
+        $("#tache_message_modifier").hide();
 
         var tache_id =  $(this).attr('id');
         //on s'assure que le <li> cliqu� est une t�che sinon exit
@@ -401,7 +402,8 @@ $(document).ready(function(){
         
         e.preventDefault();
         e.stopImmediatePropagation();
-
+        
+        $("#tache_message_ajouter").hide();
         var list_id_from_a =  $(this).attr('id');
         //on s'assure que le <a> cliquer est un bouton pour ajouter une tache sinon exit
         //il faut que le id de <a> commence par btn_ajouter_tache_Liste + _ + le id de la liste dans la bd
