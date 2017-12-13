@@ -93,7 +93,7 @@
 
                         <div class="panel-body">
                              <p>{{$value->projet_description}}</p>
-                             <small>Date dû : {{$value->projet_date_du}}</small>
+                             <small>Date dûe : {{$value->projet_date_du}}</small>
                         </div>
                        
                         <button id="btn_projet_charger" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Charger</button>
@@ -276,7 +276,7 @@
                         <textarea class="form-control" id="description_projet" name="description_projet" placeholder="Description"></textarea>
                 </div>
                 <div class="form-group" >
-                    <label for="date_du_projet">Date dû :</label>
+                    <label for="date_du_projet">Date dûe:</label>
                     <input type="text" class="form-control date" name="date_du_projet" id="date_du_projet">
                 </div>
                 <div class="form-group">
@@ -305,7 +305,7 @@
                         Description</textarea>
                 </div>
                 <div class="form-group" >
-                    <label for="date_du_projet">Date dû :</label>
+                    <label for="date_du_projet">Date dûe :</label>
                     <input type="text" class="form-control" name="modifier_date_du_projet" id="modifier_date_du_projet">
                 </div>
                 <div class="form-group" >

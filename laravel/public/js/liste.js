@@ -40,41 +40,10 @@ function creer_liste(sprint_id_name,id, nom, description){
  			var tache_id_nom = ui.item.attr("id");
 
 
-
-
-
-
-/*
-	$("#" + tache_id_nom).animate({
-	   borderLeftColor: "green",
-	   borderTopColor: "green",
-	   borderRightColor: "green",
-	   borderBottomColor: "green",
-	}, 0);
-
-
-setTimeout(function(){
-
-    var div = $("#" + tache_id_nom);
-    $({alpha:1}).animate({alpha:0}, {
-        duration: 1000,
-        step: function(){
-            div.css('border','thick solid rgba(0,255,0,'+this.alpha+')');
-        }
-    });
-
-}, 0);
-
-
-*/
-
  			var sprint_id_name = $("#tabs .ui-state-active").attr("aria-controls");
 	        var sprint_id = sprint_id_name.replace("sprint_", "");
 
 	        var json_liste_tache = get_all_liste_tache(sprint_id_name);
-
-//console.log(json_liste_tache);
-
 
 	        var data =  "projet_id=" + g_selected_projet_id+ "&sprint_id=" + sprint_id + "&liste_tache=" + json_liste_tache;
 

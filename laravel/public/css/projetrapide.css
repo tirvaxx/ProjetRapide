@@ -1,3 +1,71 @@
+
+html,body {
+    height:100%;
+}
+
+ul.assigner_user{
+    position: relative;
+   
+    height:350px;
+
+    list-style-type: none;
+  
+    display: table-row;
+    vertical-align: middle;
+  overflow: auto;
+   
+}
+ul.assigner_user li {
+
+    padding:5px;
+    margin:10px;
+    border:thin dashed #999;
+
+ 
+}
+
+
+
+.titre_ajout_tache_user{
+padding:5px;
+margin: 5px;
+
+display: inline;
+font-size:0.9em;
+}
+
+.container_ajout_tache{
+    position: relative;
+    display:table-cell;
+    width:85%;
+    height:100%;
+    
+}
+.titre_modifier_tache_user{
+padding:5px;
+margin: 5px;
+
+display: inline;
+font-size:0.9em;
+}
+
+.container_modifier_tache{
+    position: relative;
+    display:table-cell;
+    width:85%;
+    height:100%;
+
+}
+.container-user{
+
+    display: block;  
+    display:table-cell;
+    background-color: #ddd;
+    border-left:thin solid black;
+    
+}
+
+
 a {
     text-decoration:none !important;
 }
@@ -32,7 +100,6 @@ fieldset legend {
    margin:40px;
   
 }
-
 
 
 .container-list{

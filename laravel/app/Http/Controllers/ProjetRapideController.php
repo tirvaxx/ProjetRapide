@@ -16,7 +16,7 @@ class ProjetRapideController extends Controller
     public function projetInit($id)
     { 
 
-
+        //if(auth::check()){
         //non complete
         //a la selection d'un projet... appeler ce controller
            $projet = DB::table('vw_sprint_activite_actif')->select("projet_id", "projet_nom", "projet_description", "projet_date_du", "projet_date_complete", "sprint_id", "sprint_numero", "sprint_date_debut", "sprint_date_fin", DB::raw("(case when datediff(sprint_date_fin, Date(now())) < 0 then 'true' else 'false' end) as sprint_retard"), "liste_id", "liste_nom", "liste_description", "tache_id", "tache_nom", "tache_description","tache_date_du",  DB::raw("(case when datediff(tache_date_du, Date(now())) < 0 then 'true' else 'false' end) as tache_retard"))
@@ -27,6 +27,11 @@ class ProjetRapideController extends Controller
             ->get();
 
             return  $projet;
+        //}
+
+       // return redirect("/login");
+
+
     }
 
     public function index()

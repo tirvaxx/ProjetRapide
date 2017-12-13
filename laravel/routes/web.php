@@ -22,6 +22,7 @@ Route::get('/', function () {
 
 Route::post('/users', 'HomeController@getUsers');
 
+
 Route::post('/assignation', 'ProjetController@assignation');
 
 Route::get('/adminForm', 'Auth\AdminLoginController@showLoginForm')->name('adminForm');
@@ -73,8 +74,10 @@ Route::post("/commentaires", array('uses' => 'CommentaireController@store'));
 Route::get("/commentaires_projet/{projet_id}", array('uses' => 'CommentaireProjetController@show'));
 Route::post("/commentaires_projet", array('uses' => 'CommentaireProjetController@store'));
 
+Route::get('/taches_assignation/{projet_id}/{tache_id}/{flag}', array('uses' => 'TacheAssignationController@index'));
+Route::post('/taches_assignation', array('uses' => 'TacheAssignationController@store'));
 
-
+Route::resource('taches_assignation', 'TacheAssignationController');
 Route::resource('projets', 'ProjetController');
 Route::resource('admins', 'AdminController');
 Route::resource('projetrapide', 'ProjetRapideController');
