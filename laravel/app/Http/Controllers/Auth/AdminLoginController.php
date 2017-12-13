@@ -24,7 +24,8 @@ class AdminLoginController extends Controller
     	]);
 
     	if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
-    		return redirect('admin');
+    	//	return redirect('admin');
+            return redirect('/home');
     	}
 
     	return redirect('/');

@@ -25,6 +25,10 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  <span class="caret"></span></a>
                   <ul id="creer_item" class="dropdown-menu">
+
+                   @if(Auth::guard('admin')->check() ) 
+                    <li><a id="creer_item_projet" href="#">Projet</a></li>
+                   @endif 
                     <li><a id="creer_item_sprint" href="#">Sprint</a></li>
                     <li><a id="creer_item_liste" href="#">Liste</a></li>
                     <li><a id="gerer_utilisateurs" href="#">Utilisateurs</a></li>
