@@ -293,6 +293,7 @@ $(document).ready(function(){
 
                 $('#btn_assignation').click(function(e) {
                     e.preventDefault();
+                    e.stopImmediatePropagation();
 
                     var nomProjet = $(this).parents().eq(3).attr("id");
               //      console.log(nomProjet);
@@ -311,8 +312,7 @@ $(document).ready(function(){
                             //toastMessageSuccess(document.getElementById("search-bar").value);
                         },
                         error: function(xhr,status,error) {
-                            alert("error 1 " + status);
-                            alert("error 2 " + error);
+                            toastr.error('Une erreur est survenue au moment d\'assigné un utilisateur au projet.', 'ERREUR!');
                         }
                     });
                 });
