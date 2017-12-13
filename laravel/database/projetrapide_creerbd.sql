@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 10, 2017 at 10:26 PM
+-- Generation Time: Dec 13, 2017 at 01:48 AM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -91,8 +91,7 @@ CREATE TABLE IF NOT EXISTS `acteur_employe` (
 INSERT INTO `acteur_employe` (`id`, `prenom`, `nom`, `actif`, `courriel`, `telephone`, `updated_at`, `created_at`, `photo`) VALUES
 (2, 'Alain', 'Bessette', 1, NULL, 0, '2017-11-09 22:16:16', '2017-11-09 22:16:16', 'alain.jpg'),
 (3, 'Caroline', 'Cote', 1, NULL, 0, '2017-11-09 22:16:16', '2017-11-09 22:16:16', 'caroline.jpg'),
-(4, 'Mathieu', 'Novis', 1, NULL, 0, '2017-11-09 22:16:16', '2017-11-09 22:16:16', 'mathieur.jpg'),
-(5, 'alain33333', 'aaa', 1, NULL, 0, '2017-11-10 03:16:58', '2017-11-10 03:16:58', '45x45.jpg');
+(4, 'Mathieu', 'Novis', 1, NULL, 0, '2017-11-09 22:16:16', '2017-11-09 22:16:16', 'mathieur.jpg');
 
 -- --------------------------------------------------------
 
@@ -152,13 +151,23 @@ CREATE TABLE IF NOT EXISTS `admins` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `telephone` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `photo` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '45x45.png',
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `admins_email_unique` (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=1000000000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`id`, `name`, `email`, `telephone`, `photo`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'alain', 'alain@a.com', NULL, 'alain.jpg', '$2y$10$sCEgrZke8uedGVZOrYJ/U.xIGQEAxjpw9BBZBHWFtfOoD/lXIboFO', 'dWPUBbF6LDJZK8WbDGbSjCuv0BaiDuLiFdvsKowJDdUAhH81R9LqgeZrNixd', '2017-12-11 09:51:25', '2017-12-11 09:51:25'),
+(2, 'caroline', 'caroline@a.com', NULL, 'caroline.jpg', '$2y$10$sCEgrZke8uedGVZOrYJ/U.xIGQEAxjpw9BBZBHWFtfOoD/lXIboFO', 'VfuDtb2WhrNjOlATDRfa5qFbl6iMTENllmTalesQaHkvreq5oISCMVUZ4jRC', '2017-12-12 17:11:37', '2017-12-12 17:11:37'),
+(3, 'mathieu', 'mathieu@a.com', NULL, 'mathieu.jpg', '$2y$10$NfqJ9GkVhAIzCV2/jehjz.9FCp5nn7XvekDaD1hvNY3FoA3Q.fQOe', 'rRasT1p9iuBJLZUigUn3v9NDO5IWcoGJRubn2PPhFLPHBu5wtGp70fExxInz', '2017-12-12 17:12:02', '2017-12-12 17:12:02');
 
 -- --------------------------------------------------------
 
@@ -176,7 +185,14 @@ CREATE TABLE IF NOT EXISTS `commentaire` (
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `commentaire`
+--
+
+INSERT INTO `commentaire` (`id`, `projet_id`, `tache_id`, `creer_par_acteur_id`, `commentaire`, `created_at`, `updated_at`) VALUES
+(23, 14, 444, 1, 'ddd', '2017-12-11 01:30:29', '2017-12-11 01:30:29');
 
 -- --------------------------------------------------------
 
@@ -193,7 +209,14 @@ CREATE TABLE IF NOT EXISTS `commentaire_projet` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `commentaire_projet`
+--
+
+INSERT INTO `commentaire_projet` (`id`, `projet_id`, `commentaire`, `creer_par_acteur_id`, `updated_at`, `created_at`) VALUES
+(11, 14, 'ddd', 1, '2017-12-11 01:30:21', '2017-12-11 01:30:21');
 
 -- --------------------------------------------------------
 
@@ -286,7 +309,14 @@ CREATE TABLE IF NOT EXISTS `liste` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=377 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=378 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liste`
+--
+
+INSERT INTO `liste` (`id`, `nom`, `description`, `creer_par_acteur_id`, `created_at`, `updated_at`) VALUES
+(377, 'ddd', '3ddd', 1, '2017-12-10 22:40:28', '2017-12-10 22:40:28');
 
 -- --------------------------------------------------------
 
@@ -300,16 +330,16 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(19, '2014_10_12_000000_create_users_table', 1),
-(20, '2014_10_12_100000_create_password_resets_table', 1),
-(21, '2017_12_02_192317_create_admins_table', 1);
+(25, '2014_10_12_000000_create_users_table', 1),
+(26, '2014_10_12_100000_create_password_resets_table', 1),
+(27, '2017_12_02_192317_create_admins_table', 1);
 
 -- --------------------------------------------------------
 
@@ -349,11 +379,11 @@ CREATE TABLE IF NOT EXISTS `projet` (
 --
 
 INSERT INTO `projet` (`id`, `nom`, `description`, `date_du`, `date_complete`, `creer_par_acteur_id`, `created_at`, `updated_at`) VALUES
-(14, 'Premier projet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non tellus sapien. Curabitur rhoncus justo vel arcu consectetur vestibulum. Donec imperdiet lectus in erat semper, ac pharetra odio blandit. Mauris nec neque nunc. Pellentesque pulvinar vehicula gravida. Nullam eu neque lorem. In eget sem commodo, ornare massa a, rhoncus risus. Quisque vel tincidunt mi. Morbi ultrices justo at nunc fermentum fringilla. Nulla at ipsum ornare, placerat ex vel, feugiat odio. ', '2017-12-01', NULL, 2, '2017-12-08 16:42:04', '2017-12-08 16:42:04'),
-(15, 'Deuxieme projet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non tellus sapien. Curabitur rhoncus justo vel arcu consectetur vestibulum. Donec imperdiet lectus in erat semper, ac pharetra odio blandit. Mauris nec neque nunc. Pellentesque pulvinar vehicula gravida. Nullam eu neque lorem. In eget sem commodo, ornare massa a, rhoncus risus. Quisque vel tincidunt mi. Morbi ultrices justo at nunc fermentum fringilla. Nulla at ipsum ornare, placerat ex vel, feugiat odio. ', '2017-12-01', NULL, 2, '2017-12-08 16:42:04', '2017-12-08 16:42:04'),
-(16, 'Troisieme projet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non tellus sapien. Curabitur rhoncus justo vel arcu consectetur vestibulum. Donec imperdiet lectus in erat semper, ac pharetra odio blandit. Mauris nec neque nunc. Pellentesque pulvinar vehicula gravida. Nullam eu neque lorem. In eget sem commodo, ornare massa a, rhoncus risus. Quisque vel tincidunt mi. Morbi ultrices justo at nunc fermentum fringilla. Nulla at ipsum ornare, placerat ex vel, feugiat odio. ', '2017-12-01', NULL, 2, '2017-12-08 16:42:04', '2017-12-08 16:42:04'),
-(17, 'Quatrieme projet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non tellus sapien. Curabitur rhoncus justo vel arcu consectetur vestibulum. Donec imperdiet lectus in erat semper, ac pharetra odio blandit. Mauris nec neque nunc. Pellentesque pulvinar vehicula gravida. Nullam eu neque lorem. In eget sem commodo, ornare massa a, rhoncus risus. Quisque vel tincidunt mi. Morbi ultrices justo at nunc fermentum fringilla. Nulla at ipsum ornare, placerat ex vel, feugiat odio. ', '2017-12-01', NULL, 2, '2017-12-08 16:42:04', '2017-12-08 16:42:04'),
-(18, 'Cinquieme projet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non tellus sapien. Curabitur rhoncus justo vel arcu consectetur vestibulum. Donec imperdiet lectus in erat semper, ac pharetra odio blandit. Mauris nec neque nunc. Pellentesque pulvinar vehicula gravida. Nullam eu neque lorem. In eget sem commodo, ornare massa a, rhoncus risus. Quisque vel tincidunt mi. Morbi ultrices justo at nunc fermentum fringilla. Nulla at ipsum ornare, placerat ex vel, feugiat odio. ', '2017-12-01', NULL, 2, '2017-12-08 16:42:04', '2017-12-08 16:42:04');
+(14, 'Premier projet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non tellus sapien. Curabitur rhoncus justo vel arcu consectetur vestibulum. Donec imperdiet lectus in erat semper, ac pharetra odio blandit. Mauris nec neque nunc. Pellentesque pulvinar vehicula gravida. Nullam eu neque lorem. In eget sem commodo, ornare massa a, rhoncus risus. Quisque vel tincidunt mi. Morbi ultrices justo at nunc fermentum fringilla. Nulla at ipsum ornare, placerat ex vel, feugiat odio.', '2017-12-31', NULL, 1, '2017-12-08 16:42:04', '2017-12-12 01:24:47'),
+(15, 'Deuxieme projet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non tellus sapien. Curabitur rhoncus justo vel arcu consectetur vestibulum. Donec imperdiet lectus in erat semper, ac pharetra odio blandit. Mauris nec neque nunc. Pellentesque pulvinar vehicula gravida. Nullam eu neque lorem. In eget sem commodo, ornare massa a, rhoncus risus. Quisque vel tincidunt mi. Morbi ultrices justo at nunc fermentum fringilla. Nulla at ipsum ornare, placerat ex vel, feugiat odio. ', '2017-12-01', NULL, 1, '2017-12-08 16:42:04', '2017-12-08 16:42:04'),
+(16, 'Troisieme projet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non tellus sapien. Curabitur rhoncus justo vel arcu consectetur vestibulum. Donec imperdiet lectus in erat semper, ac pharetra odio blandit. Mauris nec neque nunc. Pellentesque pulvinar vehicula gravida. Nullam eu neque lorem. In eget sem commodo, ornare massa a, rhoncus risus. Quisque vel tincidunt mi. Morbi ultrices justo at nunc fermentum fringilla. Nulla at ipsum ornare, placerat ex vel, feugiat odio. ', '2017-12-01', NULL, 1, '2017-12-08 16:42:04', '2017-12-08 16:42:04'),
+(17, 'Quatrieme projet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non tellus sapien. Curabitur rhoncus justo vel arcu consectetur vestibulum. Donec imperdiet lectus in erat semper, ac pharetra odio blandit. Mauris nec neque nunc. Pellentesque pulvinar vehicula gravida. Nullam eu neque lorem. In eget sem commodo, ornare massa a, rhoncus risus. Quisque vel tincidunt mi. Morbi ultrices justo at nunc fermentum fringilla. Nulla at ipsum ornare, placerat ex vel, feugiat odio. ', '2017-12-01', NULL, 1, '2017-12-08 16:42:04', '2017-12-08 16:42:04'),
+(18, 'Cinquieme projet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla non tellus sapien. Curabitur rhoncus justo vel arcu consectetur vestibulum. Donec imperdiet lectus in erat semper, ac pharetra odio blandit. Mauris nec neque nunc. Pellentesque pulvinar vehicula gravida. Nullam eu neque lorem. In eget sem commodo, ornare massa a, rhoncus risus. Quisque vel tincidunt mi. Morbi ultrices justo at nunc fermentum fringilla. Nulla at ipsum ornare, placerat ex vel, feugiat odio. ', '2017-12-01', NULL, 1, '2017-12-08 16:42:04', '2017-12-08 16:42:04');
 
 -- --------------------------------------------------------
 
@@ -387,7 +417,14 @@ CREATE TABLE IF NOT EXISTS `sprint` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=74 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `sprint`
+--
+
+INSERT INTO `sprint` (`id`, `numero`, `projet_id`, `date_debut`, `date_fin`, `creer_par_acteur_id`, `created_at`, `updated_at`) VALUES
+(74, 3, 14, '2017-12-01', '2017-12-31', 1, '2017-12-10 22:40:11', '2017-12-12 01:35:48');
 
 -- --------------------------------------------------------
 
@@ -427,7 +464,25 @@ CREATE TABLE IF NOT EXISTS `tache` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=444 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=466 DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tache_assignation`
+--
+
+DROP TABLE IF EXISTS `tache_assignation`;
+CREATE TABLE IF NOT EXISTS `tache_assignation` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `projet_id` int(11) NOT NULL,
+  `tache_id` int(11) NOT NULL,
+  `assigne_acteur_id` int(11) NOT NULL,
+  `actif` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -449,14 +504,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_name_unique` (`name`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `telephone`, `photo`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'alain', 'alain@a.com', NULL, 'alain.jpg', '$2y$10$G1InVXa6/snHyxCwEqo7..8rKOw8BV2aD4uROxfDcy/bpbwe3fZx2', 'lvIeC5mIxSSLx5SMxEaHmOXLpQ243fbLj1Ud0uPasoSD7wBLcZi6ORFfEjQ7', '2017-12-10 14:22:28', '2017-12-10 14:22:28');
+(1, 'alain', 'alain@a.com', NULL, 'alain.jpg', '$2y$10$sCEgrZke8uedGVZOrYJ/U.xIGQEAxjpw9BBZBHWFtfOoD/lXIboFO', 'kDiQ0SWzNOquzfDNF0nPCfU7TZrbVR7cxlvBJOCgKJ7nIMSNlK0FCjYFvLPQ', '2017-12-11 09:51:25', '2017-12-11 09:51:25'),
+(2, 'caroline', 'caroline@a.com', NULL, 'caroline.jpg', '$2y$10$sCEgrZke8uedGVZOrYJ/U.xIGQEAxjpw9BBZBHWFtfOoD/lXIboFO', 'mlHFUPhDmgDjMb7nIzXQhtZNlJA2YbYTRhTiMfJ2pNkY5bkJd8TDherB7KhK', '2017-12-12 17:11:37', '2017-12-12 17:11:37'),
+(3, 'mathieu', 'mathieu@a.com', NULL, 'mathieu.jpg', '$2y$10$NfqJ9GkVhAIzCV2/jehjz.9FCp5nn7XvekDaD1hvNY3FoA3Q.fQOe', 'mnEi3yU96QhFN1Fd7Lo24TO9c4gidGJIeUWjDu0gFt1yeYYepI8wrqLKPjE1', '2017-12-12 17:12:02', '2017-12-12 17:12:02');
 
 -- --------------------------------------------------------
 
@@ -546,7 +603,6 @@ DROP TABLE IF EXISTS `vw_sprint_activite_actif`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`projetrapide`@`%` SQL SECURITY DEFINER VIEW `vw_sprint_activite_actif`  AS  select `projet`.`id` AS `projet_id`,`projet`.`nom` AS `projet_nom`,`projet`.`description` AS `projet_description`,`projet`.`date_du` AS `projet_date_du`,`projet`.`date_complete` AS `projet_date_complete`,`sprint`.`id` AS `sprint_id`,`sprint`.`numero` AS `sprint_numero`,`sprint`.`date_debut` AS `sprint_date_debut`,`sprint`.`date_fin` AS `sprint_date_fin`,`liste`.`id` AS `liste_id`,`liste`.`nom` AS `liste_nom`,`liste`.`description` AS `liste_description`,`tache`.`id` AS `tache_id`,`tache`.`nom` AS `tache_nom`,`tache`.`description` AS `tache_description`,`sa`.`ordre` AS `tache_ordre`,`tache`.`date_du` AS `tache_date_du` from ((((`sprint_activite` `sa` join `projet` on((`sa`.`projet_id` = `projet`.`id`))) join `sprint` on(((`sprint`.`id` = `sa`.`sprint_id`) and (`sa`.`projet_id` = `sprint`.`projet_id`)))) left join `liste` on((`liste`.`id` = `sa`.`liste_id`))) left join `tache` on((`tache`.`id` = `sa`.`tache_id`))) where (`sa`.`actif` = 1) ;
 
 
-
 # Privileges for `projetrapide`@`%`
 
 GRANT ALL PRIVILEGES ON *.* TO 'projetrapide'@'%' WITH GRANT OPTION;
@@ -564,6 +620,8 @@ GRANT ALL PRIVILEGES ON `projet_rapide`.* TO 'projetrapide'@'localhost';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
 
 GRANT PROXY ON ''@'' TO 'root'@'localhost' WITH GRANT OPTION;
+
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

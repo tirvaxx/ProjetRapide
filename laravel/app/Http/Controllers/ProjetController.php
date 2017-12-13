@@ -20,16 +20,20 @@ class ProjetController extends Controller
     public function index()
     {
 
-        $projet = DB::table('projet')->select("id as projet_id", "nom as projet_nom"
-                                            , "description as projet_description"
-                                            , "date_du as projet_date_du"
-                            ,  DB::raw("(case when datediff(date_du, Date(now())) < 0 then 'true' else 'false' end) as projet_retard"))
-        ->whereNull("date_complete")
-        ->orderby("id")
-        ->get();
+       // if(auth::check()){
+            $projet = DB::table('projet')->select("id as projet_id", "nom as projet_nom"
+                                                , "description as projet_description"
+                                                , "date_du as projet_date_du"
+                                ,  DB::raw("(case when datediff(date_du, Date(now())) < 0 then 'true' else 'false' end) as projet_retard"))
+            ->whereNull("date_complete")
+            ->orderby("id")
+            ->get();
 
+            return view("projetRapide")->with("dataProjet", $projet->toArray());
+        //}
 
-        return view("projetRapide")->with("dataProjet", $projet->toArray());
+        //return redirect("/login");
+            
     }
 
     /**

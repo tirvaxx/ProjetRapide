@@ -93,7 +93,7 @@
 
                         <div class="panel-body">
                              <p>{{$value->projet_description}}</p>
-                             <small>Date dû : {{$value->projet_date_du}}</small>
+                             <p>Date dûe : {{$value->projet_date_du}}</p>
                         </div>
 
                         <button id="btn_projet_charger" projet_id="{{$value->projet_id}}" projet_nom="{{$value->projet_nom}}" class="btn btn-default">Charger</button>
@@ -167,67 +167,112 @@
 
 
 
-<div class="div_tache_form"  style="display:none">
-    <form id="form_tache" action="#" >
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <!-- securite contre les failles sur les requests -->
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2">
+          <!--Sidebar content-->
+        </div>
+        <div class="span10">
+          <!--Body content-->
+        </div>
+      </div>
+    </div>
 
-        <fieldset>
-            <legend>Ajouter une tâche</legend>
-                <div class="form-group">
-                    <div id="tache_message_ajouter" class="alert alert-warning" style="display:none">{{ Session::get('tache_message_ajouter') }}</div>
-                </div>
-                <div class="form-group">
-                        <label for="nom_tache">Nom de la tâche</label>
-                        <input type="text" class="form-control" id="nom_tache" name="nom_tache" placeholder="Nom" />
-                        <input type="hidden" id="ajouter_tache_id"></input>
-                        <input type="hidden" id="ajouter_tache_liste_id"></input>
-                </div>
-                <div class="form-group">
-                        <label for="tache_date_du">Date dû</label>
-                        <input type="text" class="form-control date" id="tache_date_du" name="tache_date_du" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" placeholder="Date dû" />
-                        <label for="description_tache">Description de la tâche</label>
-                        <textarea class="form-control" id="description_tache" name="description_tache" placeholder="Description"></textarea>
-                </div>
-                <div class="form-group">
-                    <button type="button" id="btn_tache_ajouter" class="btn btn-primary" >Ajouter</button>
-                    <button type="button" id="btn_tache_fermer" class="btn btn-primary" >Fermer</button>
-                </div>
-        </fieldset>
-    </form>
+
+<div class="div_tache_form"  style="display:none">
+     <div class="container_ajout_tache">
+                <form id="form_tache" action="#" >
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <!-- securite contre les failles sur les requests -->
+
+                    <fieldset>
+                        <legend>Ajouter une tâche</legend>
+                            <div class="form-group">
+                                <div id="tache_message_ajouter" class="alert alert-warning" style="display:none">{{ Session::get('tache_message_ajouter') }}</div>
+                            </div>
+                            <div class="form-group">
+                                    <label for="nom_tache">Nom de la tâche</label>
+                                    <input type="text" class="form-control" id="nom_tache" name="nom_tache" placeholder="Nom" />
+                                    <input type="hidden" id="ajouter_tache_id"></input>
+                                    <input type="hidden" id="ajouter_tache_liste_id"></input>
+                            </div>
+                            <div class="form-group">
+                                    <label for="tache_date_du">Date dûe</label>
+                                    <input type="text" class="form-control date" id="tache_date_du" name="tache_date_du" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF" placeholder="Date dûe" />
+                                    <label for="description_tache">Description de la tâche</label>
+                                    <textarea class="form-control" id="description_tache" name="description_tache" placeholder="Description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" id="btn_tache_ajouter" class="btn btn-primary" >Ajouter</button>
+                                <button type="button" id="btn_tache_fermer" class="btn btn-primary" >Fermer</button>
+                            </div>
+                    </fieldset>
+                </form>
+
+    </div>
+  
+ <div class="container_ajout_tache_user_assigner container-user">
+        <p class="titre_ajout_tache_user">Assigné</p>
+        <ul  id="ajout_user_assigner" class="sortable assigner_user">
+ 
+       </ul>
+    </div>
+    <div  class="container_ajout_tache_user container-user ">
+        <p class="titre_ajout_tache_user">Disponible</p>
+        <ul  id="ajout_user_disponible" class="sortable assigner_user">
+           
+        </ul>
+    </div>
+     
 </div>
+
 
 <div id="tache_modifier_form" style="display:none">
-    <form id="form_modifier_tache" action="#">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <!-- securite contre les failles sur les requests -->
+   <div class="container_modifier_tache">
+      <form id="form_modifier_tache" action="#">
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <!-- securite contre les failles sur les requests -->
 
-        <fieldset>
-            <legend>Modifier une tâche</legend>
-                <div class="form-group">
-                    <div id="tache_message_modifier" class="alert alert-warning" style="display:none" >{{ Session::get('tache_message_modifier') }}</div>
-                </div>
-                <div class="form-group">
+          <fieldset>
+              <legend>Modifier une tâche</legend>
+                  <div class="form-group">
+                      <div id="tache_message_modifier" class="alert alert-warning" style="display:none" >{{ Session::get('tache_message_modifier') }}</div>
+                  </div>
+                  <div class="form-group">
+                      
+                          <label for="nom_tache">Nom de la tâche</label>
+                          <input type="text" class="form-control" id="modifier_nom_tache" name="modifier_nom_tache" placeholder="Nom" />
+                          <input type="hidden" id="modifier_tache_id" ></input>
+                  </div>
+                  <div class="form-group">
+                          <label for="modifier_tache_date_du">Date dûe</label>
+                          <input type="text" class="form-control date" id="modifier_tache_date_du" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF"  name="modifier_tache_date_du" placeholder="Date dûe" />
+                           <label for="modifier_description_tache">Description de la tâche</label>
+                          <textarea class="form-control" id="modifier_description_tache" name="modifier_description_tache" placeholder="Description"></textarea>
+                  </div>
+                  <div class="form-group">
+                      <button type="button" id="btn_tache_modifier" class="btn btn-primary" >Modifier</button>
+                      <button type="button" id="btn_tache_modifier_annuler" class="btn btn-primary" >Annuler</button>
+                  </div>
+          </fieldset>
+
+      </form>
+  </div>
+  <div class="container_modifier_tache_user_assigner container-user">
+        <p class="titre_modifier_tache_user">Assigné</p>
+        <ul id="modifier_user_assigner" class="sortable assigner_user">
                     
-                        <label for="nom_tache">Nom de la tâche</label>
-                        <input type="text" class="form-control" id="modifier_nom_tache" name="modifier_nom_tache" placeholder="Nom" />
-                        <input type="hidden" id="modifier_tache_id" ></input>
-                </div>
-                <div class="form-group">
-                        <label for="modifier_tache_date_du">Date dû</label>
-                        <input type="text" class="form-control date" id="modifier_tache_date_du" readonly="readonly" style="cursor:pointer; background-color: #FFFFFF"  name="modifier_tache_date_du" placeholder="Date dû" />
-                         <label for="modifier_description_tache">Description de la tâche</label>
-                        <textarea class="form-control" id="modifier_description_tache" name="modifier_description_tache" placeholder="Description"></textarea>
-                </div>
-                <div class="form-group">
-                    <button type="button" id="btn_tache_modifier" class="btn btn-primary" >Modifier</button>
-                    <button type="button" id="btn_tache_modifier_annuler" class="btn btn-primary" >Annuler</button>
-                </div>
-        </fieldset>
-
-    </form>
-
+       </ul>
+    </div>
+    <div class="container_modifier_tache_user_assigner container-user">
+        <p class="titre_modifier_tache_user">Disponible</p>
+        <ul id="modifier_user_disponible"  class="sortable assigner_user">
+            
+        </ul>
+    </div>
 </div>
+
+
 
 <div class="div_liste_form" style="display:none">
     <form id="form_liste" action="#" >
@@ -268,7 +313,7 @@
                         <input type="text" class="form-control" id="nom_projet" name="nom_projet" placeholder="Nom" />
                 </div>
                 <div class="form-group" >
-                    <label for="date_du_projet">Date dû :</label>
+                    <label for="date_du_projet">Date dûe :</label>
                     <input type="text" class="form-control date"  readonly="readonly" style="cursor:pointer; background-color: #FFFFFF"   name="date_du_projet" id="date_du_projet">
                 </div>
                 <div class="form-group">
@@ -301,7 +346,7 @@
                         Description</textarea>
                 </div>
                 <div class="form-group" >
-                    <label for="date_du_projet">Date dû :</label>
+                    <label for="date_du_projet">Date dûe :</label>
                     <input type="text" class="form-control date"  readonly="readonly" style="cursor:pointer; background-color: #FFFFFF"   name="modifier_date_du_projet" id="modifier_date_du_projet">
                 </div>
                 <div class="form-group" >
