@@ -340,8 +340,9 @@ $(document).ready(function(){
         return false;
     }); //$('#btn_tache_fermer').click(function()
 
-   $('#btn_tache_ajouter').click(function() {
-
+   $('#btn_tache_ajouter').click(function(e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
 
         var liste_no = $("#ajouter_tache_liste_id").val();
         var nom_tache = $("#nom_tache").val();
@@ -381,9 +382,11 @@ $(document).ready(function(){
             creer_tache(liste_no, JSON.parse(result).last_inserted_id, JSON.parse(result).nom , JSON.parse(result).description, JSON.parse(result).tache_retard);
 
             assigner_utilisateur("ajout_user_assigner",g_selected_projet_id, JSON.parse(result).last_inserted_id );
+            $("#tache_message_ajouter").hide();
             toastr.success('Tache Ajoutée', 'SUCCÈS!');
 
         },error(xhr,status,error){
+          // 
            toastr.error("Une erreur est survenue.", "ERREUR!");
 
         },complete: function (xhr,status) {
