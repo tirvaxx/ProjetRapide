@@ -267,33 +267,55 @@ $(document).ready(function(){
 
              //****************SEARCHBAR*******************
                 //////////////////////////////////////////////
+                $('body').delegate('input.searchbaar', 'focusin', function() {
+                    if($(this).is(':data(autocomplete)')) return;
+                        $(this).autocomplete({
+                            source : function(request, response){ // les deux arguments représentent les données nécessaires au plugin
+                            $.ajax({
+                                url : '/users',
+                                type : 'POST', // on appelle le script JSON
+                                data: {term: request.term},
+                                dataType : 'json', // on spécifie bien que le type de données est en JSON
 
-
-                $('#search-bar').autocomplete({
-                    source : function(request, response){ // les deux arguments représentent les données nécessaires au plugin
-                        $.ajax({
-                            url : '/users',
-                            type : 'POST', // on appelle le script JSON
-                            data: {term: request.term},
-                            dataType : 'json', // on spécifie bien que le type de données est en JSON
-
-                            success: function (data) {
-                             //   console.log(data);
-                                response($.map(data, function(item) {
-                                    return {
-                                        label : item.name
-                                    }
-                                }));
-                            }
-                        });
-                    },
-
+                                success: function (data) {
+                                 //   console.log(data);
+                                    response($.map(data, function(item) {
+                                        return {
+                                            label : item.name
+                                        }
+                                    }));
+                                }
+                            });
+                        },
+                    });
                 });
+// $("#search-bar").on('focusin','input',  function() {
 
+//                 $(this).autocomplete({
+//                     source : function(request, response){ // les deux arguments représentent les données nécessaires au plugin
+//                         $.ajax({
+//                             url : '/users',
+//                             type : 'POST', // on appelle le script JSON
+//                             data: {term: request.term},
+//                             dataType : 'json', // on spécifie bien que le type de données est en JSON
+
+//                             success: function (data) {
+//                              //   console.log(data);
+//                                 response($.map(data, function(item) {
+//                                     return {
+//                                         label : item.name
+//                                     }
+//                                 }));
+//                             }
+//                         });
+//                     },
+
+//                 });
+// });
                 //****************END SEARCHBAR*******************
                 //////////////////////////////////////////////
 
-                $('#btn_assignation').click(function(e) {
+                $("body").delegate('#btn_assignation','click', function(e) {
                     e.preventDefault();
                     e.stopImmediatePropagation();
 
@@ -301,8 +323,9 @@ $(document).ready(function(){
               //      console.log(nomProjet);
                     var idProjet = nomProjet.replace("collapse_", "");
               //      console.log(idProjet);
-                    var nomUser = document.getElementById("search-bar").value;
-                    var data = $('#form_assignation').serialize() + "&projet_id=" + idProjet;
+                    var nomUser = $(this).attr("search-bar");
+                    
+                    var data = "search-bar="+ nomUser + "&projet_id=" + idProjet;
                     $.ajax({
                         url : '/assignation',
                         type : 'POST',

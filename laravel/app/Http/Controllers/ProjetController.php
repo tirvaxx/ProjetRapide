@@ -7,6 +7,7 @@ use Log;
 use Auth;
 use App\Projet;
 use App\User;
+use App\Admin;
 use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\Auth;
 use App\ProjetAssignation;
@@ -76,9 +77,28 @@ class ProjetController extends Controller
      * @param  \App\Projet  $projet
      * @return \Illuminate\Http\Response
      */
-    public function show(Projet $projet)
+    public function show()
     {
-        //
+        $projet = DB::select(DB::raw(" SELECT 
+                    id AS projet_id,
+                    nom AS projet_nom,
+                    description AS projet_description,
+                    date_du AS projet_date_du,
+                    (
+                        CASE WHEN DATEDIFF(date_du, DATE(NOW())) < 0 THEN 'true' ELSE 'false'
+                        END) AS projet_retard
+                FROM
+                    projet p
+                    inner join projet_assignation pa
+                    on p.id = pa.projet_id
+                WHERE
+                pa.actif = 1
+                and pa.acteur_id = " . Auth::user()->id ));
+
+
+        //dd($projet);
+
+        return view("projetRapide")->with("dataProjet", $projet);
     }
 
     /**
@@ -143,10 +163,11 @@ class ProjetController extends Controller
         
         $projet_assignation->projet_id = request("projet_id");
         
-        $result = User::where('name', $request->input("search-bar"))->value('id');
+        $result = Admin::where('name', $request->input("search-bar"))->value('id');
         
-
-        $projet_assignation->acteur_id = $result;
+        //dd($result);
+        //dd($request->input("search-bar"));
+        $projet_assignation->acteur_id = 1;
         $projet_assignation->save();
 
         $data = array(
