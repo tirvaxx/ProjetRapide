@@ -16,7 +16,7 @@ class TacheAssignationController extends Controller
     public function index($projet_id, $tache_id,$flag)
     {
 
-DB::connection()->enableQueryLog();
+
 
         if($flag == 1){
             //user assigne
@@ -47,9 +47,6 @@ DB::connection()->enableQueryLog();
         }
 
 
-// some queries here
-$queries = DB::getQueryLog();
-Log::info($queries);
 
         return $resultat;
     }

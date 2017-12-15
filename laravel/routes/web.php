@@ -16,7 +16,9 @@ Route::get('/', function () {
 	return view('welcome');
 });
 
-
+Route::get('/rapports/utilisateurs', 'RapportController@utilisateurs');
+Route::get('/rapports/projetinfo', 'RapportController@projetinfo');
+Route::get('/rapports/projets', 'RapportController@projets');
 
 //Route::get('/home', 'HomeController@index');
 
@@ -77,6 +79,9 @@ Route::post("/commentaires_projet", array('uses' => 'CommentaireProjetController
 Route::get('/taches_assignation/{projet_id}/{tache_id}/{flag}', array('uses' => 'TacheAssignationController@index'));
 Route::post('/taches_assignation', array('uses' => 'TacheAssignationController@store'));
 
+
+
+Route::resource('rapports', 'RapportController');
 Route::resource('taches_assignation', 'TacheAssignationController');
 Route::resource('projets', 'ProjetController');
 Route::resource('admins', 'AdminController');

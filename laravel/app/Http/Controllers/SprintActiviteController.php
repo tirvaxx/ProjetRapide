@@ -155,9 +155,9 @@ class SprintActiviteController extends Controller
     public function rendreInactif(Request $request)
     {
         
-        LOG::info("projet = " + $request->projet_id);
-        LOG::info("sprint = " +  $request->sprint_id);
-        LOG::info("json = " + $request->json);
+        //LOG::info("projet = " + $request->projet_id);
+        //LOG::info("sprint = " +  $request->sprint_id);
+        //LOG::info("json = " + $request->json);
         self::maj_bd($request->projet_id, $request->sprint_id,json_decode($request->json));
 
 

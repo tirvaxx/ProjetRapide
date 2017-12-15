@@ -135,7 +135,7 @@ $(document).ready(function() {
            
 	
 	$("body").delegate('a.repondre','click',function(e) {
-      
+       
         e.preventDefault();
         $(this).next(".form_commentaire").toggle();
 		
@@ -147,9 +147,11 @@ $(document).ready(function() {
 	/*********************************************************
 		Bouton enregistrer le commentaire
 	**********************************************************/
-	$("body").delegate("#btn_commentaire", "click", function(){
+	$("body").delegate("#btn_commentaire", "click", function(e){
 
-		
+		e.preventDefault();
+        e.stopImmediatePropagation();
+
 			var projet_obj = $("#info_projet");
 		
 			var projet_id;
@@ -184,8 +186,10 @@ $(document).ready(function() {
 				        afficher_commentaire(obj_commentaire, projet_id, tache_id);
 		            },
 		            error(xhr,status,error){
-		                alert("error 1 " + status);
-		                alert("error 2 " + error);
+		                
+		            	toastr.error("Une erreur est survenue au moment d\'enregistrer le commentaire.", "ERREUR!");
+
+
 		            },
 		            complete: function (xhr,status) {
 						

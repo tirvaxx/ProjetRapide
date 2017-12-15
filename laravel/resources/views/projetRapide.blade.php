@@ -28,10 +28,18 @@
 
                    @if(Auth::guard('admin')->check() ) 
                     <li><a id="creer_item_projet" href="#">Projet</a></li>
+                    <li><a id="afficher_rapports" href="/rapports">Rapports</a></li>
                    @endif 
                     <li><a id="creer_item_sprint" href="#">Sprint</a></li>
                     <li><a id="creer_item_liste" href="#">Liste</a></li>
                     <li><a id="gerer_utilisateurs" href="#">Utilisateurs</a></li>
+                    @if(Auth::guard('admin')->check() ) 
+                      <li class="divider"></li>                     
+                      <li><a id="rapport_projet" href="/rapports/projets">Rapport Projets</a></li>
+                      <li><a id="rapport_projet_info" href="/rapports/projetinfo">Projets Info</a></li>
+                      <li><a id="rapport_utilisateurs" href="/rapports/utilisateurs">Utilisateurs</a></li>
+                    @endif  
+                    
                   </ul>
                 </li>
               </ul>

@@ -142,9 +142,9 @@ $(document).ready(function(){
 
     }); // btn_projet_modifier click
 
-    $("body").delegate('#btn_projet_formmodifier','click',function(){
+    $("body").delegate('#btn_projet_formmodifier','click',function(e){
 
-
+        e.stopImmediatePropagation();
         $projet_no = g_selected_projet_id;
 
         var input_name = "modifier_nom_projet";
@@ -180,7 +180,7 @@ $(document).ready(function(){
 
         $.ajax({ statusCode: {
             500: function(xhr) {
-            alert(500);
+            
             }},
             //the route pointing to the post function
             url: $url,
@@ -191,19 +191,21 @@ $(document).ready(function(){
             // remind that 'data' is the response of the AjaxController
             success: function (result,status,xhr) {
               // on retourne au home pour voir les projets... en attendant todo a continuer
-              url = "/home";
-              $( location ).attr("href", url);
+              toastr.success("La modification du projet a été effectuée avec succès.", 'SUCCÈS!');
+              $.unblockUI();
+             // url = "/home";
+             // $( location ).attr("href", url);
 
             },error(xhr,status,error){
-                alert("error 1 " + status);
-                alert("error 2 " + error);
+               
+                 toastr.error("Une erreur est survenue sur le serveur.", 'Erreur!');
             },
             complete: function (xhr,status) {
             // Handle the complete event
             //alert("complete " + status);
             }
         });
-        $.unblockUI();
+       
 
     });//#btn_projet_formmodifier click
 

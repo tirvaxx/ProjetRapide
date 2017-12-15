@@ -3,6 +3,39 @@ html,body {
     height:100%;
 }
 
+  /*rapport*/
+      .table-rapport{
+      width:75%;
+      margin: 0 auto;
+      
+      }
+
+      .table-rapport > table{
+          width:75%;
+          margin: 0 auto;   
+      }
+table{
+    margin:5px;
+}
+.table-bordered caption {
+    font-weight:bold;
+    font-size: 1.5em;
+}
+.table-bordered th {
+    padding:3px;
+    font-weight:bold;
+    background-color: #999;
+    color:white;
+    text-align: center;
+}
+.table-bordered td {
+    padding:3px;
+    text-align: center;
+}
+
+
+
+
 ul.assigner_user{
     position: relative;
    
